@@ -1,0 +1,195 @@
+.binarySystemFirsrDiv,
+.binarySystemWaitingList {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 30px;
+}
+
+.binarySystemWaitingList {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.binarySystemWaitingList > div {
+  display: flex;
+  align-items: center;
+}
+
+.binarySystemWaitingList > div > P {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: var(--textColor);
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  color: white;
+  background: var(--colorPrimary);
+  border-radius: 50%;
+}
+
+.binarySystemWaitingList > div > i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--textColor);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.treeUser {
+  background: var(--containerColor);
+  width: 230px;
+  height: 172px;
+  border-radius: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.treeUser i {
+  font-size: 50px;
+  border: 20px solid var(--lightColor);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+  width: 85px;
+  height: 85px;
+}
+
+#leftLine,
+#rightLine {
+  width: 100%;
+  margin-top: 100px;
+}
+
+.binarySystemTeamVolume {
+  background: var(--containerColor);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.binarySystemTeamVolume h5 {
+  margin-bottom: 20px;
+}
+
+.binarySystemTeamVolume > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.binarySystemTeamVolume > div > h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--colorPrimary);
+}
+
+.binarySystemTeamVolume > div > i {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: var(--colorPrimary);
+  margin-right: 30px;
+  font-size: 20px;
+}
+
+.binarySystemTeamVolume p {
+  color: var(--textColor);
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 300;
+}
+
+.binarySystemTeamVolume p > span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--textColor);
+  margin-left: 5px;
+}
+
+.binarySystemTeamVolume p > span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#treeTopLevel {
+  display: flex;
+  justify-content: center;
+}
+
+#treeTopLevel > div {
+  border: 1px solid var(--colorPrimary);
+}
+
+#treeTopLevel > img {
+  width: 80px;
+  height: 140px;
+  object-fit: contain;
+}
+
+#treeTopLevel > div {
+  margin: 0px 20px;
+}
+
+.tree1 {
+  width: 100%;
+  height: 132px;
+}
+
+#lastLevel img {
+  width: 100%;
+  height: 90px;
+}
+
+.binaryTreeMobile {
+  margin-top: 30px;
+}
+
+#binaryTreeMobileBottom img {
+  width: 50px;
+  height: 60px;
+  margin: 0px 10px;
+}
+
+#binaryTreeMobileTop > div {
+  border-radius: 20px;
+  width: 170px;
+  height: 161px;
+  border: 1px solid var(--colorPrimary);
+}
+
+#binaryTreeMobileTop > img {
+  height: 30px;
+  margin: 10px 0;
+}
+
+#binaryTreeMobileMid > div {
+  border-radius: 20px;
+  width: 122px !important;
+  height: 109px !important;
+  margin-bottom: 20px;
+}
+
+#binaryTreeMobileMid > div > i,
+#binaryTreeMobileBottom > div > i {
+  width: 46px;
+  height: 46px;
+  border: 10px solid var(--lightColor);
+  border-radius: 50%;
+}
+
+#binaryTreeMobileBottom > div {
+  border-radius: 20px;
+  width: 122px !important;
+  height: 109px !important;
+}

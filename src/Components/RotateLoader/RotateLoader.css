@@ -1,0 +1,26 @@
+.rotateLoaderDiv {
+  display: block;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.rotateLoader {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid var(--textColor);
+  border-top-color: var(--blueColor);
+  border-right-color: var(--blueColor);
+  animation: rotate 0.5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

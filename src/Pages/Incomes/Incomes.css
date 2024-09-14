@@ -1,0 +1,86 @@
+.incomeSelectBox select {
+  background: var(--containerColor);
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--textColor);
+  display: block;
+}
+
+.incomeSelectBox option {
+  padding: 10px;
+}
+
+.incomeSelectBox {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap-reverse;
+  gap: 20px;
+}
+.historyContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.historyContent h4 {
+  color: var(--textColor);
+  font-size: 15px;
+}
+.historyContent span {
+  color: var(--colorPrimary);
+}
+.incomeSelectBox button {
+  color: var(--colorPrimary);
+  background: transparent;
+  border: 1px solid var(--colorPrimary);
+  padding: 10px 30px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.incomeSelectBox button i {
+  font-size: 24px;
+  display: flex;
+  margin-left: 10px;
+}
+
+.filtersection {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.filtersectionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 25px;
+}
+
+.filtersection select {
+  background: var(--containerColor);
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--textColor);
+  width: 100%;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.filtersection button {
+  background: var(--colorPrimary);
+  padding: 8px 30px;
+  border-radius: 5px;
+  border: transparent;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .incomeSelectBox button,
+  .incomeSelectBox select {
+    width: 100%;
+  }
+}

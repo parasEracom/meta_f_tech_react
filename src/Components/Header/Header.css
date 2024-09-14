@@ -1,0 +1,255 @@
+.header {
+  padding: 16px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 34px;
+}
+
+.headerLogoLink {
+  display: flex;
+  align-items: center;
+}
+
+.headerLinkDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--containerColor);
+  padding: 5px 20px;
+  border-radius: 20px;
+  border: var(--containerBorder);
+}
+
+.headerLinkDiv p {
+  margin: 0;
+  font-size: 9px;
+  color: var(--textColor);
+  text-transform: uppercase;
+}
+
+.headerLinkDiv i {
+  font-size: 18px;
+  margin-left: 15px;
+  color: var(--textColor);
+  display: flex;
+  cursor: pointer;
+}
+
+.headerLinkDiv h2 {
+  margin: 0;
+  color: var(--colorPrimary);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.headerProfileColorDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.themeChangeIcons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.themeChangeIcons p {
+  margin: 0;
+  font-size: 8px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 10px;
+  color: var(--textColor);
+  margin-right: 10px;
+  cursor: default;
+}
+
+.themeChangeIcons i {
+  font-size: 22px;
+  color: var(--colorPrimary);
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#moon {
+  font-size: 20px;
+  color: var(--colorPrimary);
+}
+
+.headerProfile h5 {
+  font-size: 15px;
+  margin: 0;
+  color: var(--textColor);
+  margin: 0px 5px;
+  margin-left: 10px;
+  font-weight: 400;
+}
+
+.headerProfile {
+  display: flex;
+  background: var(--containerColor);
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.headerProfile img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.headerProfile i {
+  display: flex;
+  margin: 0px 4px;
+  font-size: 22px;
+  color: var(--textColor);
+}
+
+.settingDiv {
+  position: absolute;
+  top: 45px;
+  background: var(--containerColor);
+  padding: 20px 27px 13px 20px;
+  border-radius: 7px !important;
+  right: 0px;
+  border: 1px solid #80808033;
+}
+
+.settingDivItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.settingDivItem p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--textColor);
+}
+
+.settingDivItem i {
+  color: var(--textColor);
+}
+
+.alertMsg {
+  background: var(--containerColor);
+  padding: 20px 120px;
+  border-radius: 50px;
+  color: var(--colorPrimary);
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  box-shadow: 0px 0px 3px 0px var(--colorPrimary);
+  transform: translateX(-50%);
+  transition: top 0.5s;
+  white-space: nowrap;
+  z-index: 9;
+}
+
+.menuIcon,
+.userIcon {
+  font-size: 25px;
+  color: var(--colorPrimary);
+  display: flex;
+  margin-left: 5px;
+  align-items: center;
+  display: none;
+}
+
+#logoicon {
+  width: 40px;
+  display: none;
+}
+
+.menuIcon {
+  margin-left: 15px;
+  font-size: 30px;
+}
+
+.mobileStore {
+  display: flex;
+  gap: 10px;
+  margin-right: 10px;
+}
+
+.mobileStore img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.usernameShow {
+  margin: 20px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.usernameShowContent p {
+  text-align: center;
+  font-size: 15px;
+  color: var(--textColor);
+  margin-bottom: 0;
+  padding-right: "10px";
+}
+
+.statusShow {
+  text-align: center;
+
+  height: 10px;
+  width: 10px;
+  margin-bottom: 0;
+  margin-left: 10px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.statusNotShow {
+  text-align: center;
+  margin-bottom: 0;
+  height: 10px;
+  width: 10px;
+  margin-left: 10px;
+
+  border-radius: 50%;
+  background-color: green;
+}
+
+@media (max-width: 800px) {
+  .menuIcon,
+  .userIcon {
+    display: flex;
+  }
+
+  .headerProfile {
+    display: none;
+  }
+
+  #logoicon {
+    display: block;
+    width: 50px;
+    height: 50px;
+  }
+
+  .header {
+    padding: 16px 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .headerLinkHeader {
+    display: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .usernameShow {
+    display: none;
+  }
+}

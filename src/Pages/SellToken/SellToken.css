@@ -1,0 +1,24 @@
+.inputDivIcon {
+  position: relative;
+}
+
+.inputDivIcon i {
+  position: absolute;
+  right: 10px;
+  color: var(--colorPrimary);
+  font-size: 25px;
+}
+
+#pkgInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#pkgInfo p {
+  color: var(--textColor);
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  margin-bottom: 3px;
+}

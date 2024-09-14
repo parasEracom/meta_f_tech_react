@@ -1,0 +1,125 @@
+#dollar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.financeMainAccountCard h1 {
+  color: var(--colorPrimary);
+  font-size: 25px;
+  margin: 0 0 10px 0;
+}
+
+.usd {
+  color: var(--colorPrimary);
+  font-size: 25px;
+  margin: 0;
+  margin-top: 18px;
+}
+
+.btnDiv {
+  display: flex;
+}
+
+.financeMainAccountCard {
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--containerColor);
+}
+
+.financeMainAccountCard hr {
+  width: 100%;
+  background-color: var(--textColor);
+  height: 2px;
+  margin: 30px 0 60px 0;
+}
+
+#dollarIcon {
+  background: var(--colorPrimary);
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  padding: 5px;
+  border: 18px solid var(--lightColor);
+}
+
+.financeDailyIncome > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.financeDailyIncome {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.history table {
+  width: 100%;
+}
+
+thead tr th {
+  text-transform: uppercase;
+  line-height: 15px;
+  font-size: 12px;
+  font-weight: 400;
+  padding-right: 50px;
+  padding: 10px;
+}
+table {
+  background-color: var(--bodyColor);
+}
+.table {
+  overflow-x: auto;
+  padding: 30px 0;
+}
+
+/* .table tr {
+  border: none !important;
+} */
+
+.table th {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--btnBackground);
+  border: 1px solid var(--btnBackground);
+  text-align: center;
+  padding: 10px 20px;
+  white-space: nowrap;
+}
+
+.table p {
+  text-align: center;
+  margin: 50px auto;
+  color: var(--textColor);
+}
+
+.table td {
+  color: var(--textColor);
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.171);
+  white-space: nowrap;
+}
+
+.financeDailyIncome i {
+  width: 40px;
+  height: 40px;
+  background: var(--lightColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 27px;
+  color: var(--colorPrimary);
+}
+
+/* .table::-webkit-scrollbar{
+    display: none !important;
+} */

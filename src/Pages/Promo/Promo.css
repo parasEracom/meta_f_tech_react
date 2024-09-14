@@ -1,0 +1,83 @@
+#PresentationSection {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+#PresentationSection > a > img {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 25px;
+  object-fit: cover;
+  border-bottom: 20px;
+}
+
+.promoCountry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--lightColor);
+  padding: 10px 20px;
+  border-radius: 30px;
+  height: 65px;
+}
+
+.promoCountry > div {
+  display: flex;
+  align-items: center;
+}
+
+.promoCountry > div > img {
+  width: 50px;
+}
+
+.promoCountry > div > p {
+  margin: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--textColor);
+  margin-left: 12px;
+}
+
+.promoCountry > div > i {
+  font-size: 22px;
+  background: var(--containerColor);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  color: var(--colorPrimary);
+  cursor: pointer;
+}
+
+#promoBanner {
+  background: var(--containerColor);
+  padding: 20px 30px;
+  border-radius: 20px;
+}
+
+#promoBanner img {
+  width: 100%;
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.promoMaterialCard {
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--containerColor);
+}
+
+.promoMaterialCard img {
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  aspect-ratio: 10/8;
+  object-fit: cover;
+}

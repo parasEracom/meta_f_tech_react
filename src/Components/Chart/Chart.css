@@ -1,0 +1,9 @@
+g.recharts-cartesian-grid {
+    display: none;
+}
+path.recharts-curve.recharts-line-curve{
+    stroke: var(--colorPrimary);
+}
+circle.recharts-dot.recharts-line-dot {
+    display: none;
+}

@@ -1,0 +1,188 @@
+.slotDiv {
+  border: 1px solid var(--containerColor);
+  padding: 0 !important;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(128, 128, 128, 0.192);
+  background: linear-gradient(45deg, var(--containerColor), transparent);
+  border: var(--containerBorder);
+}
+
+.slotViewDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: var(--colorPrimary);
+}
+
+.slotViewDiv p {
+  margin: 0;
+  font-weight: 600;
+  font-weight: 700;
+}
+
+.slotViewDiv button {
+  background: var(--colorPrimary);
+  border: 1px solid rgba(0, 0, 0, 0.603);
+  padding: 3px 10px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.603), 0 0 2px #000;
+}
+
+.slotViewDiv button:hover {
+  opacity: 0.7;
+}
+
+.slotContentDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--containerColor);
+}
+
+.activeSpan {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--colorPrimary);
+  background: var(--colorPrimary);
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.inActiveSpan {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--colorPrimary);
+  display: block;
+}
+
+.slotAmountDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.slotAmountDiv p {
+  color: var(--textColor);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.slotAmountDiv i {
+  display: flex;
+  color: var(--colorPrimary);
+}
+
+.slotContentTreeDiv {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--containerColor);
+}
+
+.slotContentTreeDiv > div {
+  display: flex;
+  align-items: center;
+}
+
+/* .slotContentTreeDiv span {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--colorPrimary);
+}
+
+.slotContentTreeDiv span:nth-child(1) {
+  background: var(--colorPrimary);
+} */
+
+.detailsContainer {
+  width: 100%;
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.detailsContainerCycle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.detailsContainerSpan {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detailsContainerSpan span {
+  width: 90px;
+  height: 90px;
+  border: 1px solid var(--colorPrimary);
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.detailsContainerSpan p {
+  margin: 0;
+  color: var(--colorPrimary);
+}
+
+.detailsContainerSpan i {
+  margin: 0;
+  color: var(--colorPrimary);
+}
+
+.detailsContainerBtn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 50px;
+}
+
+.detailsContainerBtn button {
+  border-radius: 5px;
+  background: var(--colorPrimary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.detailsContainerBtn i {
+  display: flex;
+  font-size: 25px;
+}
+
+.detailsContainerCycle p {
+  color: black;
+  background: var(--colorPrimary);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.treeFirstDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.treeSecondDiv {
+  display: flex;
+  justify-content: space-around;
+}

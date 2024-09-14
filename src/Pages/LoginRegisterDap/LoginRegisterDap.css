@@ -1,0 +1,88 @@
+.dapAuthConnect {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dapAuthConnect img {
+  width: 150px;
+}
+
+.dapAuthContent {
+  /* background-image: url("./../../Images/bg2.jpg"); */
+  min-height: 80vh;
+  background-position: center center;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.9);
+  background-blend-mode: overlay;
+  display: flex;
+  align-items: center;
+}
+
+.dapAuthContentLeft input {
+  width: 100%;
+  font-size: 18px;
+  padding: 12px;
+  border: 1px solid var(--colorPrimary);
+  border-radius: 10px;
+  text-align: center;
+  outline: none;
+  font-weight: 400;
+  background: rgb(224 194 115 / 18%);
+  color: white;
+}
+
+.heading {
+  color: white;
+  font-family: "Abril Fatface", cursive;
+  text-align: center;
+  font-size: 30px;
+  font-family: "Times New Roman", serif;
+  letter-spacing: 5px;
+  font-weight: bold;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+.authConnectDiv img {
+  width: 150px;
+}
+
+.authConnectDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+
+.loginHeaderContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .loginLogo {
+    width: 100px;
+  }
+
+  .authConnectDiv img {
+    width: 100px;
+  }
+
+  #buttonConnect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

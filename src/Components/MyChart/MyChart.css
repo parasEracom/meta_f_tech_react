@@ -1,0 +1,148 @@
+.chartDetail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chartDetail div {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.chartDetail p {
+  margin: 0;
+  color: var(--textColor);
+  font-size: 12px;
+}
+
+.capping {
+  /* box-shadow: var(--boxShadow); */
+
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--containerColor);
+  display: flex;
+  align-items: center;
+  border: var(--containerBorder);
+}
+
+.cappingDetails {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.cappingDetails hr {
+  background: var(--textColor);
+  transform: rotate(90deg);
+  width: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.cappingDetails h1 {
+  font-size: 20px;
+  color: var(--colorPrimary);
+  font-weight: 700;
+  margin: 0;
+}
+
+.cappingDetails p {
+  font-size: 15px;
+  color: var(--textColor);
+  margin: 0;
+}
+
+.cappingDetails div {
+  text-align: center;
+}
+
+.cappingDetailsDashboard > div {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cappingGraphDiv {
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  min-width: 33%;
+  justify-content: center;
+}
+
+.cappingAbout div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.cappingAbout p {
+  color: var(--textColor);
+  font-size: 12px;
+  margin: 0;
+}
+
+.cappingAbout span {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+#OrderAmount {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#OrderAmount p {
+  color: var(--textColor);
+  margin: 0;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+#OrderAmount h5 {
+  color: var(--textColor);
+  margin: 0;
+  color: var(--colorPrimary);
+  font-size: 15px;
+}
+
+@media (max-width: 1024px) {
+  .capping {
+    display: block;
+  }
+
+  .cappingDetails h1 {
+    font-size: 14px;
+    color: var(--colorPrimary);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .cappingDetails p {
+    font-size: 10px;
+    color: var(--textColor);
+    margin: 0;
+  }
+
+  .cappingDetails {
+    margin-top: 20px;
+    justify-content: space-between;
+  }
+}
+
+.cappingDetailsDashboard h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brightGreen);
+  margin: 0;
+}

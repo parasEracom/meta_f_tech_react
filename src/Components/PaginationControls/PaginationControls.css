@@ -1,0 +1,34 @@
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}
+
+.active > .page-link {
+  z-index: 1 !important;
+  color: white !important;
+  background-color: var(--colorPrimary) !important;
+  border: none !important;
+}
+.page-link {
+  color: black !important;
+  border: none !important;
+}
+#paginationButton span {
+  color: var(--colorPrimary) !important;
+}
+#paginationButton {
+  background-color: #fff !important;
+  border: none;
+}

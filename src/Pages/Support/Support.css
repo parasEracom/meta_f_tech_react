@@ -1,0 +1,48 @@
+.supportSection {
+  background-color: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.supportSection input {
+  width: 100%;
+  padding: 10px 30px;
+  background-color: var(--lightColor);
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+  outline: none;
+  color: var(--textHeading);
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  margin-top: 20px;
+}
+
+.supportSection textarea {
+  width: 100%;
+  padding: 10px 30px;
+  background-color: var(--lightColor);
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 30px;
+  outline: none;
+  color: var(--textHeading);
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.supportSection label {
+  width: 100%;
+  margin-bottom: 10px;
+  color: var(--textColor);
+}
+
+.supportSection select {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  color: var(--textColor);
+  background: var(--lightColor) !important;
+}

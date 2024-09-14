@@ -1,0 +1,149 @@
+.btn-success {
+  background: var(--second) !important;
+  border-color: var(--second) !important;
+}
+
+.btn-success:hover {
+  background: var(--second) !important;
+  border-color: var(--second) !important;
+}
+
+.welcome_letter_design {
+  background: #383633 !important;
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 16px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.welcome_data_letter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome_letter_detail h2 {
+  text-transform: capitalize;
+  font-size: 28px;
+  color: var(--textColor);
+}
+
+.welcome_letter_detail_personal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.welcome_letter_detail_personal ul li {
+  font-size: 13px;
+  color: var(--textColor);
+}
+
+.welcome_letter_detail_personal b {
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.welcome_letter_content {
+  margin-top: 15px;
+}
+
+.welcome_letter_content strong {
+  font-size: 14px;
+  color: var(--textColor);
+}
+
+.welcome_letter_content p {
+  margin-top: 10px !important;
+  color: var(--textColor);
+}
+
+.welcome_letter_info h4 {
+  font-size: 20px;
+  margin-bottom: 4px;
+  color: var(--textColor);
+  text-transform: capitalize;
+}
+
+.welcome_letter_info h6 {
+  font-size: 16px;
+  color: var(--textColor);
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.welcome_letter_image {
+  margin-right: 10px;
+  height: 100px;
+  width: 100px;
+  line-height: 86px;
+  padding: 5px;
+  border-radius: 50%;
+  border: 1px solid #e4dfdfb5;
+}
+
+.welcome_letter_image img {
+  width: 100% !important;
+  border: none;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.welcome_letter_profile {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome_letter_image {
+  margin-right: 10px;
+}
+
+.welcome_letter_info h4 {
+  font-size: 20px;
+  margin-bottom: 4px;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.welcome_letter_info p {
+  color: #fff;
+  margin: 0;
+}
+
+.welcome_letter_page.detail {
+  margin-top: 20px;
+}
+
+.welcome_letter_info span {
+  color: var(--text2);
+}
+
+.welcome_letter_content p {
+  font-size: 14px;
+  margin-top: 10px;
+  /* / color: var(--text2); / */
+}
+
+@media only screen and (max-width: 768px) {
+  .welcome_data_letter {
+    flex-wrap: wrap;
+  }
+
+  .welcome_letter_detail h2 {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .welcome_letter_info h4 {
+    font-size: 16px;
+  }
+
+  .welcome_letter_info h6 {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,47 @@
+.myPagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.myPagination .movePagination {
+  display: flex;
+  gap: 10px;
+}
+
+.movePagination button {
+  background: var(--colorPrimary);
+  color: var(--colorText);
+  border-radius: 4px;
+}
+
+.pageCount p {
+  color: var(--textColor);
+  margin: 0;
+}
+
+.GoOnPage {
+  display: flex;
+  gap: 5px;
+}
+
+.GoOnPage input {
+  background: var(--containerColor);
+  border: 1px solid var(--textColor);
+  text-align: center;
+  width: 50px;
+  font-size: 12px;
+  color: var(--textColor);
+  border-radius: 4px;
+}
+
+.GoOnPage button {
+  background: var(--textColor);
+  border-radius: 4px;
+}
+.notFound {
+  text-align: center;
+  display: block;
+  margin: auto;
+}

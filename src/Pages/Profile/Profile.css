@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.topProfile {
+  width: 100%;
+  display: flex;
+  background: var(--containerColor);
+  position: relative;
+  height: 70px;
+  align-items: center;
+  padding: 10px 30px;
+  gap: 10px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.topProfile img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 6px solid var(--containerColor);
+  margin-top: -50px;
+}
+
+.topProfile h5 {
+  color: var(--textColor);
+  margin: 0;
+}
+
+.topProfile p {
+  color: var(--textColor);
+  margin: 0;
+}
+
+.passwordDiv,
+.basicInfo {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.passwordDiv hr {
+  background: var(--textColor);
+  height: 2px;
+}
+
+.passwordDiv h3,
+.basicInfo h3 {
+  color: var(--textColor);
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.passwordItems {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+#passwordIcon {
+  position: absolute;
+  left: 0;
+  right: auto;
+}
+.inputPassword {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.passwordItems i {
+  color: var(--colorPrimary);
+}
+
+.passwordItems label {
+  width: 30%;
+  color: var(--textColor);
+  font-weight: 300;
+  font-size: 14px;
+  font-family: "Heebo", sans-serif;
+  font-weight: 400;
+}
+
+.passwordItems > div {
+  width: 60%;
+}
+.tabButtons {
+  display: flex;
+  padding-top: 20px;
+  gap: 20px;
+}
+
+.passwordItems input {
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: transparent;
+  /* background: var(--lightColor); */
+  color: var(--textColor);
+  outline: none !important;
+  border: none !important;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.passwordItems input:focus {
+  border: 1px solid rgba(75, 74, 74, 0.651);
+}
+
+.profileTabs {
+  background: var(--containerColor);
+  border-radius: 5px;
+  padding: 20px 10px;
+}
+
+.profileTabs p {
+  color: var(--colorPrimary);
+  background: transparent;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  transition: background 0.3s;
+  border: 1px solid var(--colorPrimary);
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.profileTabs p:hover,
+.profileTabs .active {
+  color: black;
+  background: var(--colorPrimary);
+}
+
+.basicInfoDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.basicInfoDetails p,
+.basicInfoDetails a {
+  color: var(--textColor);
+  font-size: 16px;
+  font-weight: 300;
+  width: 45%;
+  word-break: break-all;
+}
+
+.basicInfoDetails h1 {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--textColor);
+  width: 10%;
+}
+
+.basicInfoDetails a {
+  width: 45%;
+  color: var(--colorPrimary) !important;
+}
+
+.editProfile {
+  background: var(--containerColor);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.editProfile button {
+  margin-top: 20px;
+}
+
+.editProfile label {
+  color: var(--textColor);
+}
+
+.editProfile input {
+  width: 100%;
+  background: var(--);
+}
+
+.editProfile h3 {
+  color: var(--textColor);
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.inputPrimary label {
+  width: 50%;
+  color: var(--textColor);
+  font-weight: 300;
+  font-size: 12px;
+  font-family: "Heebo", sans-serif;
+  font-weight: 400;
+}
+
+.inputPrimary input,
+.inputPrimary > select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--lightColor);
+  color: var(--textColor);
+  outline: none;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+
+.inputPrimary option {
+  padding: 10px !important;
+}
+
+.inputPrimary input:focus {
+  border: 1px solid rgba(75, 74, 74, 0.651);
+}
+
+.addAccountDiv {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.addAccountDiv label {
+  width: 100%;
+}
+
+#noAccountAdded {
+  color: var(--textColor);
+}
+
+.errorMsg {
+  color: rgb(243, 58, 58) !important;
+  font-size: 12px !important;
+  font-weight: 200 !important;
+  margin: 0 !important;
+  text-align: left;
+}
+.PhoneInput {
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .topProfile h5 {
+    font-size: 14px;
+  }
+
+  .topProfile p {
+    font-size: 12px;
+  }
+}

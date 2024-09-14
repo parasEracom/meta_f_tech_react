@@ -1,0 +1,93 @@
+.paymentWithUPIContent {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  /* background: grey; */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 36px 0px #000000;
+
+  /* border: 1px solid white; */
+}
+
+#paymentWithUpiAmountDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#paymentWithUpiAmountDiv p {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--textHeading);
+}
+
+#paymentWithUPIContentQRDiv {
+  text-align: center;
+}
+
+#paymentWithUPIContentQRDiv h1 {
+  font-size: 20px;
+  color: var(--textHeading);
+  font-weight: 600;
+}
+
+#paymentWithUPIContentQRDiv p {
+  font-size: 10px;
+  color: var(--textHeading);
+  margin-top: 10px;
+}
+
+#paymentWithUPIContentQRDiv > div {
+  background: var(--textHeading);
+  width: 120px;
+  height: 120px;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+#paymentWithUPIContentProcess {
+  background: var(--btnBackground);
+  padding: 20px 15px;
+  border-radius: 20px;
+  max-width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+#paymentWithUPIContentProcess > div {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#paymentWithUPIContentProcess > div i {
+  display: flex;
+  color: var(--textHeading);
+  font-size: 30px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid var(--textHeading);
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+#paymentWithUPIContentProcess > div p {
+  color: var(--textHeading);
+  font-size: 12px;
+}
+
+.paymentWithUPIContent > h5 {
+  font-size: 14px;
+  color: var(--textHeading);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,276 @@
+.planTopImg > div {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-image: url("./../../Images/img1.png");
+  padding: 20px 30px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 15px;
+  border: 1px solid var(--colorPrimary);
+}
+
+.planTopImg > div > p {
+  font-size: 24px;
+  line-height: 30px;
+  white-space: nowrap;
+  flex: 1;
+  color: var(--textColor);
+  margin: 0;
+  font-weight: 600;
+}
+
+.planDiv {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+  width: 80%;
+}
+
+.planDivItems {
+  padding: 20px;
+  border-radius: 10px;
+  height: 100%;
+  background: var(--lightColor);
+}
+
+.planDivItems p {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 13px;
+  color: var(--textColor);
+}
+
+.planDivItems > div {
+  display: flex;
+  align-items: center;
+}
+
+.planDivItems > div > h1 {
+  color: var(--colorPrimary);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.planDivItems > div > i {
+  color: var(--colorPrimary);
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  background: var(--containerColor);
+  justify-content: center;
+  border-radius: 50%;
+}
+.successData {
+  font-size: 14px;
+}
+.upgradesCard {
+  background: var(--containerColor);
+  border-radius: 15px;
+  border-top: 8px solid #625023;
+  padding-bottom: 15px;
+}
+
+.upgradesCard > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+}
+
+.upgradesCard > div > p {
+  margin: 0;
+  margin-right: 40px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--textColor);
+}
+
+.upgradesCard > div > h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: right;
+  color: var(--textColor);
+}
+
+.upgradesCard > h1 {
+  height: 70px;
+  padding-top: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  background: var(--lightColor);
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.upgradeCardLight {
+  background-color: var(--lightColor);
+}
+
+.simplePrimaryButton {
+  background: var(--colorPrimary);
+  color: black;
+  border-radius: 20px;
+  padding: 10px;
+  width: 85%;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  margin: auto;
+  display: block;
+  margin-top: 25px;
+  font-weight: 500;
+}
+
+.upgradesCard i {
+  background: #a83f3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  font-size: 17px;
+  border-radius: 50%;
+  color: white;
+}
+
+.subscriptionWallets {
+  margin-bottom: 5px;
+}
+
+.subscriptionWallets p,
+.subscriptionWallets h5 {
+  color: var(--colorPrimary);
+  font-size: 13px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.subscriptionWallets h5 {
+  color: var(--colorPrimary);
+}
+
+.addfundDiv {
+  background-color: var(--bodyColor);
+  border-radius: 20px;
+  width: 400px;
+  padding: 20px;
+  margin: auto;
+  box-shadow: 0px 0px 2px 0px var(--textColor);
+  max-width: 100%;
+}
+
+.addfundDiv label {
+  width: 100%;
+}
+
+.addfundDiv h1 {
+  color: var(--colorPrimary);
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.addfundDiv option {
+  font-size: 18px;
+}
+.fundWallet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 800px) {
+  .planTopImg > div > p {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  .planTopImg > div {
+    padding: 20px 10px;
+  }
+  @media (max-width: 1200px) {
+    .planDiv {
+      width: 100%;
+    }
+  }
+}
+
+/* @media (max-width: 767px) {
+  .SipSelectIncomeSelectBox button,
+  .SipSelectIncomeSelectBox select {
+    width: 50%;
+  } 
+}*/
+.SipSelectIncomeSelectBox button {
+  color: var(--activeTextColor);
+  background: var(--colorPrimary);
+  border: 1px solid var(--colorPrimary);
+  padding: 10px 30px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SipSelectIncomeSelectBox button i {
+  font-size: 24px;
+  display: flex;
+  margin-left: 10px;
+}
+
+.SipSelectIncomeSelectBox select {
+  background: var(--containerColor);
+  padding: 10px;
+  border-radius: 20px;
+  color: var(--textColor);
+  display: block;
+}
+
+.SipSelectIncomeSelectBox option {
+  padding: 10px;
+}
+
+.SipSelectIncomeSelectBox {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.SipIdFilter{
+  border-radius: 30px;
+  border-color: var(--colorPrimary);
+  background: transparent;
+  color: var(--textColor);
+white-space: nowrap;
+}
+.SipIdSelectBox{
+  display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.sipFilterText{
+  margin-top: 20px;
+  color: var(--textColor);
+}
+.maturityDateDiv{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  color: var(--textColor);
+  text-align: end;
+}

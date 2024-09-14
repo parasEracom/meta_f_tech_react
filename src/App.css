@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+body,
+html {
+  /* height: 100%; */
+
+  padding: 0;
+  margin: 0;
+  background: var(--bodyColor) !important;
+}
+
+* {
+  font-family: "Lexend Deca", sans-serif;
+  box-sizing: border-box;
+}
+
+:root {
+  --colorPrimary: #f87735;
+  --bodyColor: rgb(244, 247, 252);
+  --brightGreen: rgb(93 255 98);
+  --containerColor: #fff;
+  --containerBorder: 1px none #fff;
+  --textColor: black;
+  --textHeading: black;
+  --sideActiveColor: #000;
+  --borderColor: #fff;
+  --lightColor: #d3ebd494;
+  --darkLightText: #fff;
+  --darkLightBackground: #181818;
+  --activeTextColor: Black;
+  --rewardCardActive: #000;
+  --rewardCardInactive: hsla(95, 49%, 49%, 0.047);
+  --btnBackground: #f87735;
+  --btnText: #000;
+  --boxShadow: 0 0 12px 0 #1d438347;
+}
+
+tr {
+  background: var(--bodyColor) !important;
+}
+
+/* #73ba3f61  #73ba3f8f */
+::-webkit-scrollbar {
+  background-color: var(--containerColor);
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--btnBackground);
+}
+
+.container {
+  max-width: 1600px !important;
+}
+
+/* @media (min-width: 1400px) {
+} */
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bodyColor);
+}
+
+.page div {
+  background: var(--containerColor);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.page input {
+  padding: 8px;
+  border-radius: 25px;
+  border: none;
+  background: var(--lightColor);
+  border: var(--containerBorder);
+  box-shadow: var(--boxShadow);
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.tradingview-widget-container__widget {
+  height: 100vh;
+  width: 100%;
+}
+
+.addfundDivFundWallet {
+  display: flex;
+  justify-content: space-between;
+  color: var(--textColor);
+}
+
+.otpSection {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  padding: 20px;
+}
+
+.otpContainer {
+  width: 300px;
+  background: var(--containerColor);
+  padding: 30px 20px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0px 0px 3px 0px var(--textColor);
+}
+
+.otpContainer h1 {
+  color: var(--colorPrimary);
+  font-size: 30px;
+}
+
+.otpContainer p {
+  color: var(--textColor);
+  font-size: 15px;
+}
+
+.otpContainer input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 25px;
+  background: var(--lightColor);
+  border: 1px solid var(--textColor);
+
+  color: var(--textColor);
+  outline: none;
+  text-align: center;
+}
+
+.otpContainer textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--lightColor);
+  border: 1px solid var(--textColor);
+  color: var(--textColor);
+  outline: none;
+  text-align: start;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  resize: none;
+}
+
+.otpContainer div {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.otpLoading {
+  border: 2px solid var(--colorPrimary);
+  border-top-color: var(--containerColor);
+  border-left-color: var(--containerColor);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: auto;
+  animation: rotate 0.4s linear infinite;
+}
+
+.btnConnect {
+  color: var(--textColor);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  border: none;
+  text-transform: uppercase;
+  margin: 10px 0px;
+  background: #75a22f;
+  border: 1px solid transparent;
+  transition: background 0.4s;
+}
+
+.btnConnect:hover {
+  border-color: var(--colorPrimary);
+  color: white;
+  background: transparent;
+}
+
+#connectButtonAddress {
+  color: white;
+  font-size: 14px;
+  border: 1px solid #75a22f;
+  padding: 8px 20px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+}
+
+#connectButtonAddress i {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

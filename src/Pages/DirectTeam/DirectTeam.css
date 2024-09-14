@@ -1,0 +1,20 @@
+.myTeamBtn {
+  border: 1px solid grey;
+  display: inline;
+  border-radius: 25;
+  padding: 8px 20px;
+  font-size: 10px;
+  background: transparent;
+  color: grey;
+  border-radius: 25px;
+  transition: 0.3s all;
+}
+
+.myTeamBtn:hover {
+  background: grey;
+  color: black;
+  font-weight: 600;
+}
+.teamRow > td {
+  color: var(--colorPrimary);
+}

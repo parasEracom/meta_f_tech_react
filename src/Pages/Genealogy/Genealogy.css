@@ -1,0 +1,17 @@
+.rd3t-tree-container > svg > g > path {
+  fill: "none";
+  stroke: var(--colorPrimary);
+  stroke-width: 2;
+}
+
+.rd3t-label__attributes {
+  fill: var(--colorPrimary) !important;
+}
+
+.rd3t-leaf-node {
+  stroke: var(--colorPrimary) !important;
+}
+
+.rd3t-node {
+  fill: var(--colorPrimary) !important;
+}

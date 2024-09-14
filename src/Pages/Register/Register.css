@@ -1,0 +1,378 @@
+.form_check_data {
+  display: flex;
+}
+
+.form_check_data label {
+  color: var(--textColor);
+  font-size: 13px;
+  font-weight: 300;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+}
+
+.form_check_data input {
+  accent-color: var(--colorPrimary);
+  margin-right: 10px;
+}
+
+.registerInputError {
+  text-align: left;
+  font-size: 10px !important;
+  color: rgb(241, 50, 50) !important;
+  font-family: 300 !important;
+  /* margin: 0 0 0 10px !important; */
+}
+
+#sponsorLoading {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--colorPrimary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+#sponsorVerified {
+  margin: 0;
+  font-size: 10px;
+  text-align: left;
+  /* margin-left: 10px; */
+  color: rgb(34, 214, 34);
+}
+
+.registerSuccessDetails {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.registerSuccessDetails > div {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 10px;
+}
+
+#successIcon {
+  background: var(--colorPrimary);
+  text-align: center;
+  padding: 20px;
+}
+
+#successIcon i {
+  font-size: 70px;
+  margin: 0;
+  color: white;
+}
+
+#successIcon h1 {
+  color: white;
+  margin: 0;
+  font-size: 25px;
+}
+
+#successDetails {
+  text-align: center;
+  background: white;
+  padding: 20px;
+}
+
+#successDetails > p {
+  color: rgb(61, 60, 60);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+#successDetails p {
+  color: rgb(61, 60, 60);
+  margin: 0;
+}
+
+#successDetails > div {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+#successDetails > div > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#successDetails i {
+  cursor: pointer;
+}
+
+#successDetails button {
+  width: 50%;
+  margin: auto;
+  background: var(--btnBackground);
+  border-radius: 25px;
+  padding: 8px;
+  color: black;
+  border: none;
+  transition: all 0.3s;
+}
+
+#successDetails button:hover {
+  transform: translateY(-5px);
+}
+#logincontainer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: url("./../../Images/loginFrontImage.png"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  /* filter: blur(3px); */
+}
+.registerContainerContent {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px none white;
+  border-radius: 60px;
+  padding: 40px 40px;
+  text-align: center;
+  background: linear-gradient(32deg, #f87735e3, #e5dcd7);
+  /* box-shadow: 0px 0px 36px 0px #000000; */
+}
+.registerContent {
+  width: 100%;
+}
+.registerContent p {
+  margin: 10px 0px 10px 0px;
+  text-transform: capitalize;
+  font-size: 16px;
+  color: var(--textColor);
+}
+.registerContent_inner {
+  text-align: left;
+  padding: 20px;
+}
+.registerInput_inner {
+  border: none !important;
+  position: relative;
+  margin: 10px 0px;
+  outline: none !important;
+}
+.registerInput_inner input {
+  outline: none !important;
+  border: none !important;
+}
+#eyeIcon {
+  position: absolute;
+  right: 5px;
+  left: auto;
+  color: var(--colorPrimary);
+  cursor: "pointer";
+}
+.registerInput_inner input {
+  border: none;
+  background: white;
+  top: 15px;
+  position: relative;
+  /* height: 56px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 30px;
+  /* padding: 0px 40px 0 20px; */
+  position: relative;
+  width: 100%;
+  padding: 10px 25px;
+  /* padding-right: 40px; */
+  /* border-radius: 25px; */
+  outline: none;
+  color: black;
+  font-size: 14px;
+}
+.inputs {
+  padding-bottom: 20px;
+}
+.registerContent_inner h4 {
+  font-size: 24px;
+  margin: 0px;
+  font-weight: 500;
+  color: var(--textColor);
+}
+.registerInput_inner i {
+  position: absolute;
+  left: 5px;
+  top: 27px;
+  color: var(--colorPrimary);
+  display: flex;
+}
+.PhoneInput {
+  display: flex;
+  padding: 0px 20px;
+}
+/* .PhoneInputCountry {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+} */
+.PhoneInputCountry {
+  display: none;
+}
+.PhoneInputCountrySelect {
+  /* margin-left: 20px; */
+  width: 38px;
+  background: transparent !important;
+}
+.PhoneInputCountryIconImg {
+  display: inline;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 34px;
+  left: 18px;
+}
+.css-tj5bde-Svg {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 13px;
+}
+#myProfileInputFieldTitle {
+  background: transparent !important;
+  color: black !important;
+}
+.css-13cymwt-control {
+  padding: 2px 15px;
+  background: transparent !important;
+  border: none !important;
+}
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+.css-19bb58m {
+  display: flex !important;
+  margin: 0 !important;
+}
+.css-1nw5dv8-indicatorContainer {
+  position: absolute;
+  top: 0px;
+  left: 8px;
+}
+.css-b62m3t-container {
+  top: 16px;
+  left: 5px;
+  font-size: 15px;
+}
+.css-1wy0on6 {
+  display: none;
+}
+.css-hlgwow {
+  overflow: visible !important;
+}
+.css-1einrwj-singleValue {
+  overflow: visible !important;
+}
+/* Add this CSS to your Register.css or a separate CSS file */
+.selectOption {
+  border: none;
+  background: white !important;
+  top: 15px;
+  position: relative;
+  /* height: 56px; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 30px;
+  padding: 0px 40px 0 20px;
+  position: relative;
+  width: 100%;
+  padding: 10px 20px;
+  padding-right: 40px;
+  /* border-radius: 25px; */
+  outline: none;
+  color: black !important;
+  font-size: 14px;
+}
+.select-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Adjust as needed */
+}
+
+.select-container .react-select__control {
+  border: none;
+  box-shadow: none;
+  flex: 1;
+}
+
+.select-container .react-select__indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-container .react-select__placeholder {
+  color: #999;
+}
+
+.select-container .react-select__single-value {
+  color: #333;
+}
+
+.select-container .react-select__menu {
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.select-container .react-select__option {
+  padding: 0.5rem;
+}
+
+.select-container .react-select__option--is-selected {
+  background-color: #f0f0f0;
+}
+
+/* Additional styles for input */
+.mobile-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  flex: 1;
+}
+
+.mobile-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.css-13cymwt-control {
+  width: 130px !important;
+  padding: 0px 10px;
+}
+.css-1dimb5e-singleValue {
+  color: white !important;
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .registerContainerContent {
+    width: 100%;
+    padding: 10px;
+  }
+}
