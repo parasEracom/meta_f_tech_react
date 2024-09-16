@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import "./Slot.css";
 import { Row, Col } from "react-bootstrap";
-import Logo from "./../../Images/logo.png";
-import Wallet from "./../../Images/wallet.png";
-import Meating from "./../../Images/meeting.png";
-import Team from "./../../Images/team.png";
+// import Logo from "./../../Images/logo.png";
 import Loader from "../../Components/Loader/Loader";
 import InfoPage from "../../Components/InfoPage/InfoPage";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,7 +15,7 @@ import { ApiPaths } from "./../../Config/ApiPath";
 import useAxiosHelper from "./../../Common/AxiosHelper";
 import RotateLoader from "./../../Components/RotateLoader/RotateLoader";
 import QRCode from "react-qr-code";
-
+import KycStatus from "./../../Components/KycStatus/KyStatus"
 import { useSelector, useDispatch } from "react-redux";
 import { setUserPersonalInfo } from "../../Redux/ProfileDataSlice";
 import { setIncomeWallet } from "../../Redux/IncomeWallet";
@@ -38,6 +35,8 @@ const Dashboard = () => {
   const [totalIncome, setTotalIncome] = useState();
   const [rewardData, setRewardData] = useState([]);
   const [growthBonus, setGrowthBonus] = useState();
+  const [companyData, setCompanyData] = useState([])
+  // const [kycStatusShow, setKycStatusShow] = useState("pending")
   const profileData = useSelector(
     (state) => state.profileData.userPersonalInfo
   );
@@ -52,22 +51,22 @@ const Dashboard = () => {
       fetchData();
       FetchBankDetails();
       FetchRank();
+      // kycStatus()
+      CompanyInfo();
 
       x++;
     }
   }, []);
-  const [companyData, setCompanyData] = useState([])
-  useEffect(() => {
-    CompanyInfo();
-  }, []);
+
+  // async function kycStatus() {
+  //   const res = await AxiosGet(ApiPaths.getKycStatus)
+  //   setKycStatusShow(res?.overall_kyc_status)
+  // }
+
+
+
   async function CompanyInfo() {
     try {
-      // const response = await AxiosGet(ApiPaths.getCompanyDetails);
-      // // console.log(response, "llllllllll");
-      // localStorage.setItem(
-      //   "companyData",
-      //   JSON.stringify(response?.company_info)
-      // );
       const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
@@ -75,7 +74,6 @@ const Dashboard = () => {
       console.log(error);
     }
   }
-
   const FetchRank = async () => {
     try {
       setLoading(true);
@@ -94,17 +92,14 @@ const Dashboard = () => {
         AxiosGet(ApiPaths.getWallets),
         AxiosGet(ApiPaths.getTeams),
       ]);
-
       if (res1) dispatch(setUserPersonalInfo(res1));
       if (res2) {
         dispatch(setIncomeWallet(res2?.wallets));
         const objectToArray = ArrayToObject(res2?.wallets);
-        // console.log(objectToArray?.self_investment?.value,"ppppppppppppppppppppppppp")
         setTotalIncome(objectToArray?.roi_level_income?.value);
         setGrowthBonus(objectToArray?.roi_income?.value);
         setTotaInvestment(objectToArray?.self_investment?.value);
       }
-
       if (tempTeam) dispatch(setTeamSection(tempTeam));
     } catch (error) {
       toastFailed(error?.tempTeam?.message);
@@ -117,7 +112,7 @@ const Dashboard = () => {
 
       const response = await AxiosGet(ApiPaths.getOrders);
 
-      
+
     } catch (error) {
       console.error("Error fetching payment transactions:", error);
     } finally {
@@ -137,6 +132,11 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
+
+  // const handleKycClick = () => {
+  //   navigate('/dashboard/kyc');
+  // };
+
   return (
     <>
       {loading ? <Loader /> : null}
@@ -161,8 +161,11 @@ const Dashboard = () => {
         </div>
 
         <section className="cappingSection mt-4">
+         
+
+          <KycStatus/>
           <div className="viewCappingDiv">
-            <h1 className="textHeading">Statistics</h1>
+            <h1 className="textHeadingWithMargin">Statistics</h1>
           </div>
           {incomeData != null && incomeData ? (
             <MyChart
@@ -175,6 +178,7 @@ const Dashboard = () => {
           ) : (
             ""
           )}
+
         </section>
         <h1 className="textHeadingWithMargin">Dashboard</h1>
         <Row md="12">
@@ -244,7 +248,7 @@ const Dashboard = () => {
                               {x?.name}
                             </h5>
                             <h1>
-                            {companyData?.currency} {parseFloat(x?.value).toFixed(2) ?? "0"}
+                              {companyData?.currency} {parseFloat(x?.value).toFixed(2) ?? "0"}
                             </h1>
                           </div>
                         </div>
@@ -319,7 +323,7 @@ const Dashboard = () => {
                               {x?.name}
                             </h5>
                             <h1>
-                            {companyData?.currency} {parseFloat(x?.value).toFixed(2) ?? "0"}
+                              {companyData?.currency} {parseFloat(x?.value).toFixed(2) ?? "0"}
                             </h1>
                           </div>
                           {/* <div>

@@ -524,7 +524,15 @@ option {
   margin-top: 15px;
   margin-bottom: 30px;
 }
-
+.kycDetailDiv{
+  gap: 20px;
+  justify-content: center;
+  color: var(--textColor);
+}
+.kycDetailDivImg{
+  display: flex;
+  justify-content: center;
+}
 .mycard {
   background: var(--containerColor);
   padding: 20px;

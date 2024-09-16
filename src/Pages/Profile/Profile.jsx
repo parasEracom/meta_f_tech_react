@@ -203,7 +203,7 @@ const Profile = () => {
       <Row className="mt-4">
         <Col lg="6" className="mb-2">
           <div className="tabButtons">
-            <button
+            {/* <button
               className="btnPrimary"
               onClick={() => setActiveTab("password")}
             >
@@ -214,7 +214,7 @@ const Profile = () => {
               onClick={() => setActiveTab("profile")}
             >
               Edit Profile
-            </button>
+            </button> */}
             {/* <button
               className="btnPrimary"
               onClick={() => setActiveTab("bankDetails")}
