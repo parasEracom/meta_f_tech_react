@@ -436,6 +436,14 @@ const LandingPage = () => {
                         <p>Time Deposit</p>
                       </NavLink>
                       <NavLink
+                        to="fixed-deposit-plan"
+                        exact={true}
+                        activeClassName="activeTab"
+                        onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
+                      >
+                        <p>Fixed Deposit</p>
+                      </NavLink>
+                      <NavLink
                         to="growth-sip-plan"
                         exact={true}
                         activeClassName="activeTab"

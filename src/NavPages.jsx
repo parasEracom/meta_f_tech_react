@@ -8,6 +8,7 @@ import MyTeam from "./Pages/MyTeam/MyTeam";
 import News from "./Pages/News/News";
 import Plans2 from "./Pages/Plans/Plans2";
 import Plan1 from "./Pages/Plans/Plans1";
+import FixedDeposit from "./Pages/Plans/FixedDepositPlan";
 import Support from "./Pages/Support/Support";
 import Profile from "./Pages/Profile/Profile";
 import Transactions from "./Pages/Transactions/Transactions";
@@ -53,6 +54,7 @@ const NavPages = () => {
         element={<BonusSystem />}
       ></Route>
       <Route exact={true} path="/time-deposit-plan" element={<Plan1 />}></Route>
+      <Route exact={true} path="/fixed-deposit-plan" element={<FixedDeposit />}></Route>
       <Route exact={true} path="/growth-sip-plan" element={<Plans2 />}></Route>
       <Route
         exact={true}

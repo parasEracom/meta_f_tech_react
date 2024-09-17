@@ -20,18 +20,42 @@
 //   const [panNo, setPanNo] = useState("");
 //   const [selectedValue, setSelectedValue] = useState("");
 //   const [selectedBankType, setSelectedBankType] = useState("");
-//   const [bankType, setBankType] = useState("");
-//   const [fileName, setFileName] = useState("");
 //   const [holderName, setHolderName] = useState("");
-//   const [name, setName] = useState("");
-//   const { AxiosPost, AxiosGet } = useAxiosHelper();
 //   const [files, setFiles] = useState([]);
+//   const [name, setName] = useState("");
+
 //   const [previews, setPreviews] = useState({
 //     bank: [],
 //     pan: [],
 //     addressFront: [],
 //     addressBack: [],
 //   });
+//   const [kycStatus, setKycStatus] = useState({});
+
+//   const { AxiosPost, AxiosGet } = useAxiosHelper();
+
+//   useEffect(() => {
+//     // Fetch KYC status on component mount
+//     const fetchKycStatus = async () => {
+//       try {
+//         const res = await AxiosGet(ApiPaths.getKycStatus);
+//         setKycStatus(res);
+//       } catch (error) {
+//         console.error("Error fetching KYC status:", error);
+//       }
+//     };
+//     fetchKycStatus();
+//   }, []);
+
+//   const isSubmitEnabled = (type) => {
+//     if (kycStatus.overall_kyc_status === "pending") {
+//       if (type === "bank") return kycStatus.bankStatus === 0;
+//       if (type === "pan") return kycStatus.panStatus === 0;
+//       if (type === "address") return kycStatus.addressStatus === 0;
+//     }
+//     return false;
+//   };
+
 //   const handleFilesChange = (newFiles, type) => {
 //     setFiles(newFiles);
 //     setPreviews((prevPreviews) => ({
@@ -39,19 +63,6 @@
 //       [type]: newFiles.map((file) => URL.createObjectURL(file)),
 //     }));
 //   };
-//   let x = 1
-//   useEffect(() => {
-//     if (x == 1) {
-//       kycStatus();
-//       x++
-//     }
-//   }, [])
-//   async function kycStatus() {
-//     const res = await AxiosGet(ApiPaths.getKycStatus);
-//     console.log(res, "pppppppppp")
-//     // setKycStatusShow(res?.overall_kyc_status);
-//     // setKycDetails(res?.isApproved); // Store bank, pan, and address status details
-//   }
 
 //   const handleBank = async () => {
 //     setLoading(true);
@@ -68,6 +79,9 @@
 //       const response = await AxiosPost(ApiPaths.getBankDetails, formData);
 //       if (response) {
 //         toastSuccess(response?.message);
+//         // Refresh KYC status after successful submission
+//         const res = await AxiosGet(ApiPaths.getKycStatus);
+//         setKycStatus(res);
 //       }
 //     } catch (e) {
 //       console.error("Error submitting bank details:", e);
@@ -83,6 +97,7 @@
 //       setPreviews((prevPreviews) => ({ ...prevPreviews, bank: [] }));
 //     }
 //   };
+
 //   const handlePan = async () => {
 //     setLoading(true);
 //     try {
@@ -94,6 +109,9 @@
 //       const res = await AxiosPost(ApiPaths.getPanCardDetails, formData);
 //       if (res) {
 //         toastSuccess(res?.message);
+//         // Refresh KYC status after successful submission
+//         const updatedStatus = await AxiosGet(ApiPaths.getKycStatus);
+//         setKycStatus(updatedStatus);
 //       }
 //     } catch (e) {
 //       console.error("Error submitting PAN details:", e);
@@ -105,6 +123,7 @@
 //       setPreviews((prevPreviews) => ({ ...prevPreviews, pan: [] }));
 //     }
 //   };
+
 //   const handleAddress = async () => {
 //     setLoading(true);
 //     try {
@@ -122,6 +141,9 @@
 //       const resp = await AxiosPost(ApiPaths.getAddressDetails, formData);
 //       if (resp) {
 //         toastSuccess(resp?.message);
+//         // Refresh KYC status after successful submission
+//         const updatedStatus = await AxiosGet(ApiPaths.getKycStatus);
+//         setKycStatus(updatedStatus);
 //       }
 //     } catch (e) {
 //       console.error("Error submitting address details:", e);
@@ -140,6 +162,7 @@
 //       }));
 //     }
 //   };
+
 //   const onDrop = async (acceptedFiles, type) => {
 //     const compressedFiles = await Promise.all(
 //       acceptedFiles.map(async (file) => {
@@ -159,6 +182,7 @@
 //     );
 //     handleFilesChange(compressedFiles, type);
 //   };
+
 //   const { getRootProps: getBankRootProps, getInputProps: getBankInputProps } =
 //     useDropzone({ onDrop: (acceptedFiles) => onDrop(acceptedFiles, "bank") });
 //   const { getRootProps: getPanRootProps, getInputProps: getPanInputProps } =
@@ -189,10 +213,7 @@
 //             <button className="btnPrimary" onClick={() => setActiveTab("pan")}>
 //               Pan KYC
 //             </button>
-//             <button
-//               className="btnPrimary"
-//               onClick={() => setActiveTab("address")}
-//             >
+//             <button className="btnPrimary" onClick={() => setActiveTab("address")}>
 //               Address KYC
 //             </button>
 //           </div>
@@ -270,8 +291,12 @@
 //                   />
 //                 ))}
 //               </div>
-//               <button className="btnPrimary" onClick={handleBank}>
-//                 Submit
+//               <button
+//                 className="btnPrimary"
+//                 onClick={handleBank}
+//                 disabled={!isSubmitEnabled("bank")}
+//               >
+//                 {isSubmitEnabled("bank") ? "Submit" : "Already Uploaded"}
 //               </button>
 //             </div>
 //           )}
@@ -303,8 +328,12 @@
 //                   />
 //                 ))}
 //               </div>
-//               <button className="btnPrimary" onClick={handlePan}>
-//                 Submit
+//               <button
+//                 className="btnPrimary"
+//                 onClick={handlePan}
+//                 disabled={!isSubmitEnabled("pan")}
+//               >
+//                 {isSubmitEnabled("pan") ? "Submit" : "Already Uploaded"}
 //               </button>
 //             </div>
 //           )}
@@ -319,7 +348,7 @@
 //                 onChange={(e) => setSelectedValue(e.target.value)}
 //               >
 //                 <option value="">Choose ID Type</option>
-//                 <option value="Adhar Card">Aadhaar</option>
+//                 <option value="Aadhaar Card">Aadhaar</option>
 //                 <option value="Passport">Passport</option>
 //                 <option value="Driver License">Driver License</option>
 //               </select>
@@ -392,8 +421,12 @@
 //                 ))}
 //               </div>
 
-//               <button className="btnPrimary" onClick={handleAddress}>
-//                 Submit
+//               <button
+//                 className="btnPrimary"
+//                 onClick={handleAddress}
+//                 disabled={!isSubmitEnabled("address")}
+//               >
+//                 {isSubmitEnabled("address") ? "Submit" : "Already Uploaded"}
 //               </button>
 //             </div>
 //           )}
@@ -402,8 +435,8 @@
 //     </section>
 //   );
 // };
-// export default KYC;
 
+// export default KYC;
 
 
 import React, { useEffect, useState } from "react";
@@ -428,43 +461,59 @@ const KYC = () => {
   const [panNo, setPanNo] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
   const [selectedBankType, setSelectedBankType] = useState("");
+  const [bankType, setBankType] = useState("");
+  const [fileName, setFileName] = useState("");
   const [holderName, setHolderName] = useState("");
-  const [files, setFiles] = useState([]);
   const [name, setName] = useState("");
-
+  const { AxiosPost, AxiosGet } = useAxiosHelper();
+  const [files, setFiles] = useState([]);
+  const [backFiles, setBackFiles] = useState([]);
   const [previews, setPreviews] = useState({
     bank: [],
     pan: [],
     addressFront: [],
     addressBack: [],
   });
-  const [kycStatus, setKycStatus] = useState({});
+  const [bankStatus, setBankStatus] = useState();
+  const [panStatus, setPanStatus] = useState();
+  const [addressStatus, setAddressStatus] = useState();
+  const [isApproved, setIsApproved] = useState();
 
-  const { AxiosPost, AxiosGet } = useAxiosHelper();
-
+  const [bankDetails, setBankDetails] = useState();
+  const [panDetails, setPanDetails] = useState();
+  const [addressDetails, setAddressDetails] = useState();
+  var x = 0;
   useEffect(() => {
-    // Fetch KYC status on component mount
-    const fetchKycStatus = async () => {
-      try {
-        const res = await AxiosGet(ApiPaths.getKycStatus);
-        setKycStatus(res);
-      } catch (error) {
-        console.error("Error fetching KYC status:", error);
-      }
-    };
-    fetchKycStatus();
-  }, []);
-
-  const isSubmitEnabled = (type) => {
-    if (kycStatus.overall_kyc_status === "pending") {
-      if (type === "bank") return kycStatus.bankStatus === 0;
-      if (type === "pan") return kycStatus.panStatus === 0;
-      if (type === "address") return kycStatus.addressStatus === 0;
+    if (x == 0) {
+      fetchKycDetails();
+      x++;
     }
-    return false;
-  };
+  }, []);
+  const fetchKycDetails = async () => {
+    try {
+      setLoading(true);
 
+      const BankkycDetails = await AxiosGet(ApiPaths.getKycStatus);
+      console.log(BankkycDetails, "bank details");
+      setBankDetails(BankkycDetails?.bankDetails);
+      setPanDetails(BankkycDetails?.panDetails);
+      setAddressDetails(BankkycDetails?.addressDetails);
+      setBankStatus(BankkycDetails?.bankStatus);
+      setPanStatus(BankkycDetails?.panStatus);
+      setAddressStatus(BankkycDetails?.addressStatus);
+      setIsApproved(BankkycDetails?.isApproved);
+    } catch (error) {
+      console.log(error);
+      toastFailed(error?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleFilesChange = (newFiles, type) => {
+    console.log(type, "...........................kjkjkjkjjkkj");
+    if (type == "addressBack") {
+      setBackFiles(newFiles);
+    }
     setFiles(newFiles);
     setPreviews((prevPreviews) => ({
       ...prevPreviews,
@@ -487,22 +536,12 @@ const KYC = () => {
       const response = await AxiosPost(ApiPaths.getBankDetails, formData);
       if (response) {
         toastSuccess(response?.message);
-        // Refresh KYC status after successful submission
-        const res = await AxiosGet(ApiPaths.getKycStatus);
-        setKycStatus(res);
       }
     } catch (e) {
       console.error("Error submitting bank details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
-      setAccNo("");
-      setBankName("");
-      setIfscCode("");
-      setSelectedBankType("");
-      setHolderName("");
-      setFiles([]);
-      setPreviews((prevPreviews) => ({ ...prevPreviews, bank: [] }));
     }
   };
 
@@ -517,18 +556,12 @@ const KYC = () => {
       const res = await AxiosPost(ApiPaths.getPanCardDetails, formData);
       if (res) {
         toastSuccess(res?.message);
-        // Refresh KYC status after successful submission
-        const updatedStatus = await AxiosGet(ApiPaths.getKycStatus);
-        setKycStatus(updatedStatus);
       }
     } catch (e) {
       console.error("Error submitting PAN details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
-      setPanNo("");
-      setFiles([]);
-      setPreviews((prevPreviews) => ({ ...prevPreviews, pan: [] }));
     }
   };
 
@@ -543,33 +576,40 @@ const KYC = () => {
       files.forEach((file) => {
         formData.append("documentFront", file);
       });
-      files.forEach((file) => {
-        formData.append("documentBack", file);
+      backFiles.forEach((backfile) => {
+        formData.append("documentBack", backfile);
       });
       const resp = await AxiosPost(ApiPaths.getAddressDetails, formData);
       if (resp) {
         toastSuccess(resp?.message);
-        // Refresh KYC status after successful submission
-        const updatedStatus = await AxiosGet(ApiPaths.getKycStatus);
-        setKycStatus(updatedStatus);
       }
     } catch (e) {
       console.error("Error submitting address details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
-      setSelectedValue("");
-      setName("");
-      setAddress("");
-      setIdNo("");
-      setFiles([]);
-      setPreviews((prevPreviews) => ({
-        ...prevPreviews,
-        addressFront: [],
-        addressBack: [],
-      }));
     }
   };
+
+  // const onDrop = async (acceptedFiles, type) => {
+  //   const compressedFiles = await Promise.all(
+  //     acceptedFiles.map(async (file) => {
+  //       const options = {
+  //         maxSizeMB: 1,
+  //         maxWidthOrHeight: 1024,
+  //         useWebWorker: true,
+  //       };
+  //       try {
+  //         const compressedFile = await imageCompression(file, options);
+  //         return compressedFile;
+  //       } catch (err) {
+  //         console.error("Error compressing image:", err);
+  //         return file;
+  //       }
+  //     })
+  //   );
+  //   handleFilesChange(compressedFiles, type);
+  // };
 
   const onDrop = async (acceptedFiles, type) => {
     const compressedFiles = await Promise.all(
@@ -588,8 +628,26 @@ const KYC = () => {
         }
       })
     );
-    handleFilesChange(compressedFiles, type);
+  
+    if (type === "addressFront") {
+      setFiles(compressedFiles); // Keep front files in `files`
+      setPreviews((prevPreviews) => ({
+        ...prevPreviews,
+        addressFront: compressedFiles.map((file) => URL.createObjectURL(file)),
+      }));
+    } else if (type === "addressBack") {
+      setBackFiles(compressedFiles); // Store back files in `backFiles`
+      setPreviews((prevPreviews) => ({
+        ...prevPreviews,
+        addressBack: compressedFiles.map((file) => URL.createObjectURL(file)),
+      }));
+    } else {
+      handleFilesChange(compressedFiles, type); // Keep existing logic for other types
+    }
   };
+  
+
+
 
   const { getRootProps: getBankRootProps, getInputProps: getBankInputProps } =
     useDropzone({ onDrop: (acceptedFiles) => onDrop(acceptedFiles, "bank") });
@@ -613,7 +671,7 @@ const KYC = () => {
       {loading && <Loader />}
 
       <Row className="mt-4">
-        <Col lg="4" className="mb-2">
+        <Col lg="6" className="mb-2">
           <div className="tabButton">
             <button className="btnPrimary" onClick={() => setActiveTab("bank")}>
               Bank KYC
@@ -621,20 +679,34 @@ const KYC = () => {
             <button className="btnPrimary" onClick={() => setActiveTab("pan")}>
               Pan KYC
             </button>
-            <button className="btnPrimary" onClick={() => setActiveTab("address")}>
+            <button
+              className="btnPrimary"
+              onClick={() => setActiveTab("address")}
+            >
               Address KYC
             </button>
           </div>
-        </Col>
-        <Col lg="6" className="mb-2">
+          
           {activeTab === "bank" && (
             <div className="editProfile inputPrimary">
               <h3>Bank Details</h3>
+              {isApproved?.bank == 2 ? (
+                <p style={{ color: "green", fontSize: "15px" }}>
+                  Bank Kyc is approved
+                </p>
+              ) : isApproved?.bank == 3 ? (
+                <p className="error">Bank Kyc is rejected</p>
+              ) : bankStatus == 1 ? (
+                <p className="error">Bank Kyc is already Submitted, wait for approval.</p>
+              ) : (
+                ""
+              )}
+
               <label htmlFor="">Account no</label>
               <input
                 type="number"
                 placeholder="Account no"
-                value={accNo}
+                value={accNo || bankDetails?.accountNumber}
                 onChange={(e) => setAccNo(e.target.value)}
               />
               {errors.accNo && <p className="error">{errors.accNo}</p>}
@@ -642,7 +714,7 @@ const KYC = () => {
               <label htmlFor="">IFSC Code</label>
               <input
                 placeholder="IFSC Code"
-                value={ifscCode}
+                value={ifscCode || bankDetails?.ifscCode}
                 onChange={(e) => setIfscCode(e.target.value)}
               />
               {errors.ifscCode && <p className="error">{errors.ifscCode}</p>}
@@ -651,7 +723,7 @@ const KYC = () => {
               <input
                 type="text"
                 placeholder="Bank Name"
-                value={bankName}
+                value={bankName || bankDetails?.bankName}
                 onChange={(e) => setBankName(e.target.value)}
               />
               {errors.bankName && <p className="error">{errors.bankName}</p>}
@@ -660,7 +732,7 @@ const KYC = () => {
 
               <select
                 id="mySelect"
-                value={selectedBankType}
+                value={selectedBankType || bankDetails?.accountType}
                 onChange={(e) => setSelectedBankType(e.target.value)}
               >
                 <option>Choose Bank Type</option>
@@ -675,167 +747,256 @@ const KYC = () => {
               <input
                 type="text"
                 placeholder="Holder Name"
-                value={holderName}
+                value={holderName || bankDetails?.holderName}
                 onChange={(e) => setHolderName(e.target.value)}
               />
               {errors.holderName && (
                 <p className="error">{errors.holderName}</p>
               )}
-
               <label htmlFor="">Upload Document</label>
               <div className="file-upload-container">
-                <div {...getBankRootProps({ className: "dropzone" })}>
-                  <input {...getBankInputProps()} />
-                  <p>
-                    Drag 'n' drop bank document here, or click to select one
-                  </p>
-                </div>
-                {previews.bank.map((url, index) => (
+                {bankStatus == 0 && (
+                  <>
+                    <div {...getBankRootProps({ className: "dropzone" })}>
+                      <input {...getBankInputProps()} />
+                      <p>
+                        Drag 'n' drop bank document here, or click to select one
+                      </p>
+                    </div>
+                  </>
+                )}
+                {previews.bank.length > 0 ? (
+                  previews.bank.map((url, index) => (
+                    <img
+                      key={index}
+                      src={url}
+                      alt={`preview-${index}`}
+                      style={{ width: 100, height: 100, margin: 10 }}
+                    />
+                  ))
+                ) : bankDetails?.document ? (
                   <img
-                    key={index}
-                    src={url}
-                    alt={`preview-${index}`}
+                    src={bankDetails.document}
+                    alt="Bank Document"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ))}
+                ) : null}
               </div>
-              <button
-                className="btnPrimary"
-                onClick={handleBank}
-                disabled={!isSubmitEnabled("bank")}
-              >
-                {isSubmitEnabled("bank") ? "Submit" : "Already Uploaded"}
-              </button>
+
+              {bankStatus == 1 || isApproved?.bank == 1 ? (
+                <button
+                  style={{ display: "none" }}
+                  className="btnPrimary"
+                  onClick={handleBank}
+                >
+                  Submit
+                </button>
+              ) : (
+                <button className="btnPrimary" onClick={handleBank}>
+                  Submit
+                </button>
+              )}
             </div>
           )}
 
           {activeTab === "pan" && (
             <div className="editProfile inputPrimary">
               <h3>PAN Details</h3>
+              {isApproved?.pan == 2 ? (
+                <p style={{ color: "green", fontSize: "15px" }}>
+                  Pan Kyc is approved
+                </p>
+              ) : isApproved?.pan == 3 ? (
+                <p className="error">Pan Kyc is rejected</p>
+              ) : panStatus == 1 ? (
+                <p className="error">Pan Kyc is already Submitted, wait for approval.</p>
+              ) : (
+                ""
+              )}
               <label htmlFor="">Pan No</label>
               <input
                 type="text"
                 placeholder="Pan No"
-                value={panNo}
+                value={panNo || panDetails?.panNumber}
                 onChange={(e) => setPanNo(e.target.value)}
               />
               {errors.panNo && <p className="error">{errors.panNo}</p>}
 
               <label htmlFor="">Upload Document</label>
               <div className="file-upload-container">
-                <div {...getPanRootProps({ className: "dropzone" })}>
-                  <input {...getPanInputProps()} />
-                  <p>Drag 'n' drop PAN document here, or click to select one</p>
-                </div>
-                {previews.pan.map((url, index) => (
+                {panStatus == 0 && (
+                  <>
+                    <div {...getPanRootProps({ className: "dropzone" })}>
+                      <input {...getPanInputProps()} />
+                      <p>
+                        Drag 'n' drop bank document here, or click to select one
+                      </p>
+                    </div>
+                  </>
+                )}
+                {previews?.pan?.length > 0 ? (
+                  previews?.pan?.map((url, index) => (
+                    <img
+                      key={index}
+                      src={url}
+                      alt={`preview-${index}`}
+                      style={{ width: 100, height: 100, margin: 10 }}
+                    />
+                  ))
+                ) : panDetails?.document ? (
                   <img
-                    key={index}
-                    src={url}
-                    alt={`preview-${index}`}
+                    src={panDetails?.document}
+                    alt="Pan Document"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ))}
+                ) : null}
               </div>
-              <button
-                className="btnPrimary"
-                onClick={handlePan}
-                disabled={!isSubmitEnabled("pan")}
-              >
-                {isSubmitEnabled("pan") ? "Submit" : "Already Uploaded"}
-              </button>
+
+              {panStatus == 1 || isApproved?.pan == 1 ? (
+                <button
+                  style={{ display: "none" }}
+                  className="btnPrimary"
+                  onClick={handlePan}
+                >
+                  Submit
+                </button>
+              ) : (
+                <button className="btnPrimary" onClick={handlePan}>
+                  Submit
+                </button>
+              )}
             </div>
           )}
 
           {activeTab === "address" && (
             <div className="editProfile inputPrimary">
               <h3>Address Details</h3>
+              {isApproved?.address == 2 ? (
+                <p style={{ color: "green", fontSize: "15px" }}>
+                  Address Kyc is approved
+                </p>
+              ) : isApproved?.address == 3 ? (
+                <p className="error">Address Kyc is rejected</p>
+              ) : addressStatus == 1 ? (
+                <p className="error">Address Kyc is Submitted, wait for approval.</p>
+              ) : (
+                ""
+              )}
+
               <label htmlFor="">ID Type</label>
               <select
                 id="mySelect"
-                value={selectedValue}
+                value={selectedValue || addressDetails?.idType}
                 onChange={(e) => setSelectedValue(e.target.value)}
+                required
               >
                 <option value="">Choose ID Type</option>
-                <option value="Aadhaar Card">Aadhaar</option>
+                <option value="Adhar Card">Aadhaar</option>
                 <option value="Passport">Passport</option>
                 <option value="Driver License">Driver License</option>
               </select>
               {errors.selectedValue && (
                 <p className="error">{errors.selectedValue}</p>
               )}
-
               <label htmlFor="">ID Number</label>
               <input
                 type="text"
                 placeholder="ID Number"
-                value={idNo}
+                value={idNo || addressDetails?.idNumber}
                 onChange={(e) => setIdNo(e.target.value)}
+                required
               />
               {errors.idNo && <p className="error">{errors.idNo}</p>}
-
               <label htmlFor="">Name</label>
               <input
                 type="text"
                 placeholder="Name"
-                value={name}
+                value={name || addressDetails?.name}
+                required
                 onChange={(e) => setName(e.target.value)}
               />
               {errors.name && <p className="error">{errors.name}</p>}
-
               <label htmlFor="">Address</label>
               <input
                 type="text"
                 placeholder="Address"
-                value={address}
+                value={address || addressDetails?.address}
                 onChange={(e) => setAddress(e.target.value)}
               />
               {errors.address && <p className="error">{errors.address}</p>}
-
-              <label htmlFor="">Upload Address Proof (Front)</label>
+              <label htmlFor="">Upload Document(front)</label>
               <div className="file-upload-container">
-                <div {...getAddressFrontRootProps({ className: "dropzone" })}>
-                  <input {...getAddressFrontInputProps()} />
-                  <p>
-                    Drag 'n' drop address proof (front) here, or click to select
-                    one
-                  </p>
-                </div>
-                {previews.addressFront.map((url, index) => (
+                {addressStatus == 0 ? (
+                  <>
+                    <div
+                      {...getAddressFrontRootProps({ className: "dropzone" })}
+                    >
+                      <input {...getAddressFrontInputProps()} />
+                      <p>
+                        Drag 'n' drop Address front document here, or click to
+                        select one
+                      </p>
+                    </div>
+                    {previews.addressFront.map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`preview-${index}`}
+                        style={{ width: 100, height: 100, margin: 10 }}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  // This part handles when addressStatus != 0
                   <img
-                    key={index}
-                    src={url}
-                    alt={`preview-${index}`}
+                    src={addressDetails?.documentFront} // Assuming addressDetails.documentFront holds the preview when not uploading
+                    alt="address-front-preview"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ))}
+                )}
               </div>
-
-              <label htmlFor="">Upload Address Proof (Back)</label>
+              <label htmlFor="">Upload Document(back)</label>
               <div className="file-upload-container">
-                <div {...getAddressBackRootProps({ className: "dropzone" })}>
-                  <input {...getAddressBackInputProps()} />
-                  <p>
-                    Drag 'n' drop address proof (back) here, or click to select
-                    one
-                  </p>
-                </div>
-                {previews.addressBack.map((url, index) => (
+                {addressStatus == 0 ? (
+                  <>
+                    <div
+                      {...getAddressBackRootProps({ className: "dropzone" })}
+                    >
+                      <input {...getAddressBackInputProps()} />
+                      <p>
+                        Drag 'n' drop bank document here, or click to select one
+                      </p>
+                    </div>
+                    {previews.addressBack.map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`preview-${index}`}
+                        style={{ width: 100, height: 100, margin: 10 }}
+                      />
+                    ))}
+                  </>
+                ) : (
                   <img
-                    key={index}
-                    src={url}
-                    alt={`preview-${index}`}
+                    src={addressDetails?.documentBack}
+                    alt="document-back-preview"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ))}
+                )}
               </div>
-
-              <button
-                className="btnPrimary"
-                onClick={handleAddress}
-                disabled={!isSubmitEnabled("address")}
-              >
-                {isSubmitEnabled("address") ? "Submit" : "Already Uploaded"}
-              </button>
+              {addressStatus == 1 || isApproved?.address == 1 ? (
+                <button
+                  style={{ display: "none" }}
+                  className="btnPrimary"
+                  onClick={handleAddress}
+                >
+                  Submit
+                </button>
+              ) : (
+                <button className="btnPrimary" onClick={handleAddress}>
+                  Submit
+                </button>
+              )}
             </div>
           )}
         </Col>

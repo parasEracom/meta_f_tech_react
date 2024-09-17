@@ -7,7 +7,7 @@ import { BasicInfo } from "../../Config/BasicInfo";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row } from "react-bootstrap";
-const OrderHistory = () => {
+const FixedDepositPlanOrder = () => {
   const [selectIncome, setSelectIncome] = useState(1);
   const [tabsName, setTabsName] = useState("deposit");
 
@@ -28,13 +28,7 @@ const OrderHistory = () => {
   }, []);
   async function CompanyInfo() {
     try {
-      // const response = await AxiosGet(ApiPaths.getCompanyDetails);
-      // // console.log(response, "llllllllll");
-      // localStorage.setItem(
-      //   "companyData",
-      //   JSON.stringify(response?.company_info)
-      // );
-      const data = localStorage.getItem("companyData");
+           const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
     } catch (error) {
@@ -60,7 +54,7 @@ const OrderHistory = () => {
       const queryParams = {
         page,
         limit: 20,
-        planId:2
+        planId:3
       };
       if (startDate && endDate) {
         queryParams.startDate = startDate;
@@ -197,4 +191,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default FixedDepositPlanOrder;

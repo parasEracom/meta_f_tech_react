@@ -374,7 +374,7 @@ const Plans = () => {
   }, []);
   async function CompanyInfo() {
     try {
-   
+
       const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
@@ -403,7 +403,7 @@ const Plans = () => {
       if (res) {
         setSelectPackage(res?.packages);
         const timeDepositPackage = res?.packages?.find(
-          (plan) => plan.package.name === "Meta F Growth Plan(SIP)"
+          (plan) => plan.planId == "1"
         );
         if (timeDepositPackage) {
           setSelectIncome(timeDepositPackage.package.name);
@@ -448,21 +448,21 @@ const Plans = () => {
     setPackageTime(time); // Store the packageTime
   };
   async function fetchActivationUserName() {
-  const body = {
-    username: username,
-  };
-  try {
-    const res = await AxiosPost(ApiPaths.checkSponsor, body);
-    if (res && res.name) {
-      setSponsorName(res.name); // Set the sponsor name
-    } else {
-      BasicInfo.isDebug && console.log("Sponsor name not found");
-      setSponsorName(" ")
+    const body = {
+      username: username,
+    };
+    try {
+      const res = await AxiosPost(ApiPaths.checkSponsor, body);
+      if (res && res.name) {
+        setSponsorName(res.name); // Set the sponsor name
+      } else {
+        BasicInfo.isDebug && console.log("Sponsor name not found");
+        setSponsorName(" ")
+      }
+    } catch (e) {
+      BasicInfo.isDebug && console.error("Error fetching sponsor name", e);
     }
-  } catch (e) {
-    BasicInfo.isDebug && console.error("Error fetching sponsor name", e);
   }
-}
 
 
   return (
@@ -538,7 +538,7 @@ const Plans = () => {
           className="textHeadingWithMargin mt-0 mt-4"
           style={{ marginBottom: "30px" }}
         >
-          Package Activation (SIP)
+          Package Activation ({selectIncome})
         </h1>
         <div
           style={{

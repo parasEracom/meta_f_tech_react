@@ -136,6 +136,12 @@ const Dashboard = () => {
   // const handleKycClick = () => {
   //   navigate('/dashboard/kyc');
   // };
+  // let kycStatus = 2
+
+
+
+
+
 
   return (
     <>
@@ -161,9 +167,8 @@ const Dashboard = () => {
         </div>
 
         <section className="cappingSection mt-4">
-         
 
-          <KycStatus/>
+          <KycStatus />
           <div className="viewCappingDiv">
             <h1 className="textHeadingWithMargin">Statistics</h1>
           </div>
@@ -215,6 +220,32 @@ const Dashboard = () => {
                   <p>Rank:</p>
                   <p>{profileData?.myrank?.rankName}</p>
                 </div>
+
+                {profileData?.overall_kyc_status == "approved" && <div className="dashboardProfile">
+                  <p>KycStatus:</p>
+                  {/* <p>{profileData?.overall_kyc_status}</p> */}
+
+                  <p>
+                    <span
+                      style={{
+                        height: "10px",
+                        width: "10px",
+                        borderRadius: "50%",
+                        display: "inline-block",
+                        backgroundColor: profileData?.overall_kyc_status === "approved"
+                          ? "green"
+                          : profileData?.overall_kyc_status === "rejected"
+                            ? "red"
+                            : "orange"
+                      }}
+                    ></span>
+                    {' '} {profileData?.overall_kyc_status}
+                  </p>
+
+
+
+                </div> }
+                
               </div>
               <div className="mt-3">
                 <div className="d-flex gap-2">

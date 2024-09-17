@@ -10,10 +10,10 @@ import { setUserPersonalInfo } from "../../Redux/ProfileDataSlice";
 import { setIncomeWallet } from "../../Redux/IncomeWallet";
 import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import ArrayToObject from "../../Common/ArrayToObject";
-import OrderHistory from "./Time Deposit Order";
+import OrderHistory from "./FixedDepositPlanOrder";
 import { useNavigate } from "react-router-dom";
 
-const Plans = () => {
+const FixedDepositPlan = () => {
   const dispatch = useDispatch();
   const [typingTimeout, setTypingTimeout] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -74,28 +74,6 @@ const Plans = () => {
     FetchData();
     fetchIncome();
   }, []);
-
-  // async function fetchIncome() {
-  //   try {
-  //     const res = await AxiosGet(ApiPaths.getPackages);
-  //     if (res) {
-  //       setSelectPackage(res?.packages);
-  //       const timeDepositPackage = res?.packages?.find(plan => plan.package.name === "Meta F Time Deposit");
-  //       // Set select income with the value of "Meta F Time Deposit"
-  //       if (timeDepositPackage) {
-  //         setSelectIncome(timeDepositPackage.package.name);
-  //         setPlanId(timeDepositPackage?.planId)
-
-  //       } else {
-  //         BasicInfo.isDebug && console.log("Meta F Time Deposit package not found");
-  //       }
-  //     }
-  //   } catch (e) {
-  //     toastFailed(e?.response?.data?.message);
-  //   }
-  // }
-
-
   async function fetchIncome() {
     try {
       const res = await AxiosGet(ApiPaths.getPackages);
@@ -107,12 +85,12 @@ const Plans = () => {
         setSelectPackage(filteredPackages);
   
         // Find "Meta F Time Deposit" in the filtered packages
-        const timeDepositPackage = filteredPackages.find(plan => plan.planId == "2");
+        const fixedDepositPackage = filteredPackages.find(plan => plan.planId == "3");
   
         // Set select income with the value of "Meta F Time Deposit"
-        if (timeDepositPackage) {
-          setSelectIncome(timeDepositPackage.package.name);
-          setPlanId(timeDepositPackage?.planId);
+        if (fixedDepositPackage) {
+          setSelectIncome(fixedDepositPackage.package.name);
+          setPlanId(fixedDepositPackage?.planId);
         } else {
           BasicInfo.isDebug && console.log("Meta F Time Deposit package not found");
         }
@@ -347,7 +325,7 @@ const Plans = () => {
   );
 };
 
-export default Plans;
+export default FixedDepositPlan;
 
 function PopUp({
   username,
