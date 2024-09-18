@@ -27,6 +27,21 @@ const UpgradeCard = (props) => {
   const [refAddressError, setRefAddressError] = useState("");
   let navigate = useNavigate();
 
+
+  const [companyData, setCompanyData] = useState([])
+
+  useEffect(() => {
+    CompanyInfo();
+  }, []);
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
   useEffect(() => {
     checkData();
     setWalletAddress(props?.walletAddress);
@@ -170,7 +185,7 @@ const UpgradeCard = (props) => {
               <h5>Live Rate</h5>
               <div>
                 <p>{Data.coinName} : </p>
-                <p>INR  {parseFloat(props.liveRate).toFixed(2)}</p>
+                <p>{companyData?.currency_sign} {parseFloat(props.liveRate).toFixed(2)}</p>
               </div>
             </div>
             <p className="errorMsg">{subsWalletsError}</p>

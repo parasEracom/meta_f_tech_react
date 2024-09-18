@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const Data = {
   isDebug: true,
-  coinName: "OTN",
+  coinName: "",
   // providerLink: "https://data-seed-prebsc-1-s1.binance.org:8545",
   // providerLink: "https://bsc-dataseed1.binance.org/",
   providerLink: "https://polygon-rpc.com/",

@@ -78,7 +78,6 @@ const PaymentWithUPI = () => {
           <div id="paymentWithUpiAmountDiv">
             <p>Amount</p>
             <p>
-              INR
               {companyData?.currency_sign}
               {payableAmount}
             </p>

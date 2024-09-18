@@ -29,6 +29,7 @@ import SellToken from "./Pages/SellToken/SellToken";
 import WalletTransfer from "./Pages/WalletTransfer/WalletTransfer";
 import Incomes from "./Pages/Incomes/Incomes";
 import Genealogy from "./Pages/Genealogy/Genealogy";
+import FundTransfer from "./Pages/FundTransfer/FundTransfer";
 import Fund from "./Pages/Fund/Fund";
 import PaymentWithUPI from "./Pages/PaymentWithUPI/PaymentWithUPI";
 import UploadPaymentProof from "./Pages/UploadPaymentProof/UploadPaymentProof";
@@ -95,6 +96,7 @@ const NavPages = () => {
       <Route exact={true} path="/withdraw" element={<Withdraw />}></Route>
       {/* <Route exact={true} path="/set_account" element={<EditAccount />}></Route> */}
       <Route exact={true} path="/fund" element={<Fund />}></Route>
+      <Route exact={true} path="/fund-transfer" element={<FundTransfer />}></Route>
 
       <Route
         exact={true}

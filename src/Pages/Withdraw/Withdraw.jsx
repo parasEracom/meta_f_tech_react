@@ -5,6 +5,7 @@ import { ApiPaths } from "../../Config";
 import Loader from "../../Components/Loader/Loader";
 import { Link } from "react-router-dom";
 import { toastFailed, toastSuccess } from "../../Common/Data";
+import { BasicInfo } from "../../Config/BasicInfo";
 const Withdraw = () => {
   const [amount, setAmount] = useState("");
   const [paymentAddress, setPaymentAddress] = useState("");
@@ -190,6 +191,20 @@ const Withdraw = () => {
     }
   }
 
+  const [companyData, setCompanyData] = useState([])
+
+  useEffect(() => {
+    CompanyInfo();
+  }, []);
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
   return (
     <section className="dashboard">
       {loading ? <Loader /> : null}
@@ -247,7 +262,7 @@ const Withdraw = () => {
             onClick={(e) => setWithdrawalWallet("main_wallet")}
           >
             <h5 className="mb-1">
-              INR {parseFloat(dashboardData?.wallets?.main_wallet).toFixed(2)}
+            {companyData?.currency} {parseFloat(dashboardData?.wallets?.main_wallet).toFixed(2)}
             </h5>
             <p className="mb-1">Main Wallet</p>
           </div>
@@ -260,7 +275,7 @@ const Withdraw = () => {
             onClick={(e) => setWithdrawalWallet("package_wallet")}
           >
             <h5>
-              INR {parseFloat(dashboardData?.wallets?.package_wallet).toFixed(2)}
+            {companyData?.currency} {parseFloat(dashboardData?.wallets?.package_wallet).toFixed(2)}
             </h5>
             <p>Package Wallet</p>
           </div>

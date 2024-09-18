@@ -9,7 +9,12 @@
   border-radius: 25px;
   transition: 0.3s all;
 }
-
+.totalCalcDiv{
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  color: var(--textColor);
+}
 .myTeamBtn:hover {
   background: grey;
   color: black;

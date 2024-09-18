@@ -29,6 +29,20 @@ const Claim = () => {
     (state) => state.profileData.userPersonalInfo
   );
 
+  const [companyData, setCompanyData] = useState([])
+
+  useEffect(() => {
+    CompanyInfo();
+  }, []);
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
   const Withdraw = async () => {
     try {
       setLoading(true);
@@ -66,13 +80,14 @@ const Claim = () => {
                     x?.name == "Main Wallet" && (
                       <div className="fundWallet">
                         <p>{x?.name}</p>
-                        <h5> INR {x?.value}</h5>
+                        <h5>{companyData?.currency_sign}
+                          {x?.value}</h5>
                       </div>
                     )
                   );
                 })}
               </div>
-              <label htmlFor="Amount">Amount (INR )</label>
+              <label htmlFor="Amount">Amount ({companyData?.currency_sign})</label>
               <input
                 type="number"
                 className="inputPrimary"

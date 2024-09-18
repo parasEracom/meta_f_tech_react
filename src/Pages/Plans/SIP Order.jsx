@@ -258,7 +258,8 @@ const SipOrderHistory = () => {
           <div className="filter-buttons SipSelectIncomeSelectBox" style={{ marginBottom: "20px" }}>
             {investmentAmounts.map((amount, index) => (
               <button key={index} onClick={() => filterByAmount(amount)}>
-                {amount} INR
+                {amount} {companyData?.currency}
+
               </button>
 
             ))}

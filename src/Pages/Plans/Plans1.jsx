@@ -17,6 +17,9 @@ const Plans = () => {
   const dispatch = useDispatch();
   const [typingTimeout, setTypingTimeout] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [load, setLoad] = useState(false);
+  const [existUserName, setExistUserName] = useState();
+
   const [amount, setAmount] = useState();
   const [amountError, setAmountError] = useState("");
   const [username, setUsername] = useState("");
@@ -38,7 +41,7 @@ const Plans = () => {
 
   useEffect(() => {
     CompanyInfo();
-    fetchActivationUserName();
+    // fetchActivationUserName();
   }, []);
   async function CompanyInfo() {
     try {
@@ -48,22 +51,70 @@ const Plans = () => {
       BasicInfo.isDebug && console.log(error);
     }
   }
-  async function fetchActivationUserName() {
+  // async function fetchActivationUserName() {
+  //   const body = {
+  //     username: username,
+  //   };
+  //   try {
+  //     const res = await AxiosPost(ApiPaths.checkSponsor, body);
+  //     if (res && res.name) {
+  //       setSponsorName(res.name); // Set the sponsor name
+  //     } else {
+  //       BasicInfo.isDebug && console.log("Sponsor name not found");
+  //       setSponsorName(" ")
+  //     }
+  //   } catch (e) {
+  //     BasicInfo.isDebug && console.error("Error fetching sponsor name", e);
+  //   }
+  // }
+
+  
+const isUserExist = async () => {
+  setLoad(true);
+
+  if (!username) {
+    setExistUserName(". . .");
+    setLoad(false);
+    return;
+  }
+  try {
+    setLoad(true);
     const body = {
       username: username,
     };
-    try {
-      const res = await AxiosPost(ApiPaths.checkSponsor, body);
-      if (res && res.name) {
-        setSponsorName(res.name); // Set the sponsor name
-      } else {
-        BasicInfo.isDebug && console.log("Sponsor name not found");
-        setSponsorName(" ")
-      }
-    } catch (e) {
-      BasicInfo.isDebug && console.error("Error fetching sponsor name", e);
+    console.log("body", body);
+    const res = await AxiosPost(ApiPaths.checkSponsor, body);
+    if (res) {
+      toastSuccess(res?.message);
+      setExistUserName(res.name);
+    } else {
+      setExistUserName("User not exists");
     }
+  } catch (e) {
+    toastFailed(e?.response?.data?.message);
+    setExistUserName("User not exists");
+  } finally {
+    setLoad(false);
   }
+};
+
+useEffect(() => {
+  // Clear the timeout when the user is typing
+  if (typingTimeout) {
+    clearTimeout(typingTimeout);
+  }
+  // Set a new timeout to call the API after the user stops typing
+  setTypingTimeout(
+    setTimeout(() => {
+      isUserExist();
+    }, 500) // 500ms debounce delay
+  );
+
+  // Cleanup the timeout when the component is unmounted or when typing continues
+  return () => clearTimeout(typingTimeout);
+}, [username]);
+
+
   useEffect(() => {
     if (profileData?.username) {
       setUsername(profileData.username);
@@ -246,7 +297,10 @@ const Plans = () => {
               </div>
               <div className="d-flex">
                 <label htmlFor="Amount">User ID</label>
-                <label htmlFor="Amount" style={{ textAlign: "end" }}><span>{sponsorName || " "}</span></label>
+                <label htmlFor="Amount" style={{ textAlign: "end" }}>
+                <span>{load && username ? "Loading..." : existUserName}</span>
+                  </label>
+                {/* <label htmlFor="Amount" style={{ textAlign: "end" }}><span>{sponsorName || " "}</span></label> */}
               </div>
               <div style={{ position: "relative" }}>
                 <div>

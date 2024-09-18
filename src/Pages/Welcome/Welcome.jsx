@@ -13,11 +13,28 @@ function Welcome() {
   const profileData = useSelector(
     (state) => state.profileData?.userPersonalInfo
   );
+  const [companyData, setCompanyData] = useState([])
+
+
+  
+
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      // console.log(JSON.parse(data));
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   var x = 0;
   useEffect(() => {
     if (x === 0) {
       FetchData();
+      CompanyInfo()
+
       x++;
     }
   }, []);
@@ -63,7 +80,7 @@ function Welcome() {
                 </div>
                 <div className="welcome_letter_content">
                   <strong>
-                    A Warm Welcome to Meta F - Your Journey Begins!
+                    A Warm Welcome to {companyData?.companyName} - Your Journey Begins!
                   </strong>
                   <br />
                   <br />
@@ -72,19 +89,19 @@ function Welcome() {
                     <strong>Dear {profileData?.name},</strong>
                     <p>
                       Congratulations on taking the first step towards an
-                      exciting journey with Meta F ! We are thrilled to welcome
+                      exciting journey with {companyData?.companyName} ! We are thrilled to welcome
                       you aboard and are looking forward to the valuable
                       contributions we know you'll make to our team.
                     </p>
                     <p>
-                      Your decision to join Meta F marks the beginning of a
+                      Your decision to join {companyData?.companyName} marks the beginning of a
                       remarkable adventure, and we are confident that your
                       skills and expertise will play a crucial role in our
                       shared success. We appreciate your commitment and
                       enthusiasm for becoming a part of our growing family.
                     </p>
                     <p>
-                      Your decision to join Meta F marks the beginning of a
+                      Your decision to join {companyData?.companyName} marks the beginning of a
                       remarkable adventure, and we are confident that your
                       skills and expertise will play a crucial role in our
                       shared success. We appreciate your commitment and
@@ -103,13 +120,13 @@ function Welcome() {
                       integration into the company. We believe that having clear
                       objectives from the outset will help you feel immediately
                       productive in your new role and contribute to your
-                      professional growth within Meta F .
+                      professional growth within {companyData?.companyName} .
                     </p>
                     <p>
-                      It's important to note that we view your journey with Sky
-                      One World as a partnership. Your success is our success,
-                      and we encourage you to actively engage in developing your
-                      business. The opportunity to earn is in your hands, and it
+                      It's important to note that we view your journey with 
+                      {companyData?.companyName} as a partnership. Your success is 
+                      our success, and we encourage you to actively engage in developing 
+                      your business. The opportunity to earn is in your hands, and it
                       directly correlates with the effort and dedication you
                       invest in your role.
                     </p>
@@ -121,7 +138,7 @@ function Welcome() {
                       that your onboarding process is as seamless as possible.
                     </p>
                     <p>
-                      Once again, welcome to the Meta F team! We believe that
+                      Once again, welcome to the {companyData?.companyName} team! We believe that
                       the secret of success lies in constancy to purpose, and we
                       are excited to embark on this journey with you. Here's to
                       your success and our collective achievements!
@@ -137,7 +154,7 @@ function Welcome() {
                   </div>
                   <div className="welcome_letter_info">
                     <h4>User</h4>
-                    <p>Meta F </p>
+                    <p>{companyData?.companyName} </p>
                   </div>
                 </div>
               </div>

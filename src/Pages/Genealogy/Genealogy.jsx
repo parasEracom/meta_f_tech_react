@@ -75,6 +75,7 @@ export default function Genealogy() {
             translate={translate}
             separation={{ siblings: 2, nonSiblings: 2 }}
             pathFunc="step"
+            initialDepth={1}
           // linkComponent={Link}
           />
         )}

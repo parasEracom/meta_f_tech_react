@@ -10,6 +10,8 @@ import { AiOutlineHistory } from "react-icons/ai";
 import { BiNews } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { GiDiamondTrophy } from "react-icons/gi";
+import { RiFundsFill } from "react-icons/ri";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 import { MdOutlineSupport } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
@@ -477,11 +479,29 @@ const LandingPage = () => {
                 >
                   <div className="sideLink">
                     <i>
-                      <BiNews />
+                      {/* <BiNews /> */}
+                      <RiFundsFill />
+
                     </i>
                     <h5>Fund</h5>
                   </div>
                 </NavLink>
+                <NavLink
+                  to="fund-transfer"
+                  exact={true}
+                  activeClassName="activeTab"
+                  onClick={handleDropDown}
+                >
+                  <div className="sideLink">
+                    <i>
+                      {/* <BiNews /> */}
+                      <FaMoneyBillTransfer />
+
+                    </i>
+                    <h5>Transfer Fund</h5>
+                  </div>
+                </NavLink>
+                
 
                 <NavLink
                   to="withdrawal_history"

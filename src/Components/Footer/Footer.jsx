@@ -7,8 +7,11 @@ import axios from "axios";
 import { Data } from "../../Common/Data";
 const Footer = () => {
   const [dashboardData, setDashboardData] = useState([]);
+  const [companyData, setCompanyData] = useState([])
+
   useEffect(() => {
     FetchData();
+    CompanyInfo()
   }, []);
   function FetchData(checkload) {
     let userId = localStorage.getItem("userId");
@@ -30,9 +33,22 @@ const Footer = () => {
         // Data.isDebug && console.log(response);
       });
   }
+
+
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      // console.log(JSON.parse(data));
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <section className="footer">
-      <p>2024 Meta F : All Right Reserved</p>
+      <p>2024 {companyData?.companyName} : All Right Reserved</p>
       <p>Terms and Conditions | User Agreement</p>
       <div className="socialIcons">
         {dashboardData?.telegram_link?.length == 0 && (

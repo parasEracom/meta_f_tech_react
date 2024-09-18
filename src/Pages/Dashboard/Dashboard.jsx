@@ -169,7 +169,7 @@ const Dashboard = () => {
         <section className="cappingSection mt-4">
 
           <KycStatus />
-          <div className="viewCappingDiv">
+          {/* <div className="viewCappingDiv">
             <h1 className="textHeadingWithMargin">Statistics</h1>
           </div>
           {incomeData != null && incomeData ? (
@@ -182,7 +182,7 @@ const Dashboard = () => {
             />
           ) : (
             ""
-          )}
+          )} */}
 
         </section>
         <h1 className="textHeadingWithMargin">Dashboard</h1>

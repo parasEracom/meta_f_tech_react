@@ -6,6 +6,7 @@ import axios from "axios";
 import { ApiPaths } from "../../Config";
 import Loader from "../../Components/Loader/Loader";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { BasicInfo } from "../../Config/BasicInfo";
 const ActivationHistory = () => {
   const [selectIncome, setSelectIncome] = useState(1);
   const [filterVisiblity, setFilterVisiblity] = useState(false);
@@ -87,6 +88,21 @@ const ActivationHistory = () => {
       FetchData(selectIncome, (pageNum - 1) * 20);
     }
   }
+  const [companyData, setCompanyData] = useState([])
+
+  useEffect(() => {
+    CompanyInfo();
+  }, []);
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
+
   return (
     <>
       {loading ? <Loader /> : null}
@@ -141,7 +157,7 @@ const ActivationHistory = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount (INR )</th>
+                  <th>Amount ({companyData?.currency_sign})</th>
                   <th>Type</th>
                   {/* <th>Subscription</th> */}
                   <th>Status</th>

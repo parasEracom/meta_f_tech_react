@@ -28,5 +28,6 @@ export const ApiPaths = {
   getSip:"/getSips",
   payInstallment:"/payinstallment",
   getCompanyDetails: "/get-company-info",
-  getKycStatus:"/check-kyc"
+  getKycStatus:"/check-kyc",
+  p2pTransfer:"/fund_transfer"
 };

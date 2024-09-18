@@ -6,6 +6,7 @@ import { ApiPaths } from '../../Config';
 import Loader from '../../Components/Loader/Loader';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import './Transactions.css';
+import { BasicInfo } from '../../Config/BasicInfo';
 const Transactions = () => {
 
   const [selectIncome, setSelectIncome] = useState(1);
@@ -18,9 +19,23 @@ const Transactions = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [pageNum, setPageNum] = useState();
 
+
+  const [companyData, setCompanyData] = useState([])
+
+
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
   useEffect(() => {
     setSelectIncome();
     FetchData(initValue);
+    CompanyInfo();
     // checkData();
   }, [])
 
@@ -118,7 +133,7 @@ const Transactions = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount (INR )</th>
+                  <th>Amount ({companyData?.currency})</th>
                   <th>From</th>
                   {/* <th>Subscription</th> */}
                   <th>Status</th>
