@@ -29,5 +29,7 @@ export const ApiPaths = {
   payInstallment:"/payinstallment",
   getCompanyDetails: "/get-company-info",
   getKycStatus:"/check-kyc",
-  p2pTransfer:"/fund_transfer"
+  p2pTransfer:"/fund_transfer",
+  forgotPassword:"/forgot-password",
+  sendOtp:"/send-otp"
 };

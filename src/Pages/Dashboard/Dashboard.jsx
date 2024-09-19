@@ -253,7 +253,7 @@ const Dashboard = () => {
                     <button className="btnPrimary">Package Activation</button>
                   </Link> */}
                   <Link to="fund" className="flex-1" style={{ width: "100%" }}>
-                    <button className="btnPrimary">Add Fund</button>
+                    <button className="btnPrimary">Top Up Wallet</button>
                   </Link>
                 </div>
               </div>

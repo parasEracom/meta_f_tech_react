@@ -722,7 +722,7 @@ const FundTransfer = () => {
       const data = localStorage.getItem("companyData");
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug &&   console.log(error);
     }
   }
 
@@ -735,7 +735,7 @@ const FundTransfer = () => {
         }
       });
     } catch (e) {
-      console.log(e);
+      BasicInfo.isDebug &&   console.log(e);
     }
   }
 

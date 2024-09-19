@@ -65,7 +65,7 @@ const FileUpload = () => {
       formData.append("transaction_id", formTransationId);
 
       try {
-        console.log("formData", formData);
+        BasicInfo.isDebug &&   console.log("formData", formData);
         const response = await AxiosPost(ApiPaths.paymentRequest, formData);
         BasicInfo.isDebug && console.log("Upload success:", response);
         setFiles([]);

@@ -7,7 +7,7 @@ import { BsQrCodeScan } from "react-icons/bs";
 import { FaMoneyCheckDollar, FaReceipt } from "react-icons/fa6";
 import RotateLoader from "./../../Components/RotateLoader/RotateLoader";
 import QRCode from "react-qr-code";
-import { toastFailed, toastSuccess } from "../../Config/BasicInfo";
+import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import CopyFromtag from "../../Common/CopyFromtag";
 import { FiCopy } from "react-icons/fi";
 import { QRCodeSVG } from "qrcode.react";
@@ -33,7 +33,7 @@ const PaymentWithUPI = () => {
 
   const fetchBankDetails = async () => {
     const data = localStorage.getItem("companyData");
-    console.log(JSON.parse(data));
+    BasicInfo.isDebug &&  console.log(JSON.parse(data));
     setCompanyData(JSON.parse(data));
     try {
       setLoading(true);

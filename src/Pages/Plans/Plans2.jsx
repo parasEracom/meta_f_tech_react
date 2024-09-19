@@ -399,7 +399,7 @@ const Plans = () => {
       const body = {
         username: username,
       };
-      console.log("body", body);
+      BasicInfo.isDebug &&   console.log("body", body);
       const res = await AxiosPost(ApiPaths.checkSponsor, body);
       if (res) {
         toastSuccess(res?.message);
@@ -491,6 +491,15 @@ const Plans = () => {
   }
 
   const handleProceedClick = () => {
+    if (!username) {
+      toastFailed("Please enter a valid User ID");
+      return;
+    }
+  
+    if (!amount || amount <= 0) {
+      toastFailed("Please enter a valid amount");
+      return;
+    }
     setShowPopUp(true);
   };
 
@@ -686,9 +695,10 @@ function PopUp({
   planId,
   amount,
   fundBalance,
-  selectIncome,
+  selectIncome, // Package name
   onClose,
   onTopUpSuccess,
+  packageTime
 }) {
   const [loading, setLoading] = useState(false);
   const { AxiosPost } = useAxiosHelper();
@@ -731,8 +741,28 @@ function PopUp({
   return (
     <>
       <div className="otpSection" style={{ zIndex: "999" }}>
-        <div className="otpContainer">
-          <p>Are you sure you want to proceed with the top-up?</p>
+        <div className="otpContainer" style={{width:"400px"}}>
+          <p>Are you sure you want to proceed with the top-up for the following details?</p>
+          <div style={{ marginBottom: "20px", flexDirection:"column" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>User ID:</strong></p>
+              <p>{username}</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Package Name:</strong></p>
+              <p>{selectIncome}</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Package Time:</strong></p>
+              <p>{moment(packageTime).format("DD-MM-YYYY")}</p>
+                
+
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Amount:</strong></p>
+              <p>{amount}</p>
+            </div>
+          </div>
           <div>
             <button className="btnSecondary" onClick={onClose}>
               No

@@ -447,7 +447,7 @@ import "./KYC.css";
 import Loader from "../../Components/Loader/Loader";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { ApiPaths } from "../../Config/ApiPath";
-import { toastFailed, toastSuccess } from "../../Config/BasicInfo";
+import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 
 const KYC = () => {
   const [activeTab, setActiveTab] = useState("bank");
@@ -494,7 +494,7 @@ const KYC = () => {
       setLoading(true);
 
       const BankkycDetails = await AxiosGet(ApiPaths.getKycStatus);
-      console.log(BankkycDetails, "bank details");
+      BasicInfo.isDebug &&   console.log(BankkycDetails, "bank details");
       setBankDetails(BankkycDetails?.bankDetails);
       setPanDetails(BankkycDetails?.panDetails);
       setAddressDetails(BankkycDetails?.addressDetails);
@@ -503,14 +503,14 @@ const KYC = () => {
       setAddressStatus(BankkycDetails?.addressStatus);
       setIsApproved(BankkycDetails?.isApproved);
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug &&  console.log(error);
       toastFailed(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
   const handleFilesChange = (newFiles, type) => {
-    console.log(type, "...........................kjkjkjkjjkkj");
+    BasicInfo.isDebug &&   console.log(type, "...........................kjkjkjkjjkkj");
     if (type == "addressBack") {
       setBackFiles(newFiles);
     }
@@ -538,7 +538,7 @@ const KYC = () => {
         toastSuccess(response?.message);
       }
     } catch (e) {
-      console.error("Error submitting bank details:", e);
+      BasicInfo.isDebug &&  console.error("Error submitting bank details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
@@ -558,7 +558,7 @@ const KYC = () => {
         toastSuccess(res?.message);
       }
     } catch (e) {
-      console.error("Error submitting PAN details:", e);
+      BasicInfo.isDebug &&  console.error("Error submitting PAN details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
@@ -584,7 +584,7 @@ const KYC = () => {
         toastSuccess(resp?.message);
       }
     } catch (e) {
-      console.error("Error submitting address details:", e);
+      BasicInfo.isDebug &&  console.error("Error submitting address details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
@@ -623,7 +623,7 @@ const KYC = () => {
           const compressedFile = await imageCompression(file, options);
           return compressedFile;
         } catch (err) {
-          console.error("Error compressing image:", err);
+          BasicInfo.isDebug &&  console.error("Error compressing image:", err);
           return file;
         }
       })

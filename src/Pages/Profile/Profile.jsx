@@ -17,6 +17,7 @@ import PhoneInput, {
   formatPhoneNumberIntl,
   isValidPhoneNumber,
 } from "react-phone-number-input";
+import moment from "moment";
 const Profile = () => {
   const dispatch = useDispatch();
   const { AxiosGet, AxiosPost } = useAxiosHelper();
@@ -472,12 +473,12 @@ const Profile = () => {
               <div className="basicInfoDetails">
                 <p>Joining Date</p>
                 <h1>:</h1>
-                <p>{profileData?.joining_date}</p>
+                <p>{moment(profileData?.joining_date).format("DD MMM YYYY")}</p>
               </div>
               <div className="basicInfoDetails">
                 <p>Activation Date</p>
                 <h1>:</h1>
-                <p>{profileData?.Activation_date}</p>
+                <p>{moment(profileData?.Activation_date).format("DD MMM YYYY")}</p>
               </div>
 
               <div

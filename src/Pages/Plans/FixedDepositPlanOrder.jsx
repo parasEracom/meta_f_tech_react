@@ -166,7 +166,7 @@ const FixedDepositPlanOrder = () => {
                         ) : (
                           <td style={{ color: "red" }}>Rejected</td>
                         )}
-                        <td>{new Date(x?.updatedAt).toLocaleDateString()}</td>
+                        <td>{new Date(x?.order_Date).toLocaleDateString()}</td>
                         <td>
                           {x?.username}({x?.name})
                         </td>

@@ -3,6 +3,7 @@ import { ApiPaths } from "../../Config/ApiPath";
 import Loader from "../../Components/Loader/Loader";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { toastSuccess, toastFailed } from "../../Common/Data";
+import moment from "moment/moment";
 
 const Ranks = () => {
   const [loading, setLoading] = useState(false);
@@ -173,7 +174,12 @@ const Ranks = () => {
                           </>
                         )}
                       </td>
-                      <td>{x?.rewardAchievedDate}</td>
+                      {/* <td>{x?.rewardAchievedDate}</td> */}
+                      <td>
+                        {x?.rewardAchievedDate && x.rewardAchievedDate !== '-'
+                          ? moment(x.rewardAchievedDate).format("DD-MM-YYYY")
+                          : '-'}
+                      </td>
                       {/* <td>{x?.rewardClaimDate}</td>
                       <td>{x?.rewardApprovalDate}</td> */}
                     </tr>

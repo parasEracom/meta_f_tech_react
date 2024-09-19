@@ -12,6 +12,7 @@ import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import ArrayToObject from "../../Common/ArrayToObject";
 import OrderHistory from "./Time Deposit Order";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Plans = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const isUserExist = async () => {
     const body = {
       username: username,
     };
-    console.log("body", body);
+    BasicInfo.isDebug &&   console.log("body", body);
     const res = await AxiosPost(ApiPaths.checkSponsor, body);
     if (res) {
       toastSuccess(res?.message);
@@ -403,14 +404,82 @@ useEffect(() => {
 
 export default Plans;
 
+// function PopUp({
+//   username,
+//   planId,
+//   amount,
+//   fundBalance,
+//   selectIncome,
+//   onClose,
+//   onTopUpSuccess,
+// }) {
+//   const [loading, setLoading] = useState(false);
+//   const { AxiosPost } = useAxiosHelper();
+
+//   async function TopUp() {
+//     const valid = checkValidation();
+//     if (valid) {
+//       try {
+//         setLoading(true);
+//         const body = {
+//           username,
+//           planId,
+//           amount,
+//         };
+//         console.log(body);
+//         const res = await AxiosPost(ApiPaths.topUp, body);
+//         console.log(res, "..");
+//         onTopUpSuccess();
+//       } catch (e) {
+//         toastFailed(e?.response?.data?.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+//   }
+
+//   function checkValidation() {
+//     if (amount > 0) {
+//       if (amount > fundBalance) {
+//         toastFailed("Insufficient Funds");
+//         return false;
+//       } else {
+//         return true;
+//       }
+//     } else {
+//       toastFailed("Please Enter Amount");
+//       return false;
+//     }
+//   }
+
+//   return (
+//     <>
+//       <div className="otpSection" style={{ zIndex: "999" }}>
+//         <div className="otpContainer">
+//           <p>Are you sure you want to proceed with the top-up?</p>
+//           <div>
+//             <button className="btnSecondary" onClick={onClose}>
+//               No
+//             </button>
+//             <button className="btnPrimary" onClick={TopUp} disabled={loading}>
+//               {loading ? "Processing..." : "Yes"}
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
 function PopUp({
   username,
   planId,
   amount,
   fundBalance,
-  selectIncome,
+  selectIncome, // Package name
   onClose,
   onTopUpSuccess,
+  packageTime
 }) {
   const [loading, setLoading] = useState(false);
   const { AxiosPost } = useAxiosHelper();
@@ -425,10 +494,9 @@ function PopUp({
           planId,
           amount,
         };
-        console.log(body);
         const res = await AxiosPost(ApiPaths.topUp, body);
-        console.log(res, "..");
-        onTopUpSuccess();
+        const packageTime = res?.date;
+        onTopUpSuccess(packageTime); // Pass packageTime to the parent
       } catch (e) {
         toastFailed(e?.response?.data?.message);
       } finally {
@@ -454,8 +522,28 @@ function PopUp({
   return (
     <>
       <div className="otpSection" style={{ zIndex: "999" }}>
-        <div className="otpContainer">
-          <p>Are you sure you want to proceed with the top-up?</p>
+        <div className="otpContainer" style={{width:"400px"}}>
+          <p>Are you sure you want to proceed with the top-up for the following details?</p>
+          <div style={{ marginBottom: "20px", flexDirection:"column" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>User ID:</strong></p>
+              <p>{username}</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Package Name:</strong></p>
+              <p>{selectIncome}</p>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Package Time:</strong></p>
+              <p>{moment(packageTime).format("DD-MM-YYYY")}</p>
+                
+
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
+              <p><strong>Amount:</strong></p>
+              <p>{amount}</p>
+            </div>
+          </div>
           <div>
             <button className="btnSecondary" onClick={onClose}>
               No
@@ -469,3 +557,4 @@ function PopUp({
     </>
   );
 }
+

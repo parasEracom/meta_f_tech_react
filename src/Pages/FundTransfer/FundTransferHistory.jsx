@@ -38,7 +38,7 @@ const FundTransferHistory = ({ key }) => {
     CompanyInfo()
   }, []);
   useEffect(() => {
-    console.log(key);
+    BasicInfo.isDebug &&  console.log(key);
     FetchData(currentPage);
   }, [currentPage]);
 
