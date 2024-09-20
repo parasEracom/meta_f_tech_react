@@ -20,17 +20,13 @@ const SipOrderHistory = () => {
   const { AxiosGet, AxiosPost } = useAxiosHelper(); // Use AxiosPost for the payment request
   const handlePagination = (page) => { setCurrentPage(page); };
   const [companyData, setCompanyData] = useState([])
+  const [showPopUp, setShowPopUp] = useState(false);
+
   useEffect(() => {
     CompanyInfo();
   }, []);
   async function CompanyInfo() {
     try {
-      // const response = await AxiosGet(ApiPaths.getCompanyDetails);
-      // // console.log(response, "llllllllll");
-      // localStorage.setItem(
-      //   "companyData",
-      //   JSON.stringify(response?.company_info)
-      // );
       const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
@@ -45,7 +41,6 @@ const SipOrderHistory = () => {
       const res = await AxiosGet(ApiPaths.getSip);
       const transactions = res?.data || [];
       setPaymentTransaction(transactions);
-
       // Extract unique investment amounts from the data
       const amounts = [
         ...new Set(transactions.map((transaction) => transaction.investment_amount)),
@@ -57,80 +52,6 @@ const SipOrderHistory = () => {
       setLoading(false);
     }
   }
-
-  // const payInstallment = async (sip_Id, installment_id) => {
-  //   setLoading(true);
-  //   try {
-  //     const body = {
-  //       sip_Id:parseInt(sip_Id),
-  //       installment_id:parseInt(installment_id),
-  //     };
-
-  //     console.log("Body:", body);
-  //     console.log(typeof sip_Id,"is type of SIP");
-  //     console.log(typeof installment_id,"is type of Installment ID");
-
-  //     const response = await AxiosPost(ApiPaths.payInstallment, body);
-  //     console.log(response, "Response of Pay Installment")
-  //     if (response?.data?.status == true) {
-  //       // Handle success
-  //       toastSuccess("Installment paid successfully.");
-  //       // Optionally refresh the data to reflect changes
-  //       getSip(); // Refresh data to update the state
-  //     } else {
-  //       toastFailed("Unexpected response status");
-  //     }
-  //   } catch (e) {
-  //     console.error("Error:",e);
-  //     toastFailed(e?.response?.data?.message || "Failed to pay installment.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-  // const payInstallment = async (sip_Id, installment_id) => {
-  //   setLoading(true);
-  //   try {
-  //     const body = {
-  //       sip_Id: parseInt(sip_Id),
-  //       installment_id: parseInt(installment_id),
-  //     };
-
-  //     const response = await AxiosPost(ApiPaths.payInstallment, body);
-
-  //     if (response?.data?.status == true) {
-  //       // Handle success
-  //       toastSuccess("Installment paid successfully.");
-
-  //       // Update the payment status directly in the state to reflect UI changes instantly
-  //       const updatedTransactions = filteredTransactions.map((transaction) => {
-  //         if (transaction.sip_Id === sip_Id) {
-  //           return {
-  //             ...transaction,
-  //             installment: transaction.installment.map((inst) => {
-  //               if (inst.installment_id === installment_id) {
-  //                 return { ...inst, status: 1 }; // Mark the installment as "Paid"
-  //               }
-  //               return inst;
-  //             }),
-  //           };
-  //         }
-  //         return transaction;
-  //       });
-
-  //       setFilteredTransactions(updatedTransactions); // Update the state with new data
-  //     } else {
-  //       toastFailed("Unexpected response status");
-  //     }
-  //   } catch (e) {
-  //     console.error("Error:", e);
-  //     toastFailed(e?.response?.data?.message || "Failed to pay installment.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
 
   const payInstallment = async (sip_Id, installment_id) => {
     setLoading(true);
@@ -145,7 +66,6 @@ const SipOrderHistory = () => {
       if (response?.data?.status == true) {
         // Handle success
         toastSuccess(response?.message);
-
         const currentDate = new Date(); // Get current date for paid_Date
 
         // Update the payment status directly in the state to reflect UI changes instantly
@@ -167,7 +87,6 @@ const SipOrderHistory = () => {
           }
           return transaction;
         });
-
         setFilteredTransactions(updatedTransactions); // Update the state with the new data
       } else {
         toastFailed("Unexpected response status");
@@ -179,34 +98,26 @@ const SipOrderHistory = () => {
       setLoading(false);
     }
   };
+  const handleProceedClick = () => {
+    setShowPopUp(true);
+    console.log(showPopUp)
+  };
 
+  const handleSipSuccess = () => {
+    // setTopUpSuccess(true);
+    setShowPopUp(false);
+  };
 
 
   useEffect(() => {
     getSip();
   }, []);
 
-  // Filter transactions by investment amount
-  // const filterByAmount = (amount) => {
-  //   const filtered = paymentTransaction.filter(
-  //     (transaction) => transaction.investment_amount === amount
-  //   );
-  //   setFilteredTransactions(filtered);
-  //   setIsFilterApplied(true); // Set to true when filter is applied
-
-  //   // Extract unique sip_Ids from filtered transactions
-  //   const sipIds = [...new Set(filtered.map((transaction) => transaction.sip_Id))];
-  //   setFilteredSipIds(sipIds); // Set unique sip_Ids for further filtering
-  //   setSelectedSipId(null); // Reset sip_Id selection
-  // };
-
-
   const filterByAmount = (amount) => {
     // Filter transactions based on the selected amount
     const filtered = paymentTransaction.filter(
       (transaction) => transaction.investment_amount === amount
     );
-
     // Extract SIP IDs with their creation dates
     const sipData = filtered.map((transaction) => ({
       sipId: transaction.sip_Id,
@@ -215,19 +126,14 @@ const SipOrderHistory = () => {
 
     // Sort the SIP IDs by createdAt in descending order
     const sortedSipData = sipData.sort((a, b) => b.createdAt - a.createdAt);
-
     // Extract sorted SIP IDs
     const sortedSipIds = sortedSipData.map(data => data.sipId);
-
     // Update the state with sorted SIP IDs and apply filter
     setFilteredTransactions(filtered);
     setIsFilterApplied(true);
     setFilteredSipIds(sortedSipIds);
     setSelectedSipId(null); // Reset SIP ID selection
   };
-
-
-
 
   // Filter by selected sip_Id
   const filterBySipId = (sipId) => {
@@ -313,13 +219,25 @@ const SipOrderHistory = () => {
                           statusDisplay = (
                             <button
                               className="btnPrimary mb-0"
-                              onClick={() =>
-                                payInstallment(transaction.sip_Id, inst.installment_id)
-                              }
+                              onClick={handleProceedClick}
+                              // onClick={() =>
+                              //   payInstallment(transaction.sip_Id, inst.installment_id)
+                              // }
                             >
                               Pay
                             </button>
                           );
+                          {showPopUp && (
+                            <PopUp
+                              // amount={amount}
+                              // planId={planId}
+                              // username={username}
+                              // fundBalance={fundBalance}
+                              // selectIncome={selectIncome}
+                              onClose={() => setShowPopUp(false)} // Pass a prop to close the pop-up
+                              onTopUpSuccess={handleSipSuccess} // Pass a callback for top-up success
+                            />
+                          )}
                           firstPendingFound = true; // Mark that the first unpaid installment is found
                         } else {
                           // For subsequent unpaid installments, show "Pending"
@@ -365,8 +283,125 @@ const SipOrderHistory = () => {
         </section>
       </section>
     </>
-    
   );
 };
 
 export default SipOrderHistory;
+
+
+function PopUp({
+  username,
+  planId,
+  amount,
+  fundBalance,
+  selectIncome, // Package name
+  onClose,
+  // sip_Id, installment_id,
+  onTopUpSuccess,
+  packageTime
+}) {
+  const [loading, setLoading] = useState(false);
+  const { AxiosPost } = useAxiosHelper();
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+
+  // async function TopUp() {
+  //   const valid = checkValidation();
+  //   if (valid) {
+  //     try {
+  //       setLoading(true);
+  //       const body = {
+  //         username,
+  //         planId,
+  //         amount,
+  //       };
+  //       const res = await AxiosPost(ApiPaths.topUp, body);
+  //       const packageTime = res?.date;
+  //       onTopUpSuccess(packageTime); // Pass packageTime to the parent
+  //     } catch (e) {
+  //       toastFailed(e?.response?.data?.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // }
+
+  // function checkValidation() {
+  //   if (amount > 0) {
+  //     if (amount > fundBalance) {
+  //       toastFailed("Insufficient Funds");
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   } else {
+  //     toastFailed("Please Enter Amount");
+  //     return false;
+  //   }
+  // }
+
+  const payInstallment = async (sip_Id, installment_id) => {
+    setLoading(true);
+    try {
+      const body = {
+        sip_Id: parseInt(sip_Id),
+        installment_id: parseInt(installment_id),
+      };
+
+      const response = await AxiosPost(ApiPaths.payInstallment, body);
+      BasicInfo.isDebug && console.log(response, "lllllll")
+      if (response?.data?.status == true) {
+        // Handle success
+        toastSuccess(response?.message);
+        const currentDate = new Date(); // Get current date for paid_Date
+
+        // Update the payment status directly in the state to reflect UI changes instantly
+        const updatedTransactions = filteredTransactions.map((transaction) => {
+          if (transaction.sip_Id === sip_Id) {
+            return {
+              ...transaction,
+              installment: transaction.installment.map((inst) => {
+                if (inst.installment_id === installment_id) {
+                  return {
+                    ...inst,
+                    status: 1, // Mark the installment as "Paid"
+                    paid_Date: currentDate, // Update the paid_Date with the current date
+                  };
+                }
+                return inst;
+              }),
+            };
+          }
+          return transaction;
+        });
+        setFilteredTransactions(updatedTransactions); // Update the state with the new data
+      } else {
+        toastFailed("Unexpected response status");
+      }
+    } catch (e) {
+      console.error("Error:", e);
+      toastFailed(e?.response?.data?.message || "Failed to pay installment.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+  return (
+    <>
+      <div className="otpSection" style={{ zIndex: "999" }}>
+        <div className="otpContainer" style={{width:"400px"}}>
+          <p>Are you sure you want to this SIP?</p>
+          <div>
+            <button className="btnSecondary" onClick={onClose}>
+              No
+            </button>
+            <button className="btnPrimary" onClick={ ()=>console.log("hello")} disabled={loading}>
+              {loading ? "Processing..." : "Yes"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -26,7 +26,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [passwordVisility, setPasswordVisiblity] = useState(false);
   const dispatch = useDispatch();
-  const { AxiosPost,AxiosGet } = useAxiosHelper();
+  const { AxiosPost, AxiosGet } = useAxiosHelper();
   const toastSuccess = (msg) => toast.success(msg);
   const toastFailed = (msg) => toast.error(msg);
   const urlParams = new URLSearchParams(window.location.search);

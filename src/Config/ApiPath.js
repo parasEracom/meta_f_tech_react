@@ -31,5 +31,6 @@ export const ApiPaths = {
   getKycStatus:"/check-kyc",
   p2pTransfer:"/fund_transfer",
   forgotPassword:"/forgot-password",
-  sendOtp:"/send-otp"
+  sendOtp:"/send-otp",
+  getNomineeDetails:"/submit-nominee-kyc"
 };

@@ -185,8 +185,8 @@ const Dashboard = () => {
           )} */}
 
         </section>
-        <h1 className="textHeadingWithMargin">Dashboard</h1>
-        <Row md="12">
+        {/* <h1 className="textHeadingWithMargin">Dashboard</h1> */}
+        <Row md="12" style={{marginTop:"20px"}}>
           <Col lg="6" className="mb-2">
             <div className="dashboardMainAccountCard d-flex flex-column justify-content-between">
               <h5 className="dashboardCardHeading">User Account</h5>
@@ -257,6 +257,73 @@ const Dashboard = () => {
                   </Link>
                 </div>
               </div>
+
+{/* <div style={{display:"flex", justifyContent:"space-around"}}>
+  
+<div className="mt-3" style={{width:"20%"}}>
+                <div className="d-flex gap-2">
+                  
+                  <Link to="time-deposit-plan" className="flex-1" style={{ width: "100%" }}>
+                    <button className="btnPrimary">Time Deposit</button>
+                  </Link>
+                </div>
+              </div><div className="mt-3" style={{width:"20%"}}>
+                <div className="d-flex gap-2">
+                
+                  <Link to="fixed-deposit-plan" className="flex-1" style={{ width: "100%" }}>
+                    <button className="btnPrimary">Fixed Deposit</button>
+                  </Link>
+                </div>
+              </div><div className="mt-3" style={{width:"20%"}}>
+                <div className="d-flex gap-2">
+                  
+                  <Link to="growth-sip-plan" className="flex-1" style={{ width: "100%" }}>
+                    <button className="btnPrimary">SIP</button>
+                  </Link>
+                </div>
+              </div>
+</div> */}
+<div
+  style={{
+    display: "flex",
+    justifyContent: "space-around",
+    flexWrap: "wrap", // Enable wrapping for smaller screens
+    // gap: "10px", // Add some spacing between the items
+  }}
+>
+  <div className="mt-3" style={{ width: "20%", minWidth: "150px" }}>
+    <div className="d-flex gap-2">
+      <Link to="time-deposit-plan" className="flex-1" style={{ width: "100%" }}>
+        <button className="btnPrimary" style={{ width: "100%" }}>
+          Time Deposit
+        </button>
+      </Link>
+    </div>
+  </div>
+  
+  <div className="mt-3" style={{ width: "20%", minWidth: "150px" }}>
+    <div className="d-flex gap-2">
+      <Link to="fixed-deposit-plan" className="flex-1" style={{ width: "100%" }}>
+        <button className="btnPrimary" style={{ width: "100%" }}>
+          Fixed Deposit
+        </button>
+      </Link>
+    </div>
+  </div>
+  
+  <div className="mt-3" style={{ width: "20%", minWidth: "150px" }}>
+    <div className="d-flex gap-2">
+      <Link to="growth-sip-plan" className="flex-1" style={{ width: "100%" }}>
+        <button className="btnPrimary" style={{ width: "100%" }}>
+          SIP
+        </button>
+      </Link>
+    </div>
+  </div>
+</div>
+
+
+
             </div>
           </Col>
 
@@ -326,13 +393,43 @@ const Dashboard = () => {
                         className="dashboardCardHeading"
                         style={{ textTransform: "capitalize" }}
                       >
-                        Business{" "}
+                        Total Business{" "}
                       </h5>
                       <h1>{companyData?.currency} {teamData?.sum?.business}</h1>
                     </div>
                   </div>
                 </div>
               </Col>
+              {/* <Col md="6" className="mb-3">
+                <div className="dashboardIncomeCard">
+                  <div className="dashboardData">
+                    <div>
+                      <h5
+                        className="dashboardCardHeading"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        SIP Business{" "}
+                      </h5>
+                      <h1>{companyData?.currency} {teamData?.sum?.}</h1>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md="6" className="mb-3">
+                <div className="dashboardIncomeCard">
+                  <div className="dashboardData">
+                    <div>
+                      <h5
+                        className="dashboardCardHeading"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Time Deposit Business{" "}
+                      </h5>
+                      <h1>{companyData?.currency} {teamData?.sum?.}</h1>
+                    </div>
+                  </div>
+                </div>
+              </Col> */}
             </Row>
           </Col>
           <Col

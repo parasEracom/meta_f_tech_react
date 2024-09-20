@@ -458,21 +458,32 @@ const KYC = () => {
   const [errors, setErrors] = useState({});
   const [address, setAddress] = useState("");
   const [idNo, setIdNo] = useState("");
+  const [nomineeIdNo, setNomineeIdNo] = useState("");
   const [panNo, setPanNo] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
+  const [idDocumentType, setIdDocumentType] = useState("");
   const [selectedBankType, setSelectedBankType] = useState("");
-  const [bankType, setBankType] = useState("");
-  const [fileName, setFileName] = useState("");
   const [holderName, setHolderName] = useState("");
   const [name, setName] = useState("");
   const { AxiosPost, AxiosGet } = useAxiosHelper();
   const [files, setFiles] = useState([]);
   const [backFiles, setBackFiles] = useState([]);
+
+  const [nomineeName, setNomineeName] = useState("");
+  const [nomineeRelationship, setNomineeRelationship] = useState("");
+  const [nomineeAddress, setNomineeAddress] = useState("");
+  // const [nomineeFiles, setNomineeFiles] = useState([]);
+  // const [nomineePreviews, setNomineePreviews] = useState([]);
+  const [nomineeStatus, setNomineeStatus] = useState(0);
+  const [nomineeDetails, setNomineeDetails] = useState();
+
   const [previews, setPreviews] = useState({
     bank: [],
     pan: [],
     addressFront: [],
     addressBack: [],
+    nomineeFront: [],
+    nomineeBack: [],
   });
   const [bankStatus, setBankStatus] = useState();
   const [panStatus, setPanStatus] = useState();
@@ -493,24 +504,26 @@ const KYC = () => {
     try {
       setLoading(true);
 
-      const BankkycDetails = await AxiosGet(ApiPaths.getKycStatus);
-      BasicInfo.isDebug &&   console.log(BankkycDetails, "bank details");
-      setBankDetails(BankkycDetails?.bankDetails);
-      setPanDetails(BankkycDetails?.panDetails);
-      setAddressDetails(BankkycDetails?.addressDetails);
-      setBankStatus(BankkycDetails?.bankStatus);
-      setPanStatus(BankkycDetails?.panStatus);
-      setAddressStatus(BankkycDetails?.addressStatus);
-      setIsApproved(BankkycDetails?.isApproved);
+      const KycDetails = await AxiosGet(ApiPaths.getKycStatus);
+      BasicInfo.isDebug && console.log(KycDetails, "Check Kyc Status");
+      setBankDetails(KycDetails?.bankDetails);
+      setPanDetails(KycDetails?.panDetails);
+      setNomineeDetails(KycDetails?.nomineeDetails)
+      setAddressDetails(KycDetails?.addressDetails);
+      setBankStatus(KycDetails?.bankStatus);
+      setPanStatus(KycDetails?.panStatus);
+      setNomineeStatus(KycDetails?.nomineeStatus);
+      setAddressStatus(KycDetails?.addressStatus);
+      setIsApproved(KycDetails?.isApproved);
     } catch (error) {
-      BasicInfo.isDebug &&  console.log(error);
+      BasicInfo.isDebug && console.log(error);
       toastFailed(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
   const handleFilesChange = (newFiles, type) => {
-    BasicInfo.isDebug &&   console.log(type, "...........................kjkjkjkjjkkj");
+    BasicInfo.isDebug && console.log(type, "...........................kjkjkjkjjkkj");
     if (type == "addressBack") {
       setBackFiles(newFiles);
     }
@@ -538,7 +551,7 @@ const KYC = () => {
         toastSuccess(response?.message);
       }
     } catch (e) {
-      BasicInfo.isDebug &&  console.error("Error submitting bank details:", e);
+      BasicInfo.isDebug && console.error("Error submitting bank details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
@@ -558,7 +571,7 @@ const KYC = () => {
         toastSuccess(res?.message);
       }
     } catch (e) {
-      BasicInfo.isDebug &&  console.error("Error submitting PAN details:", e);
+      BasicInfo.isDebug && console.error("Error submitting PAN details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
@@ -584,33 +597,46 @@ const KYC = () => {
         toastSuccess(resp?.message);
       }
     } catch (e) {
-      BasicInfo.isDebug &&  console.error("Error submitting address details:", e);
+      BasicInfo.isDebug && console.error("Error submitting address details:", e);
       toastFailed(e?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
+  const handleNominee = async () => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("nomineeName", nomineeName);
+      formData.append("relationship", nomineeRelationship);
+      formData.append("idDocumentType", idDocumentType);
+      formData.append("idDocumentNumber", nomineeIdNo);
 
-  // const onDrop = async (acceptedFiles, type) => {
-  //   const compressedFiles = await Promise.all(
-  //     acceptedFiles.map(async (file) => {
-  //       const options = {
-  //         maxSizeMB: 1,
-  //         maxWidthOrHeight: 1024,
-  //         useWebWorker: true,
-  //       };
-  //       try {
-  //         const compressedFile = await imageCompression(file, options);
-  //         return compressedFile;
-  //       } catch (err) {
-  //         console.error("Error compressing image:", err);
-  //         return file;
-  //       }
-  //     })
-  //   );
-  //   handleFilesChange(compressedFiles, type);
-  // };
+      files.forEach((file) => {
+        formData.append("documentFront", file);
+      });
+      backFiles.forEach((backfile) => {
+        formData.append("documentBack", backfile);
+      });
 
+
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
+
+      const response = await AxiosPost(ApiPaths.getNomineeDetails, formData);
+      console.log(response, "nomineeeeeeeeeeeeeee")
+      if (response) {
+        toastSuccess(response?.message);
+      }
+    } catch (e) {
+      BasicInfo.isDebug && console.error("Error submitting nominee details:", e);
+      toastFailed(e?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const onDrop = async (acceptedFiles, type) => {
     const compressedFiles = await Promise.all(
       acceptedFiles.map(async (file) => {
@@ -623,12 +649,12 @@ const KYC = () => {
           const compressedFile = await imageCompression(file, options);
           return compressedFile;
         } catch (err) {
-          BasicInfo.isDebug &&  console.error("Error compressing image:", err);
+          BasicInfo.isDebug && console.error("Error compressing image:", err);
           return file;
         }
       })
     );
-  
+
     if (type === "addressFront") {
       setFiles(compressedFiles); // Keep front files in `files`
       setPreviews((prevPreviews) => ({
@@ -641,13 +667,24 @@ const KYC = () => {
         ...prevPreviews,
         addressBack: compressedFiles.map((file) => URL.createObjectURL(file)),
       }));
+
+    } else if (type === "nomineeFront") {
+      setFiles(compressedFiles); // Keep front files in `files`
+      setPreviews((prevPreviews) => ({
+        ...prevPreviews,
+        nomineeFront: compressedFiles.map((nomineefile) => URL.createObjectURL(nomineefile)),
+      }));
+    } else if (type === "nomineeBack") {
+      setBackFiles(compressedFiles); // Store back files in `backFiles`
+      setPreviews((prevPreviews) => ({
+        ...prevPreviews,
+        nomineeBack: compressedFiles.map((nomineefile) => URL.createObjectURL(nomineefile)),
+      }));
+
     } else {
       handleFilesChange(compressedFiles, type); // Keep existing logic for other types
     }
   };
-  
-
-
 
   const { getRootProps: getBankRootProps, getInputProps: getBankInputProps } =
     useDropzone({ onDrop: (acceptedFiles) => onDrop(acceptedFiles, "bank") });
@@ -665,6 +702,21 @@ const KYC = () => {
   } = useDropzone({
     onDrop: (acceptedFiles) => onDrop(acceptedFiles, "addressBack"),
   });
+
+
+  const {
+    getRootProps: getNomineeFrontRootProps,
+    getInputProps: getNomineeFrontInputProps,
+  } = useDropzone({
+    onDrop: (acceptedFiles) => onDrop(acceptedFiles, "nomineeFront"),
+  });
+  const {
+    getRootProps: getNomineeBackRootProps,
+    getInputProps: getNomineeBackInputProps,
+  } = useDropzone({
+    onDrop: (acceptedFiles) => onDrop(acceptedFiles, "nomineeBack"),
+  });
+
 
   return (
     <section className="dashboard" style={{ paddingTop: "10px" }}>
@@ -685,8 +737,11 @@ const KYC = () => {
             >
               Address KYC
             </button>
+            <button className="btnPrimary" onClick={() => setActiveTab("nominee")}>
+              Nominee KYC
+            </button>
           </div>
-          
+
           {activeTab === "bank" && (
             <div className="editProfile inputPrimary">
               <h3>Bank Details</h3>
@@ -829,7 +884,7 @@ const KYC = () => {
                     <div {...getPanRootProps({ className: "dropzone" })}>
                       <input {...getPanInputProps()} />
                       <p>
-                        Drag 'n' drop bank document here, or click to select one
+                        Drag 'n' drop Pan document here, or click to select one
                       </p>
                     </div>
                   </>
@@ -999,6 +1054,155 @@ const KYC = () => {
               )}
             </div>
           )}
+
+
+
+          {activeTab === "nominee" && (
+            <div className="editProfile inputPrimary">
+              <h3>Nominee Details</h3>
+              {/* {isApproved?.nomineeStatus == 2 ? (
+                <p style={{ color: "green", fontSize: "15px" }}>
+                  Nominee KYC is approved
+                </p>
+              ) : isApproved?.nomineeStatus == 3 ? (
+                <p className="error">Nominee KYC is rejected</p>
+              ) : nomineeStatus == 1 ? (
+                <p className="error">Nominee KYC is already submitted, wait for approval.</p>
+              ) : (
+                ""
+              )} */}
+
+              {isApproved?.nominee == 2 ? (
+                <p style={{ color: "green", fontSize: "15px" }}>
+                  Nominee Details are approved
+                </p>
+              ) : isApproved?.nominee == 3 ? (
+                <p className="error">Nominee Details are rejected</p>
+              ) : nomineeStatus == 1 ? (
+                <p className="error">Nominee Details are Submitted, wait for approval.</p>
+              ) : (
+                ""
+              )}
+
+              <label htmlFor="">Nominee Name</label>
+              <input
+                type="text"
+                placeholder="Nominee Name"
+                value={nomineeName || nomineeDetails?.nomineeName}
+                onChange={(e) => setNomineeName(e.target.value)}
+              />
+
+              <label htmlFor="">Relationship</label>
+              <input
+                type="text"
+                placeholder="Relationship"
+                value={nomineeRelationship || nomineeDetails?.relationship}
+                onChange={(e) => setNomineeRelationship(e.target.value)}
+              />
+
+
+              <label htmlFor="">ID Type</label>
+              <select
+                id="mySelect"
+                value={idDocumentType || nomineeDetails?.idDocumentType}
+                onChange={(e) => setIdDocumentType(e.target.value)}
+                required
+              >
+                <option value="">Choose ID Type</option>
+                <option value="Adhar Card">Aadhaar</option>
+                <option value="Passport">Passport</option>
+                <option value="Driving License">Driver License</option>
+              </select>
+              {errors.idDocumentType && (
+                <p className="error">{errors.idDocumentType}</p>
+              )}
+
+
+
+
+              <label htmlFor="">ID Number</label>
+              <input
+                type="text"
+                placeholder="ID Number"
+                value={nomineeIdNo || nomineeDetails?.idDocumentNumber}
+                onChange={(e) => setNomineeIdNo(e.target.value)}
+                required
+              />
+              {errors.idDocumentNumber && <p className="error">{errors.idDocumentNumber}</p>}
+
+              <label htmlFor="">Upload Document(front)</label>
+              <div className="file-upload-container">
+                {nomineeStatus == 0 ? (
+                  <>
+                    <div
+                      {...getNomineeFrontRootProps({ className: "dropzone" })}
+                    >
+                      <input {...getNomineeFrontInputProps()} />
+                      <p>
+                        Drag 'n' drop Nominee doc. front side here, or click to
+                        select one
+                      </p>
+                    </div>
+                    {previews.nomineeFront.map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`preview-${index}`}
+                        style={{ width: 100, height: 100, margin: 10 }}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  // This part handles when addressStatus != 0
+                  <img
+                    src={nomineeDetails?.documentFront} // Assuming addressDetails.documentFront holds the preview when not uploading
+                    alt="nominee-front-preview"
+                    style={{ width: 100, height: 100, margin: 10 }}
+                  />
+                )}
+              </div>
+              <label htmlFor="">Upload Document(back)</label>
+              <div className="file-upload-container">
+                {nomineeStatus == 0 ? (
+                  <>
+                    <div
+                      {...getNomineeBackRootProps({ className: "dropzone" })}
+                    >
+                      <input {...getNomineeBackInputProps()} />
+                      <p>
+                        Drag 'n' drop Nominee doc. back side here, or click to select one
+                      </p>
+                    </div>
+                    {previews.nomineeBack.map((url, index) => (
+                      <img
+                        key={index}
+                        src={url}
+                        alt={`preview-${index}`}
+                        style={{ width: 100, height: 100, margin: 10 }}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <img
+                    src={nomineeDetails?.documentBack}
+                    alt="document-back-preview"
+                    style={{ width: 100, height: 100, margin: 10 }}
+                  />
+                )}
+              </div>
+
+              {nomineeStatus == 1 || isApproved?.nominee == 1 ? (
+                <button style={{ display: "none" }} className="btnPrimary" onClick={handleNominee}>
+                  Submit
+                </button>
+              ) : (
+                <button className="btnPrimary" onClick={handleNominee}>
+                  Submit
+                </button>
+              )}
+            </div>
+          )}
+
         </Col>
       </Row>
     </section>
