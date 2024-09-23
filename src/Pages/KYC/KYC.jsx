@@ -723,8 +723,8 @@ const KYC = () => {
       {loading && <Loader />}
 
       <Row className="mt-4">
-        <Col lg="6" className="mb-2">
-          <div className="tabButton">
+        <Col lg="7" className="mb-2">
+          {/* <div className="tabButton">
             <button className="btnPrimary" onClick={() => setActiveTab("bank")}>
               Bank KYC
             </button>
@@ -738,6 +738,76 @@ const KYC = () => {
               Address KYC
             </button>
             <button className="btnPrimary" onClick={() => setActiveTab("nominee")}>
+              Nominee KYC
+            </button>
+          </div> */}
+
+          <div
+            className="tabButton"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '10px',
+              padding: '10px',
+            }}
+          >
+            <button
+              className="btnPrimary"
+              style={{
+                flex: '1 1 auto',
+                padding: '10px 20px',
+                minWidth: '100px',
+                maxWidth: '150px',
+                fontSize: '1em',
+                margin: '5px',
+              }}
+              onClick={() => setActiveTab('bank')}
+            >
+              Bank KYC
+            </button>
+            <button
+              className="btnPrimary"
+              style={{
+                flex: '1 1 auto',
+                padding: '10px 20px',
+                minWidth: '100px',
+                maxWidth: '150px',
+                fontSize: '1em',
+                margin: '5px',
+              }}
+              onClick={() => setActiveTab('pan')}
+            >
+              Pan KYC
+            </button>
+            <button
+              className="btnPrimary"
+              style={{
+                flex: '1 1 auto',
+                padding: '10px 20px',
+                minWidth: '100px',
+                maxWidth: '150px',
+                fontSize: '1em',
+                margin: '5px',
+              }}
+              onClick={() => setActiveTab('address')}
+            >
+              Address KYC
+            </button>
+            <button
+              className="btnPrimary"
+              style={{
+                flex: '1 1 auto',
+                padding: '10px 20px',
+                minWidth: '100px',
+                maxWidth: '150px',
+                fontSize: '1em',
+                margin: '5px',
+                whiteSpace: 'nowrap'
+              }}
+              onClick={() => setActiveTab('nominee')}
+            >
               Nominee KYC
             </button>
           </div>

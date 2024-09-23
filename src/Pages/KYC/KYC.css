@@ -2,7 +2,7 @@
   background: var(--containerColor);
   padding: 20px;
   border-radius: 5px;
-  display: block;
+  display: flex;
   padding-top: 20px;
   gap: 20px;
 }
