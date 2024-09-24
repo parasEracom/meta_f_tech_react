@@ -362,23 +362,24 @@ const LandingPage = () => {
                 <div id="partnershipSideFullDiv">
                   <div
                     className="sideLink"
-                    onClick={() => handleDropdownToggle("packagesDropdown")}
+                    onClick={() => handleDropdownToggle("fundDropdown")}
                   >
                     <i>
-                      <BsGraphUp />
+                      {/* <BsGraphUp /> */}
+                      <RiFundsFill />
                     </i>
                     <div id="partnershipSideDiv">
                       <h5>Funds</h5>
                       <i
                         style={{
-                          transform: `rotate(${activeDropdown === "packagesDropdown" ? "180deg" : "0deg"})`,
+                          transform: `rotate(${activeDropdown === "fundDropdown" ? "180deg" : "0deg"})`,
                         }}
                       >
                         <IoIosArrowUp />
                       </i>
                     </div>
                   </div>
-                  {activeDropdown === "packagesDropdown" && (
+                  {activeDropdown === "fundDropdown" && (
                     <div id="sideDropdown">
                       <NavLink
                         to="fund"
@@ -407,7 +408,6 @@ const LandingPage = () => {
                     </div>
                   )}
                 </div>
-
 
                 <div id="partnershipSideFullDiv">
                   <div
@@ -521,8 +521,8 @@ const LandingPage = () => {
                     </i>
                     <h5>Package</h5>
                   </div>
-                </NavLink> */}
-                {/* <NavLink
+                </NavLink>
+                <NavLink
                   to="fund"
                   exact={true}
                   activeClassName="activeTab"
