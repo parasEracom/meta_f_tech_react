@@ -7,6 +7,7 @@ import Loader from "../../Components/Loader/Loader";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { BasicInfo } from "../../Config/BasicInfo";
 import PaginationComponent from "../../Components/PaginationControls/PaginationControls";
+import moment from "moment";
 
 const FundTransferHistory = ({ key }) => {
   const [filterVisibility, setFilterVisibility] = useState(false);
@@ -38,7 +39,7 @@ const FundTransferHistory = ({ key }) => {
     CompanyInfo()
   }, []);
   useEffect(() => {
-    BasicInfo.isDebug &&  console.log(key);
+    BasicInfo.isDebug &&  console.log(key,"key");
     FetchData(currentPage);
   }, [currentPage]);
 
@@ -178,14 +179,15 @@ const FundTransferHistory = ({ key }) => {
                       </td>
                       {x?.debit_credit == "debit" ? (
                         <td style={{ textAlign: "center" }}>
-                          Send to {x?.from} ( {x?.name} )
+                          Send to {x?.to_from} 
+                          {/* ( {x?.name} ) */}
                         </td>
                       ) : (
                         <td style={{ textAlign: "center" }}>
-                          Received from ( {x?.from} )
+                          Received from  {x?.to_from} 
                         </td>
                       )}
-                      <td style={{ textAlign: "center" }}>{x?.time}</td>
+                      <td style={{ textAlign: "center" }}>{moment(x?.createdAt).format("DD MMM YY")}</td>
                     </tr>
                   ))
                 ) : (

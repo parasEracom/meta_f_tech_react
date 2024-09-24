@@ -58,6 +58,7 @@ export default function KyStatus() {
                         <p><strong>Bank :</strong> {statusLabels[kycDetails.bank] || 'Unknown'}</p>
                         <p><strong>PAN :</strong> {statusLabels[kycDetails.pan] || 'Unknown'}</p>
                         <p><strong>Address :</strong> {statusLabels[kycDetails.address] || 'Unknown'}</p>
+                        <p><strong>Nominee :</strong> {statusLabels[kycDetails.nominee] || 'Unknown'}</p>
                     </div>
                     </Row>
                 )}
@@ -79,6 +80,7 @@ export default function KyStatus() {
                         <p><strong>Bank KYC:</strong> {statusLabels[kycDetails.bank] || 'Unknown'}</p>
                         <p><strong>PAN KYC:</strong> {statusLabels[kycDetails.pan] || 'Unknown'}</p>
                         <p><strong>Address KYC:</strong> {statusLabels[kycDetails.address] || 'Unknown'}</p>
+                        <p><strong>Nominee :</strong> {statusLabels[kycDetails.nominee] || 'Unknown'}</p>
                     </div>
                     </Row>
                 )}

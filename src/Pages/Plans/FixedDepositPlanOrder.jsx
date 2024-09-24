@@ -7,6 +7,7 @@ import { BasicInfo } from "../../Config/BasicInfo";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { Col, Row } from "react-bootstrap";
+import moment from "moment";
 const FixedDepositPlanOrder = () => {
   const [selectIncome, setSelectIncome] = useState(1);
   const [tabsName, setTabsName] = useState("deposit");
@@ -136,7 +137,8 @@ const FixedDepositPlanOrder = () => {
                   <th>S.No</th>
                   <th>Amount ({companyData?.currency} )</th>
                   <th>Package</th>
-                  <th>Capping</th>
+                  <th>Order Date</th>
+                  <th>Maturity Date</th>
                   {/* <th>Earned Incomes</th>
                   <th>Pending Incomes</th>
                   <th>Total Incomes</th> */}
@@ -155,7 +157,8 @@ const FixedDepositPlanOrder = () => {
                         <td>{i + 1}</td>
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
                         <td>{x?.package_type}</td>
-                        <td>{x?.capping}</td>
+                        <td>{moment(x?.order_Date).format("DD-MM-YYYY")}</td>
+                        <td>{x?.maturity_Date} Months</td>
                         {/* <td>{x?.earned_income}</td>
                         <td>{x?.pending_income}</td>
                         <td>{x?.total_income}</td> */}

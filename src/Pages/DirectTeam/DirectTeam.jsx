@@ -101,11 +101,11 @@ const DirectTeam = () => {
   }
 
   function filterReset() {
-    FetchTeam(); // Fetch data without filters
     setFilterUserId("");
     // setFilterjoinDate("");
     setFilterStatus("");
-    setCurrentPage(1); // Reset to the first page
+    setCurrentPage(1); 
+    FetchTeam(); 
   }
 
   return (
@@ -175,7 +175,7 @@ const DirectTeam = () => {
 
           <div className="historyContent">
             <h1 className="textHeading"></h1>
-            <div style={{textAlign:"end"}}>
+            <div style={{ textAlign: "end" }}>
               <h4>
                 Self Business: <span>{selfBussTransaction || 0} {companyData?.currency}</span>
               </h4>

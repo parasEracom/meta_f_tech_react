@@ -1,8 +1,66 @@
-.dash oard {
+.dashboard {
   padding: 0px 30px;
   border-left: 0.5px solid rgba(182, 182, 182, 0.199);
   min-height: 90vh;
 }
+/* //////////   Order History  ////////////////// */
+.orderHistorySection {
+  max-height: 200px; /* Limit the height of the order history section */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  background: var(--containerColor);
+  /* box-shadow: var(--boxShadow); */
+  padding: 20px;
+  border-radius: 20px;
+  /* text-align: center; */
+  /* height: 100%; */
+  border: var(--containerBorder);
+}
+
+.orderHistorySection::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar width */
+  background: transparent; /* Optional: hide scrollbar background */
+}
+.orderHistorySection {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar on IE, Edge, and other browsers */
+.orderHistorySection {
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.orderHistoryTableContainer {
+  width: 100%; /* Ensure the table takes full width */
+  overflow-y: auto;
+}
+
+.orderTable {
+  width: 100%; /* Full-width table */
+  text-align: left;
+}
+
+.orderTable th,
+.orderTable td {
+  padding: 10px;
+  vertical-align: middle; /* Ensure content is vertically aligned */
+}
+
+
+.orderTable>thead>tr>th,
+.orderTable>tbody>tr>td{
+  background: var(--containerColor);
+  color:var(--textColor);
+  border: none;
+}
+
+.orderTable thead {
+  background-color: #f8f9fa; /* Light background for the header */
+}
+
+/* //////////////////////////////////////////// */
+
+
+
 
 #copyAdressOnDashboard {
   color: #000000;

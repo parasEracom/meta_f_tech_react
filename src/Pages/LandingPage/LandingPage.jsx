@@ -362,51 +362,52 @@ const LandingPage = () => {
                 <div id="partnershipSideFullDiv">
                   <div
                     className="sideLink"
-                    onClick={() => handleDropdownToggle("teamDropdown")}
+                    onClick={() => handleDropdownToggle("packagesDropdown")}
                   >
                     <i>
-                      <HiOutlineUserGroup />
+                      <BsGraphUp />
                     </i>
                     <div id="partnershipSideDiv">
-                      <h5>Team </h5>
+                      <h5>Funds</h5>
                       <i
                         style={{
-                          transform: `rotate(${activeDropdown === "teamDropdown" ? "180deg" : "0deg"})`,
+                          transform: `rotate(${activeDropdown === "packagesDropdown" ? "180deg" : "0deg"})`,
                         }}
                       >
                         <IoIosArrowUp />
                       </i>
                     </div>
                   </div>
-                  {activeDropdown === "teamDropdown" && (
+                  {activeDropdown === "packagesDropdown" && (
                     <div id="sideDropdown">
                       <NavLink
-                        to="direct_team"
+                        to="fund"
                         exact={true}
                         activeClassName="activeTab"
                         onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
                       >
-                        <p>Direct Team</p>
+                        <p>Fund Deposit</p>
                       </NavLink>
                       <NavLink
-                        to="generation_team"
+                        to="fund-transfer"
                         exact={true}
                         activeClassName="activeTab"
                         onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
                       >
-                        <p>Generation Team</p>
+                        <p>Transfer Fund</p>
                       </NavLink>
                       <NavLink
-                        to="genealogy"
+                        to="fund-history"
                         exact={true}
                         activeClassName="activeTab"
                         onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
                       >
-                        <p>Genealogy</p>
+                        <p>Fund History</p>
                       </NavLink>
                     </div>
                   )}
                 </div>
+
 
                 <div id="partnershipSideFullDiv">
                   <div
@@ -457,6 +458,56 @@ const LandingPage = () => {
                   )}
                 </div>
 
+                <div id="partnershipSideFullDiv">
+                  <div
+                    className="sideLink"
+                    onClick={() => handleDropdownToggle("teamDropdown")}
+                  >
+                    <i>
+                      <HiOutlineUserGroup />
+                    </i>
+                    <div id="partnershipSideDiv">
+                      <h5>Team </h5>
+                      <i
+                        style={{
+                          transform: `rotate(${activeDropdown === "teamDropdown" ? "180deg" : "0deg"})`,
+                        }}
+                      >
+                        <IoIosArrowUp />
+                      </i>
+                    </div>
+                  </div>
+                  {activeDropdown === "teamDropdown" && (
+                    <div id="sideDropdown">
+                      <NavLink
+                        to="direct_team"
+                        exact={true}
+                        activeClassName="activeTab"
+                        onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
+                      >
+                        <p>Direct Team</p>
+                      </NavLink>
+                      <NavLink
+                        to="generation_team"
+                        exact={true}
+                        activeClassName="activeTab"
+                        onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
+                      >
+                        <p>Generation Team</p>
+                      </NavLink>
+                      <NavLink
+                        to="genealogy"
+                        exact={true}
+                        activeClassName="activeTab"
+                        onClick={() => width < 800 && dispatch(setSidebarDisplay("none"))}
+                      >
+                        <p>Genealogy</p>
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+
+              
 
                 {/* <NavLink
                   to="plans"
@@ -471,7 +522,7 @@ const LandingPage = () => {
                     <h5>Package</h5>
                   </div>
                 </NavLink> */}
-                <NavLink
+                {/* <NavLink
                   to="fund"
                   exact={true}
                   activeClassName="activeTab"
@@ -479,7 +530,6 @@ const LandingPage = () => {
                 >
                   <div className="sideLink">
                     <i>
-                      {/* <BiNews /> */}
                       <RiFundsFill />
 
                     </i>
@@ -494,13 +544,12 @@ const LandingPage = () => {
                 >
                   <div className="sideLink">
                     <i>
-                      {/* <BiNews /> */}
                       <FaMoneyBillTransfer />
 
                     </i>
                     <h5>Transfer Fund</h5>
                   </div>
-                </NavLink>
+                </NavLink> */}
                 
 
                 <NavLink
