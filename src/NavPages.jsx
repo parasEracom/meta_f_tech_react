@@ -31,7 +31,7 @@ import Incomes from "./Pages/Incomes/Incomes";
 import Genealogy from "./Pages/Genealogy/Genealogy";
 import FundTransfer from "./Pages/FundTransfer/FundTransfer";
 import Fund from "./Pages/Fund/Fund";
-import FundHistory from "./Pages/Fund/FundHistory";
+import FundHistory from "./Pages/FundHistory/FundHistory";
 import PaymentWithUPI from "./Pages/PaymentWithUPI/PaymentWithUPI";
 import UploadPaymentProof from "./Pages/UploadPaymentProof/UploadPaymentProof";
 import Reward from "./Pages/Reward/Reward";

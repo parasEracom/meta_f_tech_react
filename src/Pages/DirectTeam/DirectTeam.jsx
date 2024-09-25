@@ -24,9 +24,9 @@ const DirectTeam = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [uid, setUid] = useState(localStorage.getItem("userId"));
   const { AxiosPost, AxiosGet } = useAxiosHelper();
-  const [selfBussTransaction, setSelfBussTransaction] = useState(0); // Total business state
-  const [teamBussTransaction, setTeamBussTransaction] = useState(0); // Total business state
-  const [companyData, setCompanyData] = useState(); // Total business state
+  const [selfBussTransaction, setSelfBussTransaction] = useState(0);
+  const [teamBussTransaction, setTeamBussTransaction] = useState(0);
+  const [companyData, setCompanyData] = useState(); 
 
   const [levelTeam, setLevelTeam] = useState([]);
 

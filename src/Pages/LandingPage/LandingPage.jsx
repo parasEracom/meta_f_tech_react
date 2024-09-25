@@ -4,14 +4,14 @@ import Header from "../../Components/Header/Header";
 import "./LandingPage.css";
 import { RxDashboard } from "react-icons/rx";
 import { BsGraphUp } from "react-icons/bs";
-import { TbReportAnalytics, TbReport, TbLogout } from "react-icons/tb";
+import { TbReportAnalytics, TbReport, TbLogout, TbMoneybag } from "react-icons/tb";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { AiOutlineHistory } from "react-icons/ai";
 import { BiNews } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { GiDiamondTrophy } from "react-icons/gi";
 import { RiFundsFill } from "react-icons/ri";
-import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { FaMoneyBillTransfer, FaRankingStar } from "react-icons/fa6";
 
 import { MdOutlineSupport } from "react-icons/md";
 import { BiUser } from "react-icons/bi";
@@ -236,6 +236,22 @@ const LandingPage = () => {
                     <h5>Profile</h5>
                   </div>
                 </NavLink>
+
+                <NavLink
+                  to="kyc"
+                  exact={true}
+                  activeClassName="activeTab"
+                  onClick={() =>
+                    width < 800 ? dispatch(setSidebarDisplay("none")) : ""
+                  }
+                >
+                  <div className="sideLink">
+                    <i>
+                      <BiNews />
+                    </i>
+                    <h5>KYC</h5>
+                  </div>
+                </NavLink>
                 {/* ///////////////////////////////////// */}
                 {/* <div id="partnershipSideFullDiv">
                   <div
@@ -366,7 +382,8 @@ const LandingPage = () => {
                   >
                     <i>
                       {/* <BsGraphUp /> */}
-                      <RiFundsFill />
+                      {/* <RiFundsFill /> */}
+                      <TbMoneybag />
                     </i>
                     <div id="partnershipSideDiv">
                       <h5>Funds</h5>
@@ -652,54 +669,13 @@ const LandingPage = () => {
                 >
                   <div className="sideLink">
                     <i>
-                      <GiDiamondTrophy />
+                      {/* <GiDiamondTrophy /> */}
+                      <FaRankingStar />
                     </i>
                     <h5>Ranks</h5>
                   </div>
                 </NavLink>
-                {/* <NavLink
-                  to="support"
-                  exact={true}
-                  activeClassName="activeTab"
-                  onClick={handleDropDown}
-                >
-                  <div className="sideLink">
-                    <i>
-                      <MdOutlineSupport />
-                    </i>
-                    <h5>Support</h5>
-                  </div>
-                </NavLink>
-                <NavLink
-                  to="blog"
-                  exact={true}
-                  activeClassName="activeTab"
-                  onClick={() =>
-                    width < 800 ? dispatch(setSidebarDisplay("none")) : ""
-                  }
-                >
-                  <div className="sideLink">
-                    <i>
-                      <BiNews />
-                    </i>
-                    <h5>News & Updates</h5>
-                  </div>
-                </NavLink> */}
-                <NavLink
-                  to="kyc"
-                  exact={true}
-                  activeClassName="activeTab"
-                  onClick={() =>
-                    width < 800 ? dispatch(setSidebarDisplay("none")) : ""
-                  }
-                >
-                  <div className="sideLink">
-                    <i>
-                      <BiNews />
-                    </i>
-                    <h5>KYC</h5>
-                  </div>
-                </NavLink>
+                
 
                 <a onClick={handleDrop}>
                   <div className="sideLink">
