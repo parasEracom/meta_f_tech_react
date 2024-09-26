@@ -47,12 +47,6 @@ const GenerationTeam = () => {
   }, []);
   async function CompanyInfo() {
     try {
-      // const response = await AxiosGet(ApiPaths.getCompanyDetails);
-      // // console.log(response, "llllllllll");
-      // localStorage.setItem(
-      //   "companyData",
-      //   JSON.stringify(response?.company_info)
-      // );
       const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
@@ -60,7 +54,6 @@ const GenerationTeam = () => {
       console.log(error);
     }
   }
-
 
   useEffect(() => {
     let param = dropdownData[0].type;
@@ -140,7 +133,6 @@ const GenerationTeam = () => {
     setLevel("All");
     // FetchData(selectLevel, 0);
   }
-
   return (
     <>
       {loading ? <Loader /> : null}
@@ -241,7 +233,6 @@ const GenerationTeam = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-
                   <th>User Id</th>
                   <th>Name</th>
                   <th>Join Date</th>
@@ -258,21 +249,17 @@ const GenerationTeam = () => {
                   return (
                     <tr>
                       <td>{i + 1 + 20 * (currentPage - 1)}</td>
-
                       <td>{x.username}</td>
                       <td>{x?.name}</td>
                       {/* <td>{x.joining_date}</td> */}
                       <td>{moment(x?.joining_date).format("DD-MM-YYYY")}</td>
                       {/* <td>{moment(x?.Activation_date).format("DD-MM-YYYY")}</td> */}
                       <td>{x?.Activation_date ? moment(x.Activation_date).format("DD-MM-YYYY") : "-"}</td>
-
                       {/* <td>Level {x?.level}</td> */}
-
                       <td>
                       {x?.sponsor_username} ({x?.sponsor_name})
                     </td>
                     <td>{x.mobile}</td>
-
                       <td>  {x?.self_investment}</td>
                       <td>  {x?.business}</td>
                     </tr>
@@ -280,10 +267,6 @@ const GenerationTeam = () => {
                 })}
               </tbody>
             </table>
-
-          
-
-
             {levelTeam == 0 ? <p>No history yet</p> : null}
           </div>
           {levelTeam.length > 0 && (
