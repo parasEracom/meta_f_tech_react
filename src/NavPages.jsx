@@ -14,7 +14,7 @@ import Profile from "./Pages/Profile/Profile";
 import Transactions from "./Pages/Transactions/Transactions";
 import DirectTeam from "./Pages/DirectTeam/DirectTeam";
 import GenerationTeam from "./Pages/GenerationTeam/GenerationTeam";
-import GenerationTeamOld from "./Pages/GenerationTeam/generationTeamOld";
+// import GenerationTeamOld from "./Pages/GenerationTeam/generationTeamOld";
 import Withdraw from "./Pages/Withdraw/Withdraw";
 import Blog from "./Pages/Blog/Blog";
 import WithdrawalHistory from "./Pages/WithdrawalHistory/WithdrawalHistory";
@@ -89,11 +89,11 @@ const NavPages = () => {
         path="/generation_team"
         element={<GenerationTeam />}
       ></Route>
-      <Route
+      {/* <Route
         exact={true}
         path="/generation_teamOld"
         element={<GenerationTeamOld />}
-      ></Route>
+      ></Route> */}
 
       {/* <Route
         exact={true}

@@ -358,25 +358,6 @@ const GenerationTeam = () => {
 
           <div className="historyContent">
             <h1 className="textHeading"></h1>
-            {/* {levelNumber === "All" && (
-                <>
-                  <h4>
-                    Total Self Business (All Data): <span>{allDataTotals.totalSelfBusiness || 0} {companyData?.currency}</span>
-                  </h4>
-                  <h4>
-                    Total Team Business (All Data): <span>{allDataTotals.totalTeamBusiness || 0} {companyData?.currency}</span>
-                  </h4>
-                </>
-              )}
-            
-            <div style={{ textAlign: "end" }}>
-              <h4>
-                 Self Business: <span>{allDataTotals.totalSelfBusiness || 0} {companyData?.currency}</span>
-              </h4>
-              <h4>
-                 Team Business: <span>{allDataTotals.totalTeamBusiness || 0} {companyData?.currency}</span>
-              </h4>
-            </div> */}
             {levelNumber === "All" ? (
               <>
                 {/* <h4>
