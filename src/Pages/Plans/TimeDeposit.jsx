@@ -10,7 +10,7 @@ import { setUserPersonalInfo } from "../../Redux/ProfileDataSlice";
 import { setIncomeWallet } from "../../Redux/IncomeWallet";
 import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import ArrayToObject from "../../Common/ArrayToObject";
-import OrderHistory from "./Time Deposit Order";
+import OrderHistory from "./TimeDepositOrder";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 

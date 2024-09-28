@@ -342,7 +342,7 @@ import { setUserPersonalInfo } from "../../Redux/ProfileDataSlice";
 import { setIncomeWallet } from "../../Redux/IncomeWallet";
 import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import ArrayToObject from "../../Common/ArrayToObject";
-import OrderHistory from "./SIP Order";
+import OrderHistory from "./GrowthSIPOrder";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 

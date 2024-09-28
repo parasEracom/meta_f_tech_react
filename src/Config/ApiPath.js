@@ -32,5 +32,7 @@ export const ApiPaths = {
   p2pTransfer:"/fund_transfer",
   forgotPassword:"/forgot-password",
   sendOtp:"/send-otp",
-  getNomineeDetails:"/submit-nominee-kyc"
+  getNomineeDetails:"/submit-nominee-kyc",
+  getUpcomingSip:"/upcominginstallments",
+  getUnpaidSip:"/unpaidinstallments"
 };

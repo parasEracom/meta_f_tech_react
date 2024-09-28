@@ -281,9 +281,9 @@ const KYC = () => {
     <section className="dashboard" style={{ paddingTop: "10px" }}>
       {loading && <Loader />}
 
-      <Row className="mt-4">
-        <Col lg="7" className="mb-2">
-          
+      <Row className="mt-4 d-flex justify-content-center">
+        <Col lg="9" className="mb-2">
+
 
           <div
             className="tabButton"
@@ -461,11 +461,8 @@ const KYC = () => {
                 ) : null}
               </div>
 
-              {/* Show submit button always, allow resubmission if rejected */}
-              {/* <button className="btnPrimary" onClick={handleBank}>
-      Submit
-    </button> */}
-              {bankStatus == 1 || isApproved?.bank == 1 ? (
+
+              {bankStatus == 1 || bankStatus == 2 || isApproved?.bank == 1 || isApproved?.bank == 2 ? (
                 <button
                   style={{ display: "none" }}
                   className="btnPrimary"
@@ -481,7 +478,7 @@ const KYC = () => {
 
             </div>
           )}
-        
+
           {activeTab === "pan" && (
             <div className="editProfile inputPrimary">
               <h3>PAN Details</h3>
@@ -548,14 +545,23 @@ const KYC = () => {
                 ) : null}
               </div>
 
-              {/* Show submit button always, allow resubmission if rejected */}
-              <button className="btnPrimary" onClick={handlePan}>
-                Submit
-              </button>
+              {panStatus == 1 || panStatus == 2 || isApproved?.pan == 1 || isApproved?.pan == 2 ? (
+                <button
+                  style={{ display: "none" }}
+                  className="btnPrimary"
+                  onClick={handlePan}
+                >
+                  Submit
+                </button>
+              ) : (
+                <button className="btnPrimary" onClick={handlePan}>
+                  Submit
+                </button>
+              )}
             </div>
           )}
-         
-       
+
+
           {activeTab === "address" && (
             <div className="editProfile inputPrimary">
               <h3>Address Details</h3>
@@ -682,7 +688,7 @@ const KYC = () => {
                   )
                 )}
               </div>
-              {addressStatus == 1 || isApproved?.address == 1 ? (
+              {addressStatus == 1 || isApproved?.address == 1 || addressStatus == 2 || isApproved?.address == 2 ? (
                 <button
                   style={{ display: "none" }}
                   className="btnPrimary"
@@ -697,7 +703,7 @@ const KYC = () => {
               )}
             </div>
           )}
-          
+
           {activeTab === "nominee" && (
             <div className="editProfile inputPrimary">
               <h3>Nominee Details</h3>
@@ -821,7 +827,7 @@ const KYC = () => {
                 )}
               </div>
 
-              {nomineeStatus == 1 || isApproved?.nominee == 1 ? (
+              {nomineeStatus == 1 || isApproved?.nominee == 1 || nomineeStatus == 2 || isApproved?.nominee == 2 ? (
                 <button
                   style={{ display: "none" }}
                   className="btnPrimary"

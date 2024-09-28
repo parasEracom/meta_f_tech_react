@@ -30,7 +30,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [dashboardData, setDashboardData] = useState([]);
-  const { AxiosGet } = useAxiosHelper();
+  const { AxiosGet,AxiosPost } = useAxiosHelper();
   const [upiDetailsData, setUpiDetailsData] = useState({});
   const [totalInvestment, setTotaInvestment] = useState();
   const [totalIncome, setTotalIncome] = useState();
@@ -38,14 +38,15 @@ const Dashboard = () => {
   const [growthBonus, setGrowthBonus] = useState();
   const [companyData, setCompanyData] = useState([])
   const [orderHistory, setOrderHistory] = useState([]);
+  const [upcomingSips, setUpcomingSips] = useState([]);
+  const [unpaidInstallments, setUnpaidInstallments] = useState([]);
+
   const profileData = useSelector(
     (state) => state.profileData.userPersonalInfo
   );
   const incomeData = useSelector((state) => state.incomeData.incomeWallet);
   const teamData = useSelector((state) => state.teamData?.teamSection);
-
   var x = 0;
-
   useEffect(() => {
     if (x === 0) {
       FetchData();
@@ -54,10 +55,35 @@ const Dashboard = () => {
       FetchRank();
       CompanyInfo();
       FetchOrderHistory(); // Fetch the order history
-
+      getUpcomingSip()
+      getUnpaidInstallments()
+      { console.log(unpaidInstallments, ".................") }
       x++;
     }
   }, []);
+
+
+
+  const getUnpaidInstallments = async () => {
+    try {
+      setLoading(true);
+      const response = await AxiosGet(ApiPaths.getUnpaidSip);
+      console.log("Unpaid Installments Data:", response?.data);
+
+      if (response.success && Array.isArray(response.data)) {
+        // Flatten the unpaid installments array and store it
+        const unpaidInstallments = response.data.flatMap(item => item.unpaidInstallments || []);
+        setUnpaidInstallments(unpaidInstallments); // Store the unpaid installments data array
+      } else {
+        toastFailed("Failed to fetch unpaid installments");
+      }
+    } catch (error) {
+      console.error("Error fetching unpaid installments:", error);
+      toastFailed(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const FetchOrderHistory = async () => {
     try {
@@ -72,12 +98,57 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
-
-
+  // const getUnpaidInstallments = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await AxiosGet(ApiPaths.getUnpaidSip); // Assuming this API returns order history
+  //     console.log("getUnpaidSippppppppppp", response)
+  //   } catch (error) {
+  //     console.error("Error fetching order history:", error);
+  //     toastFailed(error?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  const getUpcomingSip = async () => {
+    try {
+      setLoading(true);
+      const response = await AxiosGet(ApiPaths.getUpcomingSip); // Fetch upcoming SIPs
+      console.log("getUpcomingSipppppppppp", response);
+      // Sort the data by installment_date in ascending order (earliest date first)
+      const sortedSips = response?.data.sort((a, b) =>
+        new Date(a.nextUpcomingInstallment.installment_Date) - new Date(b.nextUpcomingInstallment.installment_Date)
+      );
+      setUpcomingSips(sortedSips || []); // Store the sorted data
+      // setPendingSips(response?.data || []); // Store the SIP data
+    } catch (error) {
+      console.error("Error fetching pending SIPs:", error);
+      toastFailed(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handlePayNow = async (sipId, installment_id) => {
+    try {
+      setLoading(true);
+      const body = {
+        sip_Id: parseInt(sipId),
+        installment_id: parseInt(installment_id),
+      };
+      const response = await AxiosPost(ApiPaths.payInstallment, body); // Assuming there's an API for making the payment
+      console.log("Pay Now for SIP ID:", sipId);
+      toastFailed("Coming Soon");
+      getUpcomingSip(); // Refresh the SIPs list after payment
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      toastFailed(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   async function CompanyInfo() {
     try {
       const data = localStorage.getItem("companyData");
-      // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
     } catch (error) {
       console.log(error);
@@ -160,113 +231,125 @@ const Dashboard = () => {
             link={`${window.location.origin}/register?ref=${profileData?.username}`}
           />
         </div>
-
         <section className="cappingSection mt-4">
-
           <KycStatus />
-
-          {/* <section className="orderHistorySection mt-4">
-          <h1 className="textHeadingWithMargin">Order History</h1>
-          <div className="orderHistoryGridContainer">
-            <Row>
-              {orderHistory.length > 0 ? (
-                orderHistory.map((order, index) => (
-                  <Col
-                    key={index}
-                    md="3"
-                    className="orderCard mb-3"
-                    style={{ minHeight: "200px" }}
-                  >
-                    <div className="orderCardContent">
-                      <h5>Order ID: {order.id}</h5>
-                      <p>Status: {order.status}</p>
-                      <p>Amount: {order.amount}</p>
-                      <p>Date: {new Date(order.date).toLocaleDateString()}</p>
+          <section className="unpaidInstallmentsSection mt-4">
+            {unpaidInstallments.length > 0 ? (
+              <>
+                <h1 className="textHeadingWithMargin">Unpaid Installments</h1>
+                <div className="row">
+                  {unpaidInstallments.map((installment) => (
+                    <div key={installment._id} className="col-12 mb-3">
+                      <div className="card shadow-sm" style={{ borderRadius: '8px' }}>
+                        <div className="card-body">
+                          <div className="d-flex flex-wrap justify-content-between align-items-center">
+                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+                              <h5 className="card-title">SIP ID: {installment.sip_Id}</h5>
+                            </div>
+                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+                              <p className="card-text">Installment No.: {installment.installment_id}</p>
+                            </div>
+                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+                              <p className="card-text">Amount: {installment.installment_amount}</p>
+                            </div>
+                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+                              <p className="card-text">
+                                Installment Date: {moment(installment.installment_Date).format("DD MMM YYYY")}
+                              </p>
+                            </div>
+                            <div style={{ flex: '1 1 auto' }}>
+                              <button
+                                className="btnPrimary"
+                                onClick={() => handlePayNow(installment.sip_Id, installment.installment_id)} // Call pay function with the SIP ID
+                              >
+                                Pay Now
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </Col>
-                ))
-              ) : (
-                <p>No orders found</p>
-              )}
-            </Row>
-          </div>
-        </section> */}
-          <h1 className="textHeadingWithMargin">Package Details</h1>
-
-          <section className="orderHistorySection mt-4 ">
-            {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
-            <div className="orderHistoryTableContainer">
-              {orderHistory.length > 0 ? (
-                <Table striped responsive className="orderTable">
-                  <thead>
-                    <tr>
-                      <th>Plan</th>
-                      {/* <th>Status</th> */}
-                      <th>Amount</th>
-                      {/* <th>Order Date</th> */}
-                      <th>Maturity Date</th>
-                      {/* <th>Status</th> */}
-                      {/* <th>Date</th> */}
-                      {/* <th>Username(name)</th> */}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orderHistory.map((order, index) => (
-                      <tr key={index}>
-                        <td>{order.package_type}</td>
-                        {/* <td>{order.status}</td> */}
-                        <td>{order.amount}</td>
-                        {/* <td>{moment(order.createdAt).format("DD MMM YY")}</td> */}
-                        <td>{order?.maturity_Date} Months</td>
-
-                        {/* {order?.status == "0" ? (
-                          <td>Pending</td>
-                        ) : order?.status == "1" ? (
-                          <td style={{ color: "green" }}>Success</td>
-                        ) : (
-                          <td style={{ color: "red" }}>Rejected</td>
-                        )} */}
-                        {/* <td>{new Date(order?.order_Date).toLocaleDateString()}</td> */}
-                        {/* <td>{order?.username}({order?.name})</td> */}
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              ) : (
-                <p>No orders found</p>
-              )}
-            </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              null)}
           </section>
 
-          {/* <section
-  className="orderHistorySection mt-4"
-  style={{ backgroundColor: 'var(--containerColor)' }}
->
-  <div className="orderHistoryTableContainer">
-    {orderHistory.length > 0 ? (
-      <Table striped responsive className="orderTable" style={{ color: 'var(--textColor)' }}>
-        <thead>
-          <tr>
-            <th>Plan</th>
-            <th>Amount</th>
-            <th>Maturity Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orderHistory.map((order, index) => (
-            <tr key={index}>
-              <td>{order.package_type}</td>
-              <td>{order.amount}</td>
-              <td>{order?.maturity_Date} Months</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    ) : (
-      <p style={{ color: 'var(--textColor)' }}>No orders found</p>
-    )}
-  </div>
-              </section> */}
+
+
+          <h1 className="textHeadingWithMargin">Package Details</h1>
+
+          <div className="container">
+
+            <div className="row md-12">
+              <section className="col-md-6 col-sm-12 orderHistorySection mt-4">
+                {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
+                <div className="orderHistoryTableContainer">
+                  {orderHistory.length > 0 ? (
+                    <Table striped responsive className="orderTable">
+                      <thead>
+                        <tr>
+                          <th>Plan</th>
+                          <th>Amount</th>
+                          <th>Maturity Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orderHistory.map((order, index) => (
+                          <tr key={index}>
+                            <td>{order.package_type}</td>
+                            <td>{order.amount}</td>
+                            <td>{order?.maturity_Date} Months</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  ) : (
+                    <p>No orders found</p>
+                  )}
+                </div>
+              </section>
+
+              <section className="col-md-6 col-sm-12 orderHistorySection mt-4">
+                {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
+                <div className="orderHistoryTableContainer">
+                  {upcomingSips.length > 0 ? (
+                    <Table striped responsive className="orderTable">
+                      <thead>
+                        <tr>
+                          <th>SIP ID</th>
+                          <th>Amount</th>
+                          <th>Installment Date</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {upcomingSips.map((sip, index) => (
+                          <tr key={index}>
+                            <td>{sip.nextUpcomingInstallment.sip_Id}</td>
+                            <td>{sip.nextUpcomingInstallment.installment_amount}</td>
+                            <td>{moment(sip.nextUpcomingInstallment.installment_Date).format("DD MMM YY")}</td>
+                            <td>
+                              {sip.nextUpcomingInstallment.paid_Date === null ? (
+                                <button className="btnPrimary" onClick={() => handlePayNow(sip.nextUpcomingInstallment.sip_Id, sip.nextUpcomingInstallment.installment_id)}>
+                                  Pay Now
+                                </button>
+                              ) : (
+                                <span>Paid</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  ) : (
+                    <p>No upcoming SIPs found</p>
+                  )}
+                </div>
+              </section>
+            </div>
+          </div>
 
 
           {/* <div className="viewCappingDiv">
@@ -377,10 +460,7 @@ const Dashboard = () => {
               </div>
             </div>
           </Col>
-          <Col
-            md="6"
-            className="gap-2 d-flex flex-column justify-content-between"
-          >
+          <Col md="6" className="gap-2 d-flex flex-column justify-content-between">
             <Row>
               {incomeData?.map((x, i) => {
                 return (
@@ -450,36 +530,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Col>
-              {/* <Col md="6" className="mb-3">
-                <div className="dashboardIncomeCard">
-                  <div className="dashboardData">
-                    <div>
-                      <h5
-                        className="dashboardCardHeading"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        SIP Business{" "}
-                      </h5>
-                      <h1>{companyData?.currency} {teamData?.sum?.}</h1>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-              <Col md="6" className="mb-3">
-                <div className="dashboardIncomeCard">
-                  <div className="dashboardData">
-                    <div>
-                      <h5
-                        className="dashboardCardHeading"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        Time Deposit Business{" "}
-                      </h5>
-                      <h1>{companyData?.currency} {teamData?.sum?.}</h1>
-                    </div>
-                  </div>
-                </div>
-              </Col> */}
+
             </Row>
           </Col>
           <Col lg="12" className="gap-2 d-flex flex-column justify-content-between" >
@@ -511,6 +562,7 @@ const Dashboard = () => {
           </Col>
         </Row>
       </section>
+      
     </>
   );
 };
