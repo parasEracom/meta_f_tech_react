@@ -5,7 +5,7 @@ export const BasicInfo = {
   logo: Logo,
   // logoIcon: LogoIcon,
   projectName: "Meta F",
-  isDebug: true,
+  isDebug: false,
 };
 export const toastSuccess = (msg) => toast.success(msg);
 export const toastFailed = (msg) => toast.error(msg);

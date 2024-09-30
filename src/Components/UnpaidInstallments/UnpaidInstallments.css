@@ -1,0 +1,14 @@
+.overflow-scroll {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping of child elements */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.overflow-scroll::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.row {
+    display: flex; /* Use flexbox for the row */
+}

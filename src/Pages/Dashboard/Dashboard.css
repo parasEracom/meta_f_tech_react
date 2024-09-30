@@ -4,6 +4,10 @@
   min-height: 90vh;
 }
 /* //////////   Order History  ////////////////// */
+.packageDetailText{
+  color: var(--textColor);
+}
+
 .orderHistorySection {
   max-height: 200px; /* Limit the height of the order history section */
   overflow-y: scroll; /* Enable vertical scrolling */

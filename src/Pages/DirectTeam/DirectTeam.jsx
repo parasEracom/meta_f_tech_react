@@ -11,6 +11,7 @@ import { FaUsersSlash } from "react-icons/fa6";
 import useAxiosHelper from "./../../Common/AxiosHelper";
 import PaginationComponent from "../../Components/PaginationControls/PaginationControls";
 import { BasicInfo } from "../../Config/BasicInfo";
+import moment from "moment";
 
 const DirectTeam = () => {
   const [selectIncome, setSelectIncome] = useState(1);
@@ -26,7 +27,7 @@ const DirectTeam = () => {
   const { AxiosPost, AxiosGet } = useAxiosHelper();
   const [selfBussTransaction, setSelfBussTransaction] = useState(0);
   const [teamBussTransaction, setTeamBussTransaction] = useState(0);
-  const [companyData, setCompanyData] = useState(); 
+  const [companyData, setCompanyData] = useState();
 
   const [levelTeam, setLevelTeam] = useState([]);
 
@@ -104,8 +105,8 @@ const DirectTeam = () => {
     setFilterUserId("");
     // setFilterjoinDate("");
     setFilterStatus("");
-    setCurrentPage(1); 
-    FetchTeam(); 
+    setCurrentPage(1);
+    FetchTeam();
   }
 
   return (
@@ -220,8 +221,8 @@ const DirectTeam = () => {
 
                       <td>{x.username}</td>
                       <td>{x.name}</td>
-                      <td>{x.joining_date}</td>
-                      <td>{x.Activation_date}</td>
+                      <td>{moment(x.joining_date).format("DD-MM-YYYY")}</td>
+                      <td>{moment(x.Activation_date).format("DD-MM-YYYY")}</td>
                       <td>{x.email}</td>
                       <td>{x.mobile}</td>
                       <td>{x?.self_investment}</td>
@@ -242,8 +243,8 @@ const DirectTeam = () => {
                       </td>
                       <td>{x.username}</td>
                       <td>{x.name}</td>
-                      <td>{x.joining_date}</td>
-                      <td>{x.Activation_date}</td>
+                      <td>{moment(x.joining_date).format("DD-MM-YYYY")}</td>
+                      <td>{moment(x.Activation_date).format("DD-MM-YYYY")}</td>
                       <td>{x.email}</td>
                       <td>{x.mobile}</td>
                       <td>{x?.self_investment}</td>
@@ -252,6 +253,25 @@ const DirectTeam = () => {
                     </tr>
                   );
                 })}
+                {/* {directTeamData?.map((x, i) => (
+                  <tr key={x.uid || x.id} className={x.status === "1" ? "teamRow" : "text-danger"}>
+                    <td>{i + 1}</td>
+                    <td onClick={() => (FetchTeam(x.uid || x.id, "", "0"), setUid(x.uid || x.id))}>
+                      <i style={{ fontSize: "25px", cursor: "pointer" }}>
+                        <TbBinaryTree2 />
+                      </i>
+                    </td>
+                    <td>{x.username}</td>
+                    <td>{x.name}</td>
+                    <td>{moment(x.joining_date).format("DD-MM-YYYY")}</td>
+                    <td> {x.Activation_date ? moment(x.Activation_date).format("DD-MM-YYYY") : "-"}</td>
+                    <td>{x.email}</td>
+                    <td>{x.mobile}</td>
+                    <td>{x.self_investment}</td>
+                    <td>{x.business}</td>
+                  </tr>
+                ))} */}
+
               </tbody>
             </table>
             {directTeamData == 0 ? <p>No history found</p> : ""}

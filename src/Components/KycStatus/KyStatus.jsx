@@ -312,7 +312,7 @@ export default function KyStatus() {
                         <Col md="2">
                             <button className="btnPrimary" onClick={handleKycClick}>Complete KYC</button>
                         </Col>
-                        <div style={{ textAlign: "center", display: "flex", justifyContent: "space-evenly" }}>
+                        <div style={{ textAlign: "center", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
                             <p><strong>Bank :</strong> {statusLabels[kycDetails.bank] || 'Unknown'}</p>
                             <p><strong>PAN :</strong> {statusLabels[kycDetails.pan] || 'Unknown'}</p>
                             <p><strong>Address :</strong> {statusLabels[kycDetails.address] || 'Unknown'}</p>
@@ -376,7 +376,7 @@ export default function KyStatus() {
                             )}
                         </Col>
                         <Col md="2">
-                            <button className="btnPrimary" disabled>Support</button>
+                            <button className="btnPrimary" onClick={handleKycClick}>Re-Submit</button>
                         </Col>
                     </Row>
                 )}

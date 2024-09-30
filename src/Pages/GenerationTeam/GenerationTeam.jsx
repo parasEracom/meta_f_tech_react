@@ -293,7 +293,7 @@ import Loader from "./../../Components/Loader/Loader";
 import "./GenerationTeam.css";
 import PaginationComponent from "../../Components/PaginationControls/PaginationControls";
 import useAxiosHelper from "../../Common/AxiosHelper";
-import { toastFailed, toastSuccess } from "../../Config/BasicInfo";
+import { BasicInfo, toastFailed, toastSuccess } from "../../Config/BasicInfo";
 import moment from "moment";
 
 const GenerationTeam = () => {
@@ -305,6 +305,8 @@ const GenerationTeam = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [levelTeam, setLevelTeam] = useState([]);
   const { AxiosGet, AxiosPost } = useAxiosHelper();
+  const [allDataTotals, setAllDataTotals] = useState({ totalSelfBusiness: 0, totalTeamBusiness: 0 });
+
   const [search, setSearch] = useState({
     search: "",
     name: "",
@@ -327,23 +329,45 @@ const GenerationTeam = () => {
       console.log(error);
     }
   }
+  const fetchAllDataTotals = async () => {
+    try {
+      const queryParams = {
+        limit: 100000, // Large limit to get all records
+        levels: selectedLevel !== "0" ? selectedLevel : undefined,
+      };
+      if (search.startDateJoining && search.endDateJoining) {
+        queryParams.startDate = search.startDateJoining;
+        queryParams.endDate = search.endDateJoining;
+      }
+      const response = await AxiosGet(
+        `${ApiPaths.getALlTeam}?${new URLSearchParams(queryParams).toString()}`
+      );
+      const totalSelfBusiness = response?.data.reduce((sum, member) => sum + (member?.self_investment || 0), 0);
+      const totalTeamBusiness = response?.data.reduce((sum, member) => sum + (member?.business || 0), 0);
+      BasicInfo.isDebug && console.log(totalSelfBusiness, "totalSelfBusiness")
+      BasicInfo.isDebug && console.log(totalTeamBusiness, "totalTeamBusiness")
+      setAllDataTotals({ totalSelfBusiness, totalTeamBusiness });
+    } catch (error) {
+      BasicInfo.isDebug && console.error("Error fetching all data totals:", error);
+    }
+  };
 
   // Fetch levels from API
   const getLevels = async () => {
     try {
       const response = await AxiosGet(ApiPaths.getPackages);
       const levels = response?.packages?.[0]?.level_income?.level;
-      console.log(levels.length,"....");
+      console.log(levels.length, "....");
 
       // Build dropdown data based on levels
       const generatedLevels = [
         { name: "All Data", type: 0 },
-        ...Array.from({ length: levels.length}, (_, index) => ({
+        ...Array.from({ length: levels.length }, (_, index) => ({
           name: `Level ${index + 1}`,
           type: index + 1,
         })),
       ];
-      console.log(generatedLevels,"generated levels..");
+      console.log(generatedLevels, "generated levels..");
       setLevels(generatedLevels);
     } catch (error) {
       console.error("Error fetching levels:", error);
@@ -352,10 +376,12 @@ const GenerationTeam = () => {
 
   useEffect(() => {
     getLevels();
+
   }, []);
 
   useEffect(() => {
     FetchData(selectedLevel);
+
   }, [currentPage]);
 
   function fetchIncome(e) {
@@ -366,6 +392,7 @@ const GenerationTeam = () => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       FetchData(selectedLevel);
+      fetchAllDataTotals(selectedLevel)
     }, 500);
     return () => clearTimeout(delayDebounceFn);
   }, [search, selectedLevel]);
@@ -521,7 +548,25 @@ const GenerationTeam = () => {
 
         <section className="history">
           <h1 className="textHeading">Generation Team</h1>
-           
+          <div className="historyContent">
+            <h1 className="textHeading"></h1>
+            {selectedLevel == "0" ? (
+              <>
+
+              </>
+            ) : (
+              <div style={{ textAlign: "end" }}>
+                <h4>
+                  Self Business: <span>{allDataTotals.totalSelfBusiness || 0} {companyData?.currency}</span>
+                </h4>
+                <h4>
+                  Team Business: <span>{allDataTotals.totalTeamBusiness || 0} {companyData?.currency}</span>
+                </h4>
+              </div>
+            )}
+
+
+          </div>
           <div className="table">
             <table>
               <thead>

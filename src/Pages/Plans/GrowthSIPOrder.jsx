@@ -5,7 +5,7 @@ import PaginationComponent from "../../Components/PaginationControls/PaginationC
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { toastFailed, toastSuccess } from "../../Common/Data";
 import moment from "moment";
-import { BasicInfo } from "../../Config/BasicInfo";
+import PopUp from "../../Components/PayNowPopUp/PopUp"; // Importing the PopUp component
 
 const SipOrderHistory = () => {
   const [paymentTransaction, setPaymentTransaction] = useState([]);
@@ -85,9 +85,7 @@ const SipOrderHistory = () => {
           return transaction;
         });
         setFilteredTransactions(updatedTransactions);
-      }
-      else {
-        // toastFailed("Unexpected response status");
+      } else {
         toastFailed("Coming Soon");
       }
     } catch (e) {
@@ -224,23 +222,8 @@ const SipOrderHistory = () => {
                     })}
                   </tbody>
                 </table>
-                {/* <PaginationComponent
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePagination}
-                /> */}
               </div>
             </>
-          )}
-          {!isFilterApplied && (
-            <div className="sipFilterText">
-              <p>Please select a filter to view the SIP details.</p>
-            </div>
-          )}
-          {isFilterApplied && filteredTransactions.length === 0 && (
-            <div className="sipFilterText">
-              <p>No history found for the selected filter.</p>
-            </div>
           )}
         </section>
       </section>
@@ -263,23 +246,3 @@ const SipOrderHistory = () => {
 };
 
 export default SipOrderHistory;
-
-function PopUp({ sipId, amount, maturityDate, onClose, onConfirm,companyData }) {
-  return (
-    <div className="otpSection" style={{ zIndex: "999" }}>
-      <div className="otpContainer" style={{ width: "400px" }}>
-        <p>Are you sure you want to pay for SIP ID: <strong>{sipId}</strong>?</p>
-        <p>Amount: <strong>{companyData.currency_sign}{amount}</strong></p> 
-        <p>Maturity Date: <strong>{moment(maturityDate).format("DD-MM-YYYY")}</strong></p> 
-        <div>
-          <button className="btnSecondary" onClick={onClose}>
-            No
-          </button>
-          <button className="btnPrimary" onClick={onConfirm}>
-            Yes
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}

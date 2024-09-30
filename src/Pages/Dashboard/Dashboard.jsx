@@ -23,14 +23,16 @@ import { setTeamSection } from "../../Redux/TeamSlice";
 import MyChart from "../../Components/MyChart/MyChart";
 import ArrayToObject from "../../Common/ArrayToObject";
 import Income from "./../../Images/income.png";
+import PopUp from "../../Components/PayNowPopUp/PopUp";
 import moment from "moment/moment";
+import UnpaidInstallments from "../../Components/UnpaidInstallments/UnpaidInstallments";
 const Dashboard = () => {
   let myArray = Array.from({ length: 8 });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [dashboardData, setDashboardData] = useState([]);
-  const { AxiosGet,AxiosPost } = useAxiosHelper();
+  const { AxiosGet, AxiosPost } = useAxiosHelper();
   const [upiDetailsData, setUpiDetailsData] = useState({});
   const [totalInvestment, setTotaInvestment] = useState();
   const [totalIncome, setTotalIncome] = useState();
@@ -40,6 +42,7 @@ const Dashboard = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [upcomingSips, setUpcomingSips] = useState([]);
   const [unpaidInstallments, setUnpaidInstallments] = useState([]);
+  const [showPopUp, setShowPopUp] = useState({ visible: false, sipId: null, amount: null, maturityDate: null, installmentId: null });
 
   const profileData = useSelector(
     (state) => state.profileData.userPersonalInfo
@@ -57,18 +60,15 @@ const Dashboard = () => {
       FetchOrderHistory(); // Fetch the order history
       getUpcomingSip()
       getUnpaidInstallments()
-      { console.log(unpaidInstallments, ".................") }
       x++;
     }
   }, []);
-
-
 
   const getUnpaidInstallments = async () => {
     try {
       setLoading(true);
       const response = await AxiosGet(ApiPaths.getUnpaidSip);
-      console.log("Unpaid Installments Data:", response?.data);
+      BasicInfo.isDebug && console.log("Unpaid Installments Data:", response?.data);
 
       if (response.success && Array.isArray(response.data)) {
         // Flatten the unpaid installments array and store it
@@ -84,12 +84,32 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
-
+  const payInstallment = async (sip_Id, installment_id, amount, maturityDate) => {
+    setLoading(true);
+    try {
+      const body = {
+        sip_Id: parseInt(sip_Id),
+        installment_id: parseInt(installment_id),
+      };
+      BasicInfo.isDebug && console.log(body, "pppppppppppppppppppppppppppp")
+      const response = await AxiosPost(ApiPaths.payInstallment, body);
+      if (response?.data?.status == true) {
+        toastSuccess(response?.message);
+      } else {
+        toastFailed("Coming Soon");
+      }
+    } catch (e) {
+      console.error("Error:", e);
+      toastFailed(e?.response?.data?.message || "Failed to pay installment.");
+    } finally {
+      setLoading(false);
+    }
+  };
   const FetchOrderHistory = async () => {
     try {
       setLoading(true);
       const response = await AxiosGet(ApiPaths.getOrders); // Assuming this API returns order history
-      console.log("ordersssssss", response)
+      BasicInfo.isDebug && console.log("ordersssssss", response)
       setOrderHistory(response?.data || []); // Assuming 'orders' is the key for the list of orders
     } catch (error) {
       console.error("Error fetching order history:", error);
@@ -98,18 +118,6 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
-  // const getUnpaidInstallments = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await AxiosGet(ApiPaths.getUnpaidSip); // Assuming this API returns order history
-  //     console.log("getUnpaidSippppppppppp", response)
-  //   } catch (error) {
-  //     console.error("Error fetching order history:", error);
-  //     toastFailed(error?.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const getUpcomingSip = async () => {
     try {
       setLoading(true);
@@ -146,12 +154,19 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
+  const handleProceedClick = (sipId, amount, maturityDate, installmentId) => {
+    BasicInfo.isDebug && console.log(sipId, "=>Sip")
+    BasicInfo.isDebug && console.log(amount, "=>amount")
+    BasicInfo.isDebug && console.log(maturityDate, "=>maturityDate")
+    BasicInfo.isDebug && console.log(installmentId, "=>installmentId")
+    setShowPopUp({ visible: true, sipId, amount, maturityDate, installmentId });
+  };
   async function CompanyInfo() {
     try {
       const data = localStorage.getItem("companyData");
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug && console.log(error);
     }
   }
   const FetchRank = async () => {
@@ -237,30 +252,94 @@ const Dashboard = () => {
             {unpaidInstallments.length > 0 ? (
               <>
                 <h1 className="textHeadingWithMargin">Unpaid Installments</h1>
-                <div className="row">
+                {/* <div className="row">
                   {unpaidInstallments.map((installment) => (
                     <div key={installment._id} className="col-12 mb-3">
-                      <div className="card shadow-sm" style={{ borderRadius: '8px' }}>
-                        <div className="card-body">
+                      <div className="card " style={{ borderRadius: '8px', border: "none" }}>
+                        <div className="card-body" style={{ background: "var(--containerColor", color: "var(--textColor)" }}>
+
                           <div className="d-flex flex-wrap justify-content-between align-items-center">
-                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+                            <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'space-between' }}>
                               <h5 className="card-title">SIP ID: {installment.sip_Id}</h5>
                             </div>
-                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
-                              <p className="card-text">Installment No.: {installment.installment_id}</p>
+
+                            <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'space-between' }}>
+                              <p className="card-text">Installment No.:</p>
+                              <p className="card-text">{installment.installment_id}</p>
                             </div>
-                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
-                              <p className="card-text">Amount: {installment.installment_amount}</p>
+
+                            <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'space-between' }}>
+                              <p className="card-text">Amount:</p>
+                              <p className="card-text">{installment.installment_amount}</p>
                             </div>
-                            <div style={{ flex: '1 1 100%', textAlign: 'left' }}>
+
+                            <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'space-between' }}>
+                              <p className="card-text">Installment Date:</p>
                               <p className="card-text">
-                                Installment Date: {moment(installment.installment_Date).format("DD MMM YYYY")}
+                                {moment(installment.installment_Date).format("DD MMM YYYY")}
                               </p>
                             </div>
-                            <div style={{ flex: '1 1 auto' }}>
+
+                            <div style={{ flex: '1 1 auto', marginTop: "10px" }}>
                               <button
                                 className="btnPrimary"
-                                onClick={() => handlePayNow(installment.sip_Id, installment.installment_id)} // Call pay function with the SIP ID
+                                onClick={() =>
+                                  handleProceedClick(
+                                    installment.sip_Id,
+                                    installment.installment_amount,
+                                    installment.installment_Date,
+                                    installment.installment_id
+                                  )
+                                }
+                              >
+                                Pay Now
+                              </button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div> */}
+                {/* <div className="row">
+                  {unpaidInstallments.map((installment) => (
+                    <div key={installment._id} className="col-12 col-md-6 col-lg-4 mb-3">
+                      <div className="card" style={{ borderRadius: '8px', border: "none" }}>
+                        <div className="card-body" style={{ background: "var(--containerColor)", color: "var(--textColor)" }}>
+                          <div className="d-flex flex-column">
+                            <div className="d-flex justify-content-between">
+                              <h5 className="card-title">SIP ID: {installment.sip_Id}</h5>
+                            </div>
+
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Installment No.:</p>
+                              <p className="card-text">{installment.installment_id}</p>
+                            </div>
+
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Amount:</p>
+                              <p className="card-text">{installment.installment_amount}</p>
+                            </div>
+
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Installment Date:</p>
+                              <p className="card-text">
+                                {moment(installment.installment_Date).format("DD MMM YYYY")}
+                              </p>
+                            </div>
+
+                            <div className="d-flex justify-content-center mt-3">
+                              <button
+                                className="btnPrimary"
+                                onClick={() =>
+                                  handleProceedClick(
+                                    installment.sip_Id,
+                                    installment.installment_amount,
+                                    installment.installment_Date,
+                                    installment.installment_id
+                                  )
+                                }
                               >
                                 Pay Now
                               </button>
@@ -270,87 +349,137 @@ const Dashboard = () => {
                       </div>
                     </div>
                   ))}
-                </div>
+                </div> */}
+                {/* <div className="row justify-content-between">
+                  {unpaidInstallments.map((installment) => (
+                    <div key={installment._id} className="col-12 col-sm-6 col-lg-6 mb-3">
+                      <div className="card" style={{ borderRadius: '8px', border: "none" }}>
+                        <div className="card-body" style={{ background: "var(--containerColor)", minWidth: "300px", color: "var(--textColor)" }}>
+                          <div className="d-flex flex-column">
+                            <h5 className="card-title">SIP ID: {installment.sip_Id}</h5>
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Installment No.:</p>
+                              <p className="card-text">{installment.installment_id}</p>
+                            </div>
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Amount:</p>
+                              <p className="card-text">{installment.installment_amount}</p>
+                            </div>
+                            <div className="d-flex justify-content-between">
+                              <p className="card-text">Installment Date:</p>
+                              <p className="card-text">
+                                {moment(installment.installment_Date).format("DD MMM YYYY")}
+                              </p>
+                            </div>
+                            <div className="mt-3">
+                              <button
+                                className="btnPrimary"
+                                onClick={() =>
+                                  handleProceedClick(
+                                    installment.sip_Id,
+                                    installment.installment_amount,
+                                    installment.installment_Date,
+                                    installment.installment_id
+                                  )
+                                }
+                              >
+                                Pay Now
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div> */}
+                <UnpaidInstallments />
               </>
             ) : (
               null)}
           </section>
-
-
-
-          <h1 className="textHeadingWithMargin">Package Details</h1>
+          {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
 
           <div className="container">
-
-            <div className="row md-12">
-              <section className="col-md-6 col-sm-12 orderHistorySection mt-4">
-                {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
-                <div className="orderHistoryTableContainer">
-                  {orderHistory.length > 0 ? (
-                    <Table striped responsive className="orderTable">
-                      <thead>
-                        <tr>
-                          <th>Plan</th>
-                          <th>Amount</th>
-                          <th>Maturity Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orderHistory.map((order, index) => (
-                          <tr key={index}>
-                            <td>{order.package_type}</td>
-                            <td>{order.amount}</td>
-                            <td>{order?.maturity_Date} Months</td>
+            <Row md="12" style={{ marginTop: "20px" }}>
+              <Col lg="6" className="mb-2">
+                <p className="packageDetailText">Order History</p>
+                <section className=" orderHistorySection ">
+                  {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
+                  <div className="orderHistoryTableContainer">
+                    {orderHistory.length > 0 ? (
+                      <Table striped responsive className="orderTable">
+                        <thead>
+                          <tr>
+                            <th>Plan</th>
+                            <th>Amount</th>
+                            <th>Maturity Date</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  ) : (
-                    <p>No orders found</p>
-                  )}
-                </div>
-              </section>
+                        </thead>
+                        <tbody>
+                          {orderHistory.map((order, index) => (
+                            <tr key={index}>
+                              <td>{order.package_type}</td>
+                              <td>{order.amount}</td>
+                              <td>{order?.maturity_Date} Months</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    ) : (
+                      <p>No orders found</p>
+                    )}
+                  </div>
+                </section>
+              </Col>
+              <Col lg="6" className="mb-2 d-flex flex-column ">
+                <p className="packageDetailText">Upcoming Orders</p>
 
-              <section className="col-md-6 col-sm-12 orderHistorySection mt-4">
-                {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
-                <div className="orderHistoryTableContainer">
-                  {upcomingSips.length > 0 ? (
-                    <Table striped responsive className="orderTable">
-                      <thead>
-                        <tr>
-                          <th>SIP ID</th>
-                          <th>Amount</th>
-                          <th>Installment Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {upcomingSips.map((sip, index) => (
-                          <tr key={index}>
-                            <td>{sip.nextUpcomingInstallment.sip_Id}</td>
-                            <td>{sip.nextUpcomingInstallment.installment_amount}</td>
-                            <td>{moment(sip.nextUpcomingInstallment.installment_Date).format("DD MMM YY")}</td>
-                            <td>
-                              {sip.nextUpcomingInstallment.paid_Date === null ? (
-                                <button className="btnPrimary" onClick={() => handlePayNow(sip.nextUpcomingInstallment.sip_Id, sip.nextUpcomingInstallment.installment_id)}>
-                                  Pay Now
-                                </button>
-                              ) : (
-                                <span>Paid</span>
-                              )}
-                            </td>
+                <section className="orderHistorySection">
+                  {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
+                  <div className="orderHistoryTableContainer">
+                    {upcomingSips.length > 0 ? (
+                      <Table striped responsive className="orderTable">
+                        <thead>
+                          <tr>
+                            <th>SIP ID</th>
+                            <th>Amount</th>
+                            <th>Installment Date</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  ) : (
-                    <p>No upcoming SIPs found</p>
-                  )}
-                </div>
-              </section>
-            </div>
+                        </thead>
+                        <tbody>
+                          {upcomingSips.map((sip, index) => (
+                            <tr key={index}>
+                              <td>{sip.nextUpcomingInstallment.sip_Id}</td>
+                              <td>{sip.nextUpcomingInstallment.installment_amount}</td>
+                              <td>{moment(sip.nextUpcomingInstallment.installment_Date).format("DD MMM YY")}</td>
+                              <td>
+                                {sip.nextUpcomingInstallment.paid_Date === null ? (
+                                  <button className="btnPrimary"
+                                    onClick={() => handleProceedClick(
+                                      sip.nextUpcomingInstallment.sip_Id,
+                                      sip.nextUpcomingInstallment.installment_amount,
+                                      sip.nextUpcomingInstallment.installment_Date,
+                                      sip.nextUpcomingInstallment.installment_id
+                                    )}                                >
+                                    Pay Now
+                                  </button>
+                                ) : (
+                                  <span>Paid</span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    ) : (
+                      <p>No upcoming SIPs found</p>
+                    )}
+                  </div>
+                </section>
+              </Col>
+            </Row>
           </div>
-
 
           {/* <div className="viewCappingDiv">
             <h1 className="textHeadingWithMargin">Statistics</h1>
@@ -562,7 +691,21 @@ const Dashboard = () => {
           </Col>
         </Row>
       </section>
-      
+
+      {showPopUp.visible && (
+        <PopUp
+          sipId={showPopUp.sipId}
+          amount={showPopUp.amount}
+          maturityDate={showPopUp.maturityDate}
+          companyData={showPopUp.companyData}
+          installmentId={showPopUp.installmentId}
+          onClose={() => setShowPopUp({ visible: false })}
+          onConfirm={() => {
+            payInstallment(showPopUp.sipId, showPopUp.installmentId, showPopUp.amount, showPopUp.maturityDate);
+            setShowPopUp({ visible: false });
+          }}
+        />
+      )}
     </>
   );
 };
