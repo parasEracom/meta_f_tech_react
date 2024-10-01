@@ -91,10 +91,11 @@ const Dashboard = () => {
         sip_Id: parseInt(sip_Id),
         installment_id: parseInt(installment_id),
       };
-      BasicInfo.isDebug && console.log(body, "pppppppppppppppppppppppppppp")
+      BasicInfo.isDebug && console.log(body, "body")
       const response = await AxiosPost(ApiPaths.payInstallment, body);
       if (response?.data?.status == true) {
         toastSuccess(response?.message);
+        await getUpcomingSip();
       } else {
         toastFailed("Coming Soon");
       }
@@ -401,12 +402,13 @@ const Dashboard = () => {
 
           <div className="container">
             <Row md="12" style={{ marginTop: "20px" }}>
+            {orderHistory.length > 0 ? (
               <Col lg="6" className="mb-2">
                 <p className="packageDetailText">Order History</p>
                 <section className=" orderHistorySection ">
                   {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
                   <div className="orderHistoryTableContainer">
-                    {orderHistory.length > 0 ? (
+                    {/* {orderHistory.length > 0 ? ( */}
                       <Table striped responsive className="orderTable">
                         <thead>
                           <tr>
@@ -425,19 +427,24 @@ const Dashboard = () => {
                           ))}
                         </tbody>
                       </Table>
-                    ) : (
-                      <p>No orders found</p>
-                    )}
+                    {/* // ) : (
+                    //   <p>No orders found</p>
+                    // )} */}
                   </div>
                 </section>
               </Col>
+            ) : (
+              null
+            )}
+
+              {upcomingSips.length > 0 ? (
               <Col lg="6" className="mb-2 d-flex flex-column ">
-                <p className="packageDetailText">Upcoming Orders</p>
+                <p className="packageDetailText">Upcoming SIP's</p>
 
                 <section className="orderHistorySection">
                   {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
                   <div className="orderHistoryTableContainer">
-                    {upcomingSips.length > 0 ? (
+                    {/* {upcomingSips.length > 0 ? ( */}
                       <Table striped responsive className="orderTable">
                         <thead>
                           <tr>
@@ -472,12 +479,15 @@ const Dashboard = () => {
                           ))}
                         </tbody>
                       </Table>
-                    ) : (
+                    {/* ) : (
                       <p>No upcoming SIPs found</p>
-                    )}
+                    )} */}
                   </div>
                 </section>
               </Col>
+               ) : (
+                null
+              )}
             </Row>
           </div>
 

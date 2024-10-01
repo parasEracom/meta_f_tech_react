@@ -245,6 +245,19 @@ const OverallFundHistory = () => {
     startDate: "",
     endDate: "",
   });
+  const [companyData, setCompanyData] = useState([])
+  useEffect(() => {
+    CompanyInfo();
+  }, []);
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      // console.log(JSON.parse(data));
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
 
   useEffect(() => {
     FetchData(currentPage);
@@ -382,7 +395,7 @@ const OverallFundHistory = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount ($)</th>
+                  <th>Amount({companyData?.currency_sign})</th>
                   <th>Status</th>
                   <th>Tx ID</th>
                   <th>Proof</th>
@@ -432,7 +445,7 @@ const OverallFundHistory = () => {
                       ) : (
                         <td></td>
                       )}
-                      <td style={{ textAlign: "center" }}>{moment(x?.time).format("DD-MM-YYYY")}</td>
+                      <td style={{ textAlign: "center" }}>{moment(x?.time).format("DD MMM YY")}</td>
                     </tr>
                   ))
                 ) : (

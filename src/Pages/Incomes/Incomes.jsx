@@ -34,6 +34,27 @@ const Incomes = () => {
     (wallet) => wallet.wallet_type === "income"
   );
 
+  const [companyData, setCompanyData] = useState();
+
+  useEffect(() => {
+    
+    CompanyInfo();
+  }, []);
+
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
+
+
+
+
+
   var x = 0;
   const handlePagination = (page) => {
     setCurrentPage(page);
@@ -163,7 +184,7 @@ const Incomes = () => {
               <thead>
                 <tr>
                   <th>S.no</th>
-                  <th>Amount</th>
+                  <th>Amount ({companyData?.currency_sign})</th>
                   <th>From</th>
                   <th>Level</th>
                   {/* <th>Hash</th> */}

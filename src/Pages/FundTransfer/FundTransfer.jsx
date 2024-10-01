@@ -328,7 +328,7 @@ const FundTransfer = () => {
     try {
       setLoading(true);
       const body = {
-        "action": "transfer",
+        "action": "Fund transfer",
         // username:userId
       }
       BasicInfo.isDebug && console.log("Body===>", body)
@@ -363,7 +363,7 @@ const FundTransfer = () => {
       username: userId,
       amount: amount,
       otp: otp,
-      action: "transfer"
+      action: "Fund transfer"
     }
     BasicInfo.isDebug && console.log("body", body)
     if (amount > 0 && userId.length > 0 && otp.length == 6) {
@@ -482,7 +482,7 @@ const FundTransfer = () => {
           {sponsorLoading ? <i id="sponsorLoading"></i> : null}
         </div>
         <p className="errorMsg">{userIdError}</p>
-        <label htmlFor="Amount">Amount</label>
+        <label htmlFor="Amount">Amount ({companyData?.currency_sign})</label>
         <input
           min={1}
           required

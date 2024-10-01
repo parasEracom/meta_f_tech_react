@@ -4,16 +4,32 @@ import Loader from "../../Components/Loader/Loader";
 import useAxiosHelper from "../../Common/AxiosHelper";
 import { toastSuccess, toastFailed } from "../../Common/Data";
 import moment from "moment/moment";
+import { BasicInfo } from "../../Config/BasicInfo";
 
 const Ranks = () => {
   const [loading, setLoading] = useState(false);
   const [rewardData, setRewardData] = useState([]);
   const [selectedValues, setSelectedValues] = useState({});
+  const [companyData, setCompanyData] = useState();
+
   const { AxiosGet, AxiosPost } = useAxiosHelper();
+
+
 
   useEffect(() => {
     FetchData();
+    CompanyInfo();
   }, []);
+
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
+
 
   const FetchData = async () => {
     try {
@@ -21,7 +37,7 @@ const Ranks = () => {
       const tempRank = await AxiosGet(ApiPaths.getRanks);
       setRewardData(tempRank);
     } catch (error) {
-      console.error("Error fetching payment transactions:", error);
+      BasicInfo.isDebug && console.error("Error fetching payment transactions:", error);
     } finally {
       setLoading(false);
     }
@@ -41,7 +57,7 @@ const Ranks = () => {
         toastFailed("No option selected.");
         return;
       }
-      console.log("selectedValue?.rankId", selectedValue);
+      BasicInfo.isDebug && console.log("selectedValue?.rankId", selectedValue);
       const body = {
         item: selectedValue,
         rankId: rankId,
@@ -49,10 +65,10 @@ const Ranks = () => {
       const response = await AxiosPost(ApiPaths.claimReward, body);
       toastSuccess("Reward claimed successfully");
       FetchData();
-      console.log("Reward claimed:", response);
+      BasicInfo.isDebug && console.log("Reward claimed:", response);
     } catch (error) {
       toastFailed("Error claiming reward");
-      console.error("Error claiming reward:", error);
+      BasicInfo.isDebug && console.error("Error claiming reward:", error);
     }
   };
 
@@ -71,9 +87,9 @@ const Ranks = () => {
                     <tr>
                       <th>S.No</th>
                       <th>Rank</th>
-                      <th>Total Business</th>
-                      <th>1-3 Level/ Required Business</th>
-                      <th>4-10 Level/ Required Business</th>
+                      <th>Total Business ({companyData?.currency_sign})</th>
+                      <th>1-3 Level/ Required Business ({companyData?.currency_sign}) </th>
+                      <th>4-10 Level/ Required Business ({companyData?.currency_sign})</th>
                       {/* <th>Power Line / Business</th>
                       <th>Weaker Line / Business</th>
                       <th>Rewards</th> */}

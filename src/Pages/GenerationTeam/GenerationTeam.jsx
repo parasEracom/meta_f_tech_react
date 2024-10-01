@@ -578,8 +578,8 @@ const GenerationTeam = () => {
                   <th>Activation Date</th>
                   <th>Sponsor ID (Name)</th>
                   <th>Mobile Number</th>
-                  <th>Self Business</th>
-                  <th>Team Business</th>
+                  <th>Self Business ({companyData?.currency_sign})</th>
+                  <th>Team Business ({companyData?.currency_sign})</th>
                 </tr>
               </thead>
               <tbody>

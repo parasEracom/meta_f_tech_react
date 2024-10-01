@@ -15,33 +15,25 @@ const ClaimedHistory = () => {
   const [loading, setLoading] = useState(false);
   const [runOnce, setRunOnce] = useState(true);
   const [paymentTransaction, setPaymentTransaction] = useState();
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [initValue, setInitValue] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [pageNum, setPageNum] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-
   const { AxiosGet } = useAxiosHelper();
   const incomeData = useSelector((state) => state.incomeData.incomeWallet);
   const [companyData, setCompanyData] = useState([])
-  useEffect(() => {
-    CompanyInfo();
-  }, []);
+
+ 
   async function CompanyInfo() {
     try {
-      // const response = await AxiosGet(ApiPaths.getCompanyDetails);
-      // // console.log(response, "llllllllll");
-      // localStorage.setItem(
-      //   "companyData",
-      //   JSON.stringify(response?.company_info)
-      // );
+
       const data = localStorage.getItem("companyData");
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug && console.log(error);
     }
   }
   const handlePagination = (page) => {
@@ -53,6 +45,7 @@ const ClaimedHistory = () => {
   useEffect(() => {
     if (x === 0) {
       FetchData();
+      CompanyInfo();
       x++;
     }
   }, []);
@@ -76,7 +69,7 @@ const ClaimedHistory = () => {
       setPaymentTransaction(response?.data || []);
       setTotalPages(response?.totalPages || 1);
     } catch (error) {
-      console.error("Error fetching payment transactions:", error);
+      BasicInfo.isDebug && console.error("Error fetching payment transactions:", error);
     } finally {
       setLoading(false);
     }
@@ -141,7 +134,7 @@ const ClaimedHistory = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount ({companyData?.currency} )</th>
+                  <th>Amount ({companyData?.currency_sign})</th>
                   <th>Type</th>
                   <th>Status</th>
                   <th>Date</th>
@@ -150,25 +143,25 @@ const ClaimedHistory = () => {
               <tbody>
                 {paymentTransaction != null && Array.isArray(paymentTransaction)
                   ? paymentTransaction?.map((x, i) => {
-                      return (
-                        <tr>
-                          <td>{parseInt(incomeData?.start_from) + 1 + i}</td>
+                    return (
+                      <tr>
+                        <td>{parseInt(incomeData?.start_from) + 1 + i}</td>
 
-                          {/* <td>{i + 1}</td> */}
-                          <td>{parseFloat(x?.amount).toFixed(2)}</td>
-                          <td>{x?.tx_type}</td>
-                          {/* <td>{x?.subcription}</td> */}
-                          {x?.status == "0" ? (
-                            <td>Pending</td>
-                          ) : x?.status == "1" ? (
-                            <td style={{ color: "green" }}>Success</td>
-                          ) : (
-                            <td style={{ color: "red" }}>Rejected</td>
-                          )}
-                          <td>{x?.added_on}</td>
-                        </tr>
-                      );
-                    })
+                        {/* <td>{i + 1}</td> */}
+                        <td>{parseFloat(x?.amount).toFixed(2)}</td>
+                        <td>{x?.tx_type}</td>
+                        {/* <td>{x?.subcription}</td> */}
+                        {x?.status == "0" ? (
+                          <td>Pending</td>
+                        ) : x?.status == "1" ? (
+                          <td style={{ color: "green" }}>Success</td>
+                        ) : (
+                          <td style={{ color: "red" }}>Rejected</td>
+                        )}
+                        <td>{x?.added_on}</td>
+                      </tr>
+                    );
+                  })
                   : ""}
               </tbody>
             </table>

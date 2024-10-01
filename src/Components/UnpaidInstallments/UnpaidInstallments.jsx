@@ -1,91 +1,4 @@
-// import React from 'react'
-// import useAxiosHelper from '../../Common/AxiosHelper';
-// import { ApiPaths } from '../../Config/ApiPath';
-// import { BasicInfo } from '../../Config/BasicInfo';
-// import moment from 'moment';
-// import { toastFailed } from '../../Common/Data';
-
-// export default function UnpaidInstallments() {
-
-//     const [unpaidInstallments, setUnpaidInstallments] = useState([]);
-//     const { AxiosGet, AxiosPost } = useAxiosHelper();
-
-//     const getUnpaidInstallments = async () => {
-//         try {
-//             setLoading(true);
-//             const response = await AxiosGet(ApiPaths.getUnpaidSip);
-//             BasicInfo.isDebug && console.log("Unpaid Installments Data:", response?.data);
-
-//             if (response.success && Array.isArray(response.data)) {
-//                 // Flatten the unpaid installments array and store it
-//                 const unpaidInstallments = response.data.flatMap(item => item.unpaidInstallments || []);
-//                 setUnpaidInstallments(unpaidInstallments); // Store the unpaid installments data array
-//             } else {
-//                 toastFailed("Failed to fetch unpaid installments");
-//             }
-//         } catch (error) {
-//             console.error("Error fetching unpaid installments:", error);
-//             toastFailed(error?.message);
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     var x = 0;
-//     useEffect(() => {
-//         if (x === 0) {
-//             getUnpaidInstallments()
-//             x++;
-//         }
-//     }, []);
-
-//     return (
-//         <div className="row justify-content-between">
-//             {unpaidInstallments.map((installment) => (
-//                 <div key={installment._id} className="col-12 col-sm-6 col-lg-6 mb-3">
-//                     <div className="card" style={{ borderRadius: '8px', border: "none" }}>
-//                         <div className="card-body" style={{ background: "var(--containerColor)", minWidth: "300px", color: "var(--textColor)" }}>
-//                             <div className="d-flex flex-column">
-//                                 <h5 className="card-title">SIP ID: {installment.sip_Id}</h5>
-//                                 <div className="d-flex justify-content-between">
-//                                     <p className="card-text">Installment No.:</p>
-//                                     <p className="card-text">{installment.installment_id}</p>
-//                                 </div>
-//                                 <div className="d-flex justify-content-between">
-//                                     <p className="card-text">Amount:</p>
-//                                     <p className="card-text">{installment.installment_amount}</p>
-//                                 </div>
-//                                 <div className="d-flex justify-content-between">
-//                                     <p className="card-text">Installment Date:</p>
-//                                     <p className="card-text">
-//                                         {moment(installment.installment_Date).format("DD MMM YYYY")}
-//                                     </p>
-//                                 </div>
-//                                 <div className="mt-3">
-//                                     <button
-//                                         className="btnPrimary"
-//                                         onClick={() =>
-//                                             handleProceedClick(
-//                                                 installment.sip_Id,
-//                                                 installment.installment_amount,
-//                                                 installment.installment_Date,
-//                                                 installment.installment_id
-//                                             )
-//                                         }
-//                                     >
-//                                         Pay Now
-//                                     </button>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             ))}
-//         </div>
-// }
-
-
-import React, { useState, useEffect } from 'react'; // Import useState and useEffect
+import React, { useState, useEffect } from 'react';
 import useAxiosHelper from '../../Common/AxiosHelper';
 import { ApiPaths } from '../../Config/ApiPath';
 import { BasicInfo } from '../../Config/BasicInfo';
@@ -136,7 +49,7 @@ export default function UnpaidInstallments() {
         sip_Id: parseInt(sip_Id),
         installment_id: parseInt(installment_id),
       };
-      BasicInfo.isDebug && console.log(body, "pppppppppppppppppppppppppppp")
+      BasicInfo.isDebug && console.log(body, "body")
       const response = await AxiosPost(ApiPaths.payInstallment, body);
       if (response?.data?.status == true) {
         toastSuccess(response?.message);
@@ -144,7 +57,7 @@ export default function UnpaidInstallments() {
         toastFailed("Coming Soon");
       }
     } catch (e) {
-      BasicInfo.isDebug &&  console.error("Error:", e);
+      BasicInfo.isDebug && console.error("Error:", e);
       toastFailed(e?.response?.data?.message || "Failed to pay installment.");
     } finally {
       setLoading(false);
@@ -173,7 +86,7 @@ export default function UnpaidInstallments() {
       <div className="overflow-scroll">
         <div className="row flex-nowrap">
           {unpaidInstallments.map((installment) => (
-            <div key={installment._id} className="col-12 col-sm-6 col-lg-6 mb-3">
+            <div key={installment._id} className="col-12 col-sm-6 col-lg-6 mb-3 w-85">
               <div className="card" style={{ borderRadius: '8px', border: "none" }}>
                 <div className="card-body" style={{ background: "var(--containerColor)", minWidth: "300px", color: "var(--textColor)" }}>
                   <div className="d-flex flex-column">

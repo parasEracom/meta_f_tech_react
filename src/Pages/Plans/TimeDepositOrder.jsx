@@ -141,7 +141,7 @@ const OrderHistory = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount ({companyData?.currency} )</th>
+                  <th>Amount ({companyData?.currency_sign})</th>
                   <th>Package</th>
                   <th>Order Date</th>
                   <th>Maturity Date</th>

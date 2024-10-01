@@ -169,7 +169,7 @@ const SipOrderHistory = () => {
             </div>
           )}
 
-          {isFilterApplied && filteredTransactions.length > 0 && (
+          {isFilterApplied &&selectedSipId && filteredTransactions.length > 0 && (
             <>
               {filteredTransactions.length > 0 && (
                 <div className="maturityDateDiv">
@@ -181,7 +181,7 @@ const SipOrderHistory = () => {
                   <thead>
                     <tr>
                       <th>S.No</th>
-                      <th>Installment Amount ({companyData?.currency})</th>
+                      <th>Installment Amount ({companyData?.currency_sign})</th>
                       <th>Package</th>
                       <th>Installment Date</th>
                       <th>Paid Date</th>

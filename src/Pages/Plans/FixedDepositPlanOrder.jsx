@@ -135,7 +135,7 @@ const FixedDepositPlanOrder = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Amount ({companyData?.currency} )</th>
+                  <th>Amount ({companyData?.currency_sign})</th>
                   <th>Package</th>
                   <th>Order Date</th>
                   <th>Maturity Date</th>
@@ -157,7 +157,7 @@ const FixedDepositPlanOrder = () => {
                         <td>{i + 1}</td>
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
                         <td>{x?.package_type}</td>
-                        <td>{moment(x?.order_Date).format("DD-MM-YYYY")}</td>
+                        <td>{moment(x?.order_Date).format("DD MMM YY")}</td>
                         <td>{x?.maturity_Date} Months</td>
                         {/* <td>{x?.earned_income}</td>
                         <td>{x?.pending_income}</td>
