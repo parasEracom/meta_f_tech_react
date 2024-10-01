@@ -23,11 +23,6 @@ import { setRegisterDisplay } from "../../Redux/RegisterSlice";
 import { setAuthToken } from "./../../Redux/StatusState";
 import useAxiosHelper from "./../../Common/AxiosHelper";
 import Modal from "../../Components/Modal";
-import PhoneInput, {
-  formatPhoneNumber,
-  formatPhoneNumberIntl,
-  isValidPhoneNumber,
-} from "react-phone-number-input";
 import { getCountries, getCountryCallingCode } from "react-phone-number-input";
 import Select from "react-select";
 
@@ -119,18 +114,18 @@ const Register = () => {
       console.log(e);
     }
   };
-  const handleChange = (event) => {
-    setAccountType(event.target.value);
-    validateSelection(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setAccountType(event.target.value);
+  //   validateSelection(event.target.value);
+  // };
 
-  const validateSelection = (value) => {
-    if (value === "") {
-      setError("Please select an option");
-    } else {
-      setError("");
-    }
-  };
+  // const validateSelection = (value) => {
+  //   if (value === "") {
+  //     setError("Please select an option");
+  //   } else {
+  //     setError("");
+  //   }
+  // };
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -173,9 +168,23 @@ const Register = () => {
     setBankDetailField(response?.is_bankdetails_required);
     setadharcardField(response?.is_aadhar_required);
   }
+
   const LoginRegister = async (e) => {
     e.preventDefault();
-    let valid = checkValidation();
+    let valid = true;
+
+    if (registerData.confirmPassword.length === 0) {
+      setconfirmPasswordError("Confirm password cannot be empty");
+      valid = false;
+    } else if (registerData.password !== registerData.confirmPassword) {
+      console.log("Password does not match");
+      setconfirmPasswordError("Password does not match");
+      valid = false;
+    } else {
+      valid = true;
+      setconfirmPasswordError("");
+    }
+
     if (valid) {
       setLoading(true);
       try {
@@ -187,7 +196,7 @@ const Register = () => {
           mobile: `${selectedCountry?.value}${registerData?.mobile}`,
           password: registerData.password,
           pancard: pancard,
-          adharcard:adharcard,
+          adharcard: adharcard,
           bankName: bankName,
           accountNumber: accNo,
           ifscCode: ifscCode,
@@ -214,6 +223,51 @@ const Register = () => {
       }
     }
   };
+
+
+
+
+  // const LoginRegister = async (e) => {
+  //   e.preventDefault();
+  //   let valid = checkValidation();
+  //   if (valid) {
+  //     setLoading(true);
+  //     try {
+  //       const body = {
+  //         sponsor: sponsorId,
+  //         name: registerData.name,
+  //         email: registerData.email,
+  //         username: sponsorUsername,
+  //         mobile: `${selectedCountry?.value}${registerData?.mobile}`,
+  //         password: registerData.password,
+  //         pancard: pancard,
+  //         adharcard:adharcard,
+  //         bankName: bankName,
+  //         accountNumber: accNo,
+  //         ifscCode: ifscCode,
+  //         holder: holderName,
+  //         accountType: accountType,
+  //         branch: branch,
+  //       };
+  //       console.log(body, "....");
+  //       const res = await AxiosPost(ApiPaths.register, body);
+  //       if (res.status == 200) {
+  //         toastSuccess(res?.message);
+  //         localStorage.setItem("token", res?.token);
+  //         dispatch(setRegisterDisplay(false));
+  //         dispatch(setAuthToken(res?.token));
+  //         localStorage.setItem("userProfile", JSON.stringify(res?.User));
+  //         setRegisterSuccess(true);
+  //         setRegisterSuccessData(res?.User);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       toastFailed(error?.response?.data?.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
   async function onUserStoppedTyping(sponID) {
     setSponsorLoading(true);
     try {
@@ -292,6 +346,15 @@ const Register = () => {
     setconfirmPasswordError("");
     setPenCardError("");
   }
+  const handleChange = (e) => {
+    setAccountType(e.target.value);
+    // Validation: if no account type is selected, show error
+    if (!e.target.value) {
+      setError("Please select a bank type");
+    } else {
+      setError("");
+    }
+  };
 
   return (
     <>
@@ -522,7 +585,7 @@ const Register = () => {
                 ) : (
                   ""
                 )}
-                   {adharcardfield == "yes" ? (
+                {adharcardfield == "yes" ? (
                   <Col md="4" className="inputs">
                     <>
                       <p className="registerInputError"></p>
@@ -582,6 +645,21 @@ const Register = () => {
                         />
                       </div>
                     </Col>
+                    {/* <Col md="4" className="inputs">
+                      <div className="registerInput_inner">
+                        <span id="myProfileInputFieldTitle">Account Type</span>
+                        <select
+                          className="selectOption"
+                          value={accountType}
+                          onChange={handleChange}
+                          required
+                        >
+                          <option value="">Choose Bank Type</option>
+                          <option value="Saving">Saving</option>
+                          <option value="Current">Current</option>
+                        </select>
+                      </div>
+                    </Col> */}
                     <Col md="4" className="inputs">
                       <div className="registerInput_inner">
                         <span id="myProfileInputFieldTitle">Account Type</span>
@@ -595,6 +673,9 @@ const Register = () => {
                           <option value="Saving">Saving</option>
                           <option value="Current">Current</option>
                         </select>
+
+                        {/* {/ Conditionally display the error message /} */}
+                        {error && <span style={{ color: "red" }}>{error}</span>}
                       </div>
                     </Col>
                     <Col md="4" className="inputs">

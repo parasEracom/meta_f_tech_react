@@ -673,7 +673,7 @@ const FundHistory = ({ status }) => {
                   ))
                 ) : (
                   <tr>
-                    <td style={{ textAlign: "center" }} colSpan="3">
+                    <td style={{ textAlign: "center" }} colSpan="5">
                       No history yet
                     </td>
                   </tr>

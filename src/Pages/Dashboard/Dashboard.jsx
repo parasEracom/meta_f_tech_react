@@ -78,7 +78,7 @@ const Dashboard = () => {
         toastFailed("Failed to fetch unpaid installments");
       }
     } catch (error) {
-      console.error("Error fetching unpaid installments:", error);
+      BasicInfo.isDebug && console.error("Error fetching unpaid installments:", error);
       toastFailed(error?.message);
     } finally {
       setLoading(false);
@@ -99,7 +99,7 @@ const Dashboard = () => {
         toastFailed("Coming Soon");
       }
     } catch (e) {
-      console.error("Error:", e);
+      BasicInfo.isDebug && console.error("Error:", e);
       toastFailed(e?.response?.data?.message || "Failed to pay installment.");
     } finally {
       setLoading(false);
@@ -112,7 +112,7 @@ const Dashboard = () => {
       BasicInfo.isDebug && console.log("ordersssssss", response)
       setOrderHistory(response?.data || []); // Assuming 'orders' is the key for the list of orders
     } catch (error) {
-      console.error("Error fetching order history:", error);
+      BasicInfo.isDebug && console.error("Error fetching order history:", error);
       toastFailed(error?.message);
     } finally {
       setLoading(false);
@@ -122,7 +122,7 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await AxiosGet(ApiPaths.getUpcomingSip); // Fetch upcoming SIPs
-      console.log("getUpcomingSipppppppppp", response);
+      BasicInfo.isDebug && console.log("getUpcomingSipppppppppp", response);
       // Sort the data by installment_date in ascending order (earliest date first)
       const sortedSips = response?.data.sort((a, b) =>
         new Date(a.nextUpcomingInstallment.installment_Date) - new Date(b.nextUpcomingInstallment.installment_Date)
@@ -130,30 +130,30 @@ const Dashboard = () => {
       setUpcomingSips(sortedSips || []); // Store the sorted data
       // setPendingSips(response?.data || []); // Store the SIP data
     } catch (error) {
-      console.error("Error fetching pending SIPs:", error);
+      BasicInfo.isDebug && console.error("Error fetching pending SIPs:", error);
       toastFailed(error?.message);
     } finally {
       setLoading(false);
     }
   };
-  const handlePayNow = async (sipId, installment_id) => {
-    try {
-      setLoading(true);
-      const body = {
-        sip_Id: parseInt(sipId),
-        installment_id: parseInt(installment_id),
-      };
-      const response = await AxiosPost(ApiPaths.payInstallment, body); // Assuming there's an API for making the payment
-      console.log("Pay Now for SIP ID:", sipId);
-      toastFailed("Coming Soon");
-      getUpcomingSip(); // Refresh the SIPs list after payment
-    } catch (error) {
-      console.error("Error processing payment:", error);
-      toastFailed(error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handlePayNow = async (sipId, installment_id) => {
+  //   try {
+  //     setLoading(true);
+  //     const body = {
+  //       sip_Id: parseInt(sipId),
+  //       installment_id: parseInt(installment_id),
+  //     };
+  //     const response = await AxiosPost(ApiPaths.payInstallment, body); // Assuming there's an API for making the payment
+  //     BasicInfo.isDebug && console.log("Pay Now for SIP ID:", sipId);
+  //     toastFailed("Coming Soon");
+  //     getUpcomingSip(); // Refresh the SIPs list after payment
+  //   } catch (error) {
+  //     BasicInfo.isDebug && console.error("Error processing payment:", error);
+  //     toastFailed(error?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleProceedClick = (sipId, amount, maturityDate, installmentId) => {
     BasicInfo.isDebug && console.log(sipId, "=>Sip")
     BasicInfo.isDebug && console.log(amount, "=>amount")
@@ -175,7 +175,7 @@ const Dashboard = () => {
       const tempRank = await AxiosGet(ApiPaths.getRanks);
       setRewardData(tempRank);
     } catch (error) {
-      console.error("Error fetching payment transactions:", error);
+      BasicInfo.isDebug && console.error("Error fetching payment transactions:", error);
     } finally {
       setLoading(false);
     }
@@ -206,7 +206,7 @@ const Dashboard = () => {
       setLoading(true);
       const response = await AxiosGet(ApiPaths.getOrders);
     } catch (error) {
-      console.error("Error fetching payment transactions:", error);
+      BasicInfo.isDebug && console.error("Error fetching payment transactions:", error);
     } finally {
       setLoading(false);
     }
@@ -219,7 +219,7 @@ const Dashboard = () => {
       setUpiDetailsData(res?.activeOptions?.web3?.chains?.[0] || {});
     } catch (e) {
       toastFailed(e?.response?.data?.message);
-      console.error("Error payment method transactions:", e);
+      BasicInfo.isDebug && console.error("Error payment method transactions:", e);
     } finally {
       setLoading(false);
     }
@@ -412,7 +412,7 @@ const Dashboard = () => {
                           <tr>
                             <th>Plan</th>
                             <th>Amount</th>
-                            <th>Maturity Date</th>
+                            <th>Maturity Time</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -516,16 +516,14 @@ const Dashboard = () => {
                 <div className="dashboardProfile">
                   <p>Joining Date:</p>
                   <p>
-                    {" "}
-                    {new Date(profileData?.joining_date).toLocaleDateString()}
+
+                    {moment(profileData?.joining_date).format("DD MMM YY")}
                   </p>
                 </div>
                 <div className="dashboardProfile">
                   <p>Activation Date:</p>
                   <p>
-                    {new Date(
-                      profileData?.Activation_date
-                    ).toLocaleDateString()}
+                    {moment(profileData?.Activation_date).format("DD MMM YY")}
                   </p>
                 </div>
                 <div className="dashboardProfile">

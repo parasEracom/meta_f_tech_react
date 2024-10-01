@@ -177,7 +177,7 @@ const Reward = () => {
                       {/* <td>{x?.rewardAchievedDate}</td> */}
                       <td>
                         {x?.rewardAchievedDate && x.rewardAchievedDate !== '-'
-                          ? moment(x.rewardAchievedDate).format("DD-MM-YYYY")
+                          ? moment(x.rewardAchievedDate).format("DD MMM YY")
                           : '-'}
                       </td>
                       {/* <td>{x?.rewardClaimDate}</td>

@@ -38,7 +38,7 @@ const Fund = () => {
       // console.log(JSON.parse(data));
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug && console.log(error);
     }
   }
 

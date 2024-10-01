@@ -221,8 +221,10 @@ const DirectTeam = () => {
 
                       <td>{x.username}</td>
                       <td>{x.name}</td>
-                      <td>{moment(x.joining_date).format("DD-MM-YYYY")}</td>
-                      <td>{moment(x.Activation_date).format("DD-MM-YYYY")}</td>
+                      <td>{moment(x.joining_date).format("DD MMM YY")}</td>
+                      <td> {x?.Activation_date
+                        ? moment(x.Activation_date).format("DD MMM YY")
+                        : "-"}</td>
                       <td>{x.email}</td>
                       <td>{x.mobile}</td>
                       <td>{x?.self_investment}</td>
@@ -243,8 +245,10 @@ const DirectTeam = () => {
                       </td>
                       <td>{x.username}</td>
                       <td>{x.name}</td>
-                      <td>{moment(x.joining_date).format("DD-MM-YYYY")}</td>
-                      <td>{moment(x.Activation_date).format("DD-MM-YYYY")}</td>
+                      <td>{moment(x.joining_date).format("DD MMM YY")}</td>
+                      <td> {x?.Activation_date
+                        ? moment(x.Activation_date).format("DD MMM YY")
+                        : "-"}</td>
                       <td>{x.email}</td>
                       <td>{x.mobile}</td>
                       <td>{x?.self_investment}</td>

@@ -35,5 +35,4 @@ export const ApiPaths = {
   getNomineeDetails:"/submit-nominee-kyc",
   getUpcomingSip:"/upcominginstallments",
   getUnpaidSip:"/unpaidinstallments",
-  // sendOTP: "/send-otp",
 };

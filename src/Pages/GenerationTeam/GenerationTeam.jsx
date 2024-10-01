@@ -326,7 +326,7 @@ const GenerationTeam = () => {
       const data = localStorage.getItem("companyData");
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      console.log(error);
+      BasicInfo.isDebug &&  console.log(error);
     }
   }
   const fetchAllDataTotals = async () => {
@@ -357,7 +357,7 @@ const GenerationTeam = () => {
     try {
       const response = await AxiosGet(ApiPaths.getPackages);
       const levels = response?.packages?.[0]?.level_income?.level;
-      console.log(levels.length, "....");
+      BasicInfo.isDebug &&  console.log(levels.length, "....");
 
       // Build dropdown data based on levels
       const generatedLevels = [
@@ -367,7 +367,7 @@ const GenerationTeam = () => {
           type: index + 1,
         })),
       ];
-      console.log(generatedLevels, "generated levels..");
+      BasicInfo.isDebug && console.log(generatedLevels, "generated levels..");
       setLevels(generatedLevels);
     } catch (error) {
       console.error("Error fetching levels:", error);
@@ -588,12 +588,10 @@ const GenerationTeam = () => {
                     <td>{i + 1 + 20 * (currentPage - 1)}</td>
                     <td>{x.username}</td>
                     <td>{x?.name}</td>
-                    <td>{moment(x?.joining_date).format("DD-MM-YYYY")}</td>
-                    <td>
-                      {x?.Activation_date
-                        ? moment(x.Activation_date).format("DD-MM-YYYY")
-                        : "-"}
-                    </td>
+                    <td>{moment(x.joining_date).format("DD MMM YY")}</td>
+                      <td> {x?.Activation_date
+                        ? moment(x.Activation_date).format("DD MMM YY")
+                        : "-"}</td>
                     <td>
                       {x?.sponsor_username} ({x?.sponsor_name})
                     </td>

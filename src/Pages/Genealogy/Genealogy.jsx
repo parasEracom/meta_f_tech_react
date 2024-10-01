@@ -92,6 +92,7 @@ import "./Genealogy.css";
 import { ApiPaths } from "../../Config/ApiPath";
 import Loader from "./../../Components/Loader/Loader";
 import useAxiosHelper from "./../../Common/AxiosHelper";
+import { BasicInfo } from "../../Config/BasicInfo";
 
 export default function Genealogy() {
   const [loading, setLoading] = useState(false);
@@ -121,12 +122,12 @@ export default function Genealogy() {
       setLoading(true);
       const body = { uid: userId };
       const response = await AxiosPost(ApiPaths.generationTree, body);
-      console.log("Response from tree API:", response);
+      BasicInfo.isDebug && console.log("Response from tree API:", response);
       setOrgChart(response);
       if (response) {
       }
     } catch (error) {
-      console.error("Error fetching tree data:", error);
+      BasicInfo.isDebug &&  console.error("Error fetching tree data:", error);
     } finally {
       setLoading(false);
     }
