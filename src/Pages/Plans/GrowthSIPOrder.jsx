@@ -159,7 +159,7 @@ const SipOrderHistory = () => {
             <button onClick={resetFilter}>Reset Filter</button>
           </div>
 
-          {isFilterApplied && filteredSipIds.length > 0 && (
+          {isFilterApplied && filteredSipIds.length > 0 ? (
             <div className="filter-buttons SipIdSelectBox">
               {filteredSipIds.map((sipId, index) => (
                 <button className="SipIdFilter" key={index} onClick={() => filterBySipId(sipId)}>
@@ -167,6 +167,12 @@ const SipOrderHistory = () => {
                 </button>
               ))}
             </div>
+          ):(
+            <p style={{color:"var(--textColor"}}>Please select an amount to view the SIP ID's:</p>
+          )}
+          {isFilterApplied && !selectedSipId && 
+          (
+            <p style={{color:"var(--textColor"}}>Please select a SIP ID to view further details:</p>
           )}
 
           {isFilterApplied &&selectedSipId && filteredTransactions.length > 0 && (
@@ -206,15 +212,15 @@ const SipOrderHistory = () => {
                           );
                           firstPendingFound = true;
                         } else {
-                          statusDisplay = "Pending Now";
+                          statusDisplay = "Upcoming...";
                         }
                         return (
                           <tr key={`${i}-${j}`}>
                             <td>{j + 1}</td>
-                            <td>{parseFloat(inst.installment_amount).toFixed(2)}</td>
+                            <td>{inst.installment_amount}</td>
                             <td>{transaction.package_type}</td>
-                            <td>{new Date(inst.installment_Date).toLocaleDateString()}</td>
-                            <td>{inst.paid_Date ? new Date(inst.paid_Date).toLocaleDateString() : "Pending"}</td>
+                            <td>{moment(inst.installment_Date).format("DD MMM YY")}</td>
+                            <td>{inst.paid_Date ? moment(inst.paid_Date).format("DD MMM YY") : "Pending"}</td>
                             <td>{statusDisplay}</td>
                           </tr>
                         );
@@ -233,6 +239,7 @@ const SipOrderHistory = () => {
           sipId={showPopUp.sipId}
           amount={showPopUp.amount}
           maturityDate={showPopUp.maturityDate}
+          installmentId={showPopUp.installmentId}
           companyData={companyData}
           onClose={() => setShowPopUp({ visible: false })}
           onConfirm={() => {

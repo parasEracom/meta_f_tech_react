@@ -86,7 +86,7 @@ export default function UnpaidInstallments() {
       <div className="overflow-scroll">
         <div className="row flex-nowrap">
           {unpaidInstallments.map((installment) => (
-            <div key={installment._id} className="col-12 col-sm-6 col-lg-6 mb-3 w-85">
+            <div key={installment._id} className="col-12 col-sm-4 col-lg-4 mb-3 w-85">
               <div className="card" style={{ borderRadius: '8px', border: "none" }}>
                 <div className="card-body" style={{ background: "var(--containerColor)", minWidth: "300px", color: "var(--textColor)" }}>
                   <div className="d-flex flex-column">

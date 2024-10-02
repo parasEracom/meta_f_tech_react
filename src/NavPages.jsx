@@ -39,6 +39,7 @@ import Reward from "./Pages/Reward/Reward";
 import Ranks from "./Pages/Ranks/Ranks";
 import Welcome from "./Pages/Welcome/Welcome";
 import KYC from "./Pages/KYC/KYC";
+// import KYC from "./Pages/KYC/demo";
 import Bonanza from "./Pages/Bonanza/Bonanza";
 import PopUp from "./Components/PopUp/PopUp";
 import TermsCondition from "./Pages/TermsConditions/TermsCondition";

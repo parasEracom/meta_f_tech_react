@@ -261,8 +261,6 @@ const KYC = () => {
   } = useDropzone({
     onDrop: (acceptedFiles) => onDrop(acceptedFiles, "addressBack"),
   });
-
-
   const {
     getRootProps: getNomineeFrontRootProps,
     getInputProps: getNomineeFrontInputProps,
@@ -283,8 +281,6 @@ const KYC = () => {
 
       <Row className="mt-4 d-flex justify-content-center">
         <Col lg="9" className="mb-2">
-
-
           <div
             className="tabButton"
             style={{
@@ -354,8 +350,6 @@ const KYC = () => {
               Nominee KYC
             </button>
           </div>
-
-
           {activeTab === "bank" && (
             <div className="editProfile inputPrimary">
               <h3>Bank Details</h3>
@@ -458,9 +452,9 @@ const KYC = () => {
                     alt="Bank Document"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ) : null}
+                ) : 
+                null}
               </div>
-
 
               {bankStatus == 1 || bankStatus == 2 || isApproved?.bank == 1 || isApproved?.bank == 2 ? (
                 <button
@@ -595,7 +589,7 @@ const KYC = () => {
                 <option value="">Choose ID Type</option>
                 <option value="Adhar Card">Aadhaar</option>
                 <option value="Passport">Passport</option>
-                <option value="Driver License">Driver License</option>
+                <option value="Driving License">Driver License</option>
               </select>
               {errors.selectedValue && <p className="error">{errors.selectedValue}</p>}
 

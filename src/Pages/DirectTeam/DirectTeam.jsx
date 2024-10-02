@@ -185,10 +185,7 @@ const DirectTeam = () => {
               </h4>
             </div>
           </div>
-
-
           <div className="table">
-
             <table>
               <thead>
                 <tr>
@@ -211,7 +208,8 @@ const DirectTeam = () => {
                       <td>{i + 1}</td>
                       <td
                         onClick={() => (
-                          FetchTeam(x?.uid, "", "0"), setUid(x?.uid)
+                          FetchTeam(x?.uid, "", "0"), setUid(x?.uid),
+                          console.log("Data==>",x?.uid)
                         )}
                       >
                         <i style={{ fontSize: "25px", cursor: "pointer" }}>
