@@ -488,6 +488,7 @@ import { Row, Col } from "react-bootstrap";
 import { BasicInfo } from "./../../Config/BasicInfo";
 import { AiOutlineClose } from "react-icons/ai";
 import { FiMaximize2 } from "react-icons/fi";
+import moment from "moment";
 
 const FundHistory = ({ status }) => {
   const [filterVisibility, setFilterVisibility] = useState(false);
@@ -681,7 +682,7 @@ const FundHistory = ({ status }) => {
                           <FiMaximize2 />
                         </i>
                       </td>
-                      <td style={{ textAlign: "center" }}>{x?.time}</td>
+                      <td style={{ textAlign: "center" }}>{moment(x?.time).format("DD MMM YY")}</td>
                     </tr>
                   ))
                 ) : (

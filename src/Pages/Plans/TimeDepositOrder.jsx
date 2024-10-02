@@ -149,7 +149,7 @@ const OrderHistory = () => {
                   <th>Pending Incomes</th>
                   <th>Total Incomes</th> */}
                   <th>Status</th>
-                  <th>Expiry Date</th>
+                  {/* <th>Expiry Date</th> */}
                   <th>Username(name)</th>
                 </tr>
               </thead>
@@ -164,7 +164,7 @@ const OrderHistory = () => {
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
                         <td>{x?.package_type}</td>
                         <td>{moment(x?.order_Date).format("DD MMM YY")}</td>
-                        <td>{x?.maturity_Date} Months</td>
+                        <td>{moment(x?.order_Date).add(x?.maturity_Date, 'months').format("DD MMM YY")}</td>
                         {/* <td>{x?.earned_income}</td>
                         <td>{x?.pending_income}</td>
                         <td>{x?.total_income}</td> */}
@@ -176,7 +176,7 @@ const OrderHistory = () => {
                           <td style={{ color: "red" }}>Rejected</td>
                         )}
                         {/* <td>{new Date(x?.order_Date).toLocaleDateString()}</td> */}
-                        <td>{moment(x?.expiryDate).format("DD MMM YY")}</td>
+                        {/* <td>{moment(x?.order_Date).add(x?.maturity_Date, 'months').format("DD MMM YY")}</td> */}
                         <td>
                           {x?.username}({x?.name})
                         </td>

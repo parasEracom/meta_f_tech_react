@@ -143,7 +143,7 @@ const FixedDepositPlanOrder = () => {
                   <th>Pending Incomes</th>
                   <th>Total Incomes</th> */}
                   <th>Status</th>
-                  <th>Date</th>
+                  {/* <th>Date</th> */}
                   <th>Username(name)</th>
                 </tr>
               </thead>
@@ -152,16 +152,11 @@ const FixedDepositPlanOrder = () => {
                   ? paymentTransaction?.map((x, i) => {
                     return (
                       <tr>
-                        {/* <td>{parseInt(incomeData?.start_from) + 1 + i}</td> */}
-
                         <td>{i + 1}</td>
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
                         <td>{x?.package_type}</td>
                         <td>{moment(x?.order_Date).format("DD MMM YY")}</td>
-                        <td>{x?.maturity_Date} Months</td>
-                        {/* <td>{x?.earned_income}</td>
-                        <td>{x?.pending_income}</td>
-                        <td>{x?.total_income}</td> */}
+                        <td>{moment(x?.order_Date).add(x?.maturity_Date, 'months').format("DD MMM YY")}</td>
                         {x?.status == "0" ? (
                           <td>Pending</td>
                         ) : x?.status == "1" ? (
@@ -170,7 +165,8 @@ const FixedDepositPlanOrder = () => {
                           <td style={{ color: "red" }}>Rejected</td>
                         )}
                         {/* <td>{new Date(x?.order_Date).toLocaleDateString()}</td> */}
-                        <td>{moment(x?.expiryDate).format("DD MMM YY")}</td>
+                        {/* <td>{moment(x?.expiryDate).format("DD MMM YY")}</td> */}
+                        {/* <td>{moment(x?.order_Date).add(x?.maturity_Date, 'months').format("DD MMM YY")}</td> */}
 
                         <td>
                           {x?.username}({x?.name})
