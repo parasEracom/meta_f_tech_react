@@ -84,8 +84,6 @@
 //   );
 // }
 
-
-
 import React, { useState, useEffect, useRef } from "react";
 import Tree from "react-d3-tree";
 import "./Genealogy.css";

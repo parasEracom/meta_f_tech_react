@@ -595,7 +595,7 @@ const LandingPage = () => {
                     <i>
                       <TbReportAnalytics />
                     </i>
-                    <h5>Bonus</h5>
+                    <h5>Incomes</h5>
                   </div>
                 </NavLink>
                 {/* <NavLink

@@ -80,21 +80,6 @@ const DirectTeam = () => {
       setDirectTeamData(response?.data);
 
 
-      // Calculate total self business (sum of self_investment)
-      // const totalSelfBusiness = response?.data.reduce((sum, user) => {
-      //   return sum + (user?.self_investment || 0); // Add self_investment if it exists
-      // }, 0);
-
-      // // Calculate total team business (sum of business)
-      // const totalTeamBusiness = response?.data.reduce((sum, user) => {
-      //   return sum + (user?.business || 0); // Add team business if it exists
-      // }, 0);
-
-      // // Set the total self and team business values
-      // setSelfBussTransaction(totalSelfBusiness);
-      // setTeamBussTransaction(totalTeamBusiness);
-
-      // setTotalPages(response?.totalPages || 1);
     } catch (error) {
       BasicInfo.isDebug && console.log("Error Occurred", error);
     } finally {

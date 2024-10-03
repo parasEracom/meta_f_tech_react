@@ -197,8 +197,15 @@ const KYC = () => {
     }
   };
   const onDrop = async (acceptedFiles, type) => {
+    const acceptedImageTypes = ['image/jpeg', 'image/png']; // JPEG and PNG MIME types
+    const imageFiles = acceptedFiles.filter(file => 
+      acceptedImageTypes.includes(file.type) || 
+      file.name.endsWith('.jpg') || 
+      file.name.endsWith('.jpeg')
+    );
+  
     const compressedFiles = await Promise.all(
-      acceptedFiles.map(async (file) => {
+      imageFiles.map(async (file) => {
         const options = {
           maxSizeMB: 1,
           maxWidthOrHeight: 1024,
@@ -209,7 +216,7 @@ const KYC = () => {
           return compressedFile;
         } catch (err) {
           BasicInfo.isDebug && console.error("Error compressing image:", err);
-          return file;
+          return file; // Return the original file if compression fails
         }
       })
     );
@@ -430,7 +437,8 @@ const KYC = () => {
                     <div {...getBankRootProps({ className: "dropzone" })}>
                       <input {...getBankInputProps()} />
                       <p>
-                        Drag 'n' drop bank document here, or click to select one
+                        {/* Drag 'n' drop bank document here, or click to select one */}
+                        Upload Bank document here (.jpg, .jpeg & .png)
                       </p>
                     </div>
                   </>
@@ -514,7 +522,8 @@ const KYC = () => {
                     <div {...getPanRootProps({ className: "dropzone" })}>
                       <input {...getPanInputProps()} />
                       <p>
-                        Drag 'n' drop PAN document here, or click to select one
+                        {/* Drag 'n' drop PAN document here, or click to select one */}
+                        Upload PAN document here (.jpg, .jpeg & .png)
                       </p>
                     </div>
                   </>
@@ -554,7 +563,6 @@ const KYC = () => {
               )}
             </div>
           )}
-
 
           {activeTab === "address" && (
             <div className="editProfile inputPrimary">
@@ -629,7 +637,8 @@ const KYC = () => {
                     <div {...getAddressFrontRootProps({ className: "dropzone" })}>
                       <input {...getAddressFrontInputProps()} />
                       <p>
-                        Drag 'n' drop address front document here, or click to select one
+                        {/* Drag 'n' drop address front document here, or click to select one */}
+                        Upload Address front document here (.jpg, .jpeg, or .png)
                       </p>
                     </div>
                     {previews.addressFront.map((url, index) => (
@@ -660,7 +669,7 @@ const KYC = () => {
                     <div {...getAddressBackRootProps({ className: "dropzone" })}>
                       <input {...getAddressBackInputProps()} />
                       <p>
-                        Drag 'n' drop address back document here, or click to select one
+                      Upload Address back document here (.jpg, .jpeg, or .png)
                       </p>
                     </div>
                     {previews.addressBack.map((url, index) => (
@@ -767,7 +776,7 @@ const KYC = () => {
                     <div {...getNomineeFrontRootProps({ className: "dropzone" })}>
                       <input {...getNomineeFrontInputProps()} />
                       <p>
-                        Drag 'n' drop nominee document front side here, or click to select one
+                      Upload Nominee front document here (.jpg, .jpeg, or .png)
                       </p>
                     </div>
                     {previews.nomineeFront.map((url, index) => (
@@ -798,7 +807,9 @@ const KYC = () => {
                     <div {...getNomineeBackRootProps({ className: "dropzone" })}>
                       <input {...getNomineeBackInputProps()} />
                       <p>
-                        Drag 'n' drop nominee document back side here, or click to select one
+                        {/* Drag 'n' drop nominee document back side here, or click to select one */}
+                        Upload Nominee back document here (.jpg, .jpeg, or .png)
+
                       </p>
                     </div>
                     {previews.nomineeBack.map((url, index) => (

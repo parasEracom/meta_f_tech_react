@@ -305,7 +305,13 @@ const GenerationTeam = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [levelTeam, setLevelTeam] = useState([]);
   const { AxiosGet, AxiosPost } = useAxiosHelper();
-  const [allDataTotals, setAllDataTotals] = useState({ totalSelfBusiness: 0, totalTeamBusiness: 0 });
+  const [allDataTotals, setAllDataTotals] = useState({
+    totalSelfBusiness: 0,
+    totalTeamBusiness: 0,
+    fdBusiness: 0,
+    tdBusiness: 0,
+    sipBusiness: 0,
+  });
 
   const [search, setSearch] = useState({
     search: "",
@@ -326,7 +332,7 @@ const GenerationTeam = () => {
       const data = localStorage.getItem("companyData");
       setCompanyData(JSON.parse(data));
     } catch (error) {
-      BasicInfo.isDebug &&  console.log(error);
+      BasicInfo.isDebug && console.log(error);
     }
   }
   const fetchAllDataTotals = async () => {
@@ -344,9 +350,16 @@ const GenerationTeam = () => {
       );
       const totalSelfBusiness = response?.data.reduce((sum, member) => sum + (member?.self_investment || 0), 0);
       const totalTeamBusiness = response?.data.reduce((sum, member) => sum + (member?.business || 0), 0);
+      const fdBusiness = response?.data.reduce((sum, member) => sum + (member?.fdbusiness || 0), 0);
+      const tdBusiness = response?.data.reduce((sum, member) => sum + (member?.tdbusiness || 0), 0);
+      const sipBusiness = response?.data.reduce((sum, member) => sum + (member?.sipbusiness || 0), 0);
       BasicInfo.isDebug && console.log(totalSelfBusiness, "totalSelfBusiness")
       BasicInfo.isDebug && console.log(totalTeamBusiness, "totalTeamBusiness")
-      setAllDataTotals({ totalSelfBusiness, totalTeamBusiness });
+      BasicInfo.isDebug && console.log(fdBusiness, "fdBusiness")
+      BasicInfo.isDebug && console.log(tdBusiness, "tdBusiness")
+      BasicInfo.isDebug && console.log(sipBusiness, "sipBusiness")
+      // BasicInfo.isDebug && console.log(allDataTotals, "sipBusiness")
+      setAllDataTotals({ totalSelfBusiness, totalTeamBusiness, fdBusiness, tdBusiness, sipBusiness });
     } catch (error) {
       BasicInfo.isDebug && console.error("Error fetching all data totals:", error);
     }
@@ -357,7 +370,7 @@ const GenerationTeam = () => {
     try {
       const response = await AxiosGet(ApiPaths.getPackages);
       const levels = response?.packages?.[0]?.level_income?.level;
-      BasicInfo.isDebug &&  console.log(levels.length, "....");
+      BasicInfo.isDebug && console.log(levels.length, "....");
 
       // Build dropdown data based on levels
       const generatedLevels = [
@@ -557,48 +570,66 @@ const GenerationTeam = () => {
             ) : (
               <div style={{ textAlign: "end" }}>
                 <h4>
-                  Self Business: <span>{allDataTotals.totalSelfBusiness || 0} {companyData?.currency}</span>
+                  Self Business: <span>{allDataTotals.totalSelfBusiness} {companyData?.currency}</span>
                 </h4>
                 <h4>
-                  Team Business: <span>{allDataTotals.totalTeamBusiness || 0} {companyData?.currency}</span>
+                  Team Business: <span>{allDataTotals.totalTeamBusiness} {companyData?.currency}</span>
+                </h4>
+                <h4>
+                  FD Business: <span>{allDataTotals.fdBusiness} {companyData?.currency}</span>
+                </h4>
+                <h4>
+                  TD Business: <span>{allDataTotals.tdBusiness} {companyData?.currency}</span>
+                </h4>
+                <h4>
+                  SIP Business: <span>{allDataTotals.sipBusiness} {companyData?.currency}</span>
                 </h4>
               </div>
             )}
-
 
           </div>
           <div className="table">
             <table>
               <thead>
                 <tr>
-                  <th>S.No</th>
-                  <th>User Id</th>
-                  <th>Name</th>
-                  <th>Join Date</th>
-                  <th>Activation Date</th>
-                  <th>Sponsor ID (Name)</th>
-                  <th>Mobile Number</th>
-                  <th>Self Business ({companyData?.currency_sign})</th>
-                  <th>Team Business ({companyData?.currency_sign})</th>
+                  <th rowSpan="2">S.No</th>
+                  <th rowSpan="2">User Id</th>
+                  <th rowSpan="2">Name</th>
+                  <th rowSpan="2">Join Date</th>
+                  <th rowSpan="2">Activation Date</th>
+                  <th rowSpan="2">Sponsor ID (Name)</th>
+                  <th rowSpan="2">Mobile Number</th>
+                  {/* Self Business header with 2 sub-columns */}
+                  <th colSpan="3">Self Business ({companyData?.currency_sign})</th>
+                  <th rowSpan="2">Team Business ({companyData?.currency_sign})</th>
+                </tr>
+                <tr>
+                  <th>FD</th>
+                  <th>TD</th>
+                  <th>SIP</th>
                 </tr>
               </thead>
               <tbody>
                 {levelTeam.map((x, i) => (
-                  <tr key={i}>
-                    <td>{i + 1 + 20 * (currentPage - 1)}</td>
-                    <td>{x.username}</td>
-                    <td>{x?.name}</td>
-                    <td>{moment(x.joining_date).format("DD MMM YY")}</td>
-                      <td> {x?.Activation_date
-                        ? moment(x.Activation_date).format("DD MMM YY")
-                        : "-"}</td>
-                    <td>
-                      {x?.sponsor_username} ({x?.sponsor_name})
-                    </td>
-                    <td>{x.mobile}</td>
-                    <td>{x?.self_investment}</td>
-                    <td>{x?.business}</td>
-                  </tr>
+                  <>
+                    <tr key={i}>
+                      <td rowSpan="2">{i + 1 + 20 * (currentPage - 1)}</td>
+                      <td rowSpan="2">{x.username}</td>
+                      <td rowSpan="2">{x?.name}</td>
+                      <td rowSpan="2">{moment(x.joining_date).format("DD MMM YY")}</td>
+                      <td rowSpan="2">{x?.Activation_date ? moment(x.Activation_date).format("DD MMM YY") : "-"}</td>
+                      <td rowSpan="2">{x?.sponsor_username} ({x?.sponsor_name})</td>
+                      <td rowSpan="2">{x.mobile}</td>
+                      {/* Separate columns for Self Business, SIP Business, and FD Business */}
+                      <td colSpan="3">{x?.self_investment ?? 0}</td>
+                      <td rowSpan="2">{x?.business}</td>
+                    </tr>
+                    <tr>
+                      <td>{x?.fdbusiness ?? 0}</td>
+                      <td>{x?.tdbusiness ?? 0}</td>
+                      <td>{x?.sipbusiness ?? 0}</td>
+                    </tr>
+                  </>
                 ))}
               </tbody>
             </table>

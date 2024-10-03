@@ -12,6 +12,7 @@ import { setIncomeWallet } from "../../Redux/IncomeWallet";
 import { useDispatch, useSelector } from "react-redux";
 import PaginationComponent from "../../Components/PaginationControls/PaginationControls";
 import { BasicInfo } from "../../Config/BasicInfo";
+import moment from "moment/moment";
 
 const Incomes = () => {
   const { AxiosGet } = useAxiosHelper();
@@ -49,12 +50,6 @@ const Incomes = () => {
       BasicInfo.isDebug && console.log(error);
     }
   }
-
-
-
-
-
-
   var x = 0;
   const handlePagination = (page) => {
     setCurrentPage(page);
@@ -174,9 +169,9 @@ const Incomes = () => {
         ) : null}
         <section className="history">
           <div className="historyContent">
-            <h1 className="textHeading">History</h1>
+            <h1 className="textHeading"></h1>
             <h4>
-              Total Income: <span>{currentIncome}</span>
+              Total Income: <span> {currentIncome} {companyData?.currency}</span>
             </h4>
           </div>
           <div className="table">
@@ -195,7 +190,7 @@ const Incomes = () => {
                 {paymentTransaction?.map((x, i) => {
                   return (
                     <tr>
-                      <td>{i + 1}</td>
+                      <td>{i + 1 + 20 * (currentPage - 1)}</td>
                       <td>{parseFloat(x?.amount).toFixed(2)}</td>
 
                       <td>{x?.from}</td>
@@ -209,7 +204,7 @@ const Incomes = () => {
                           {abbreviatedHash}
                         </a>
                       </td> */}
-                      <td>{new Date(x?.updatedAt).toLocaleDateString()}</td>
+                      <td>{moment(x?.updatedAt).format("DD MMM YY")}</td>
                     </tr>
                   );
                 })}
