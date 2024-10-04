@@ -53,6 +53,7 @@ export default function UnpaidInstallments() {
       const response = await AxiosPost(ApiPaths.payInstallment, body);
       if (response?.data?.status == true) {
         toastSuccess(response?.message);
+        await getUnpaidInstallments()
       } else {
         toastFailed("Coming Soon");
       }

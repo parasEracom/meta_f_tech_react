@@ -402,49 +402,56 @@ const Dashboard = () => {
 
           <div className="container">
             <Row md="12" style={{ marginTop: "20px" }}>
-            {orderHistory.length > 0 ? (
-              <Col lg="6" className="mb-2">
-                <p className="packageDetailText">Order History</p>
-                <section className=" orderHistorySection ">
-                  {/* <h1 className="textHeadingWithMargin">Package Details</h1> */}
-                  <div className="orderHistoryTableContainer">
-                    {/* {orderHistory.length > 0 ? ( */}
+              {orderHistory.length > 0 ? (
+                <Col lg="6" className="mb-2">
+                  <p className="packageDetailText">Order History</p>
+                  <section className="orderHistorySection">
+                    <div className="orderHistoryTableContainer">
                       <Table striped responsive className="orderTable">
                         <thead>
                           <tr>
                             <th>Plan</th>
                             <th>Amount</th>
+                            <th>SIP Id</th>
+                            <th>Inst. Id</th>
                             <th>Maturity Time</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {orderHistory.map((order, index) => (
-                            <tr key={index}>
-                              <td>{order.package_type}</td>
-                              <td>{order.amount}</td>
-                              <td>{order?.maturity_Date} Months</td>
-                            </tr>
-                          ))}
+                          {orderHistory
+                            .reduce((uniqueOrders, order) => {
+                              // Check if the SIP ID is already added to the uniqueOrders array
+                              if (!uniqueOrders.some(o => o.sip_Id === order.sip_Id)) {
+                                uniqueOrders.push(order);
+                              }
+                              return uniqueOrders;
+                            }, [])
+                            .map((order, index) => (
+                              <tr key={index}>
+                                <td>{order.package_type}</td>
+                                <td>{order.amount}</td>
+                                <td>{order?.sip_Id ? order.sip_Id : "-"}</td>
+                                <td>{order?.installment_id ? order.installment_id : "-"}</td>
+                                <td>{order?.maturity_Date} Months</td>
+                              </tr>
+                            ))}
                         </tbody>
                       </Table>
-                    {/* // ) : (
-                    //   <p>No orders found</p>
-                    // )} */}
-                  </div>
-                </section>
-              </Col>
-            ) : (
-              null
-            )}
+                    </div>
+                  </section>
+                </Col>
+              ) : null}
+
+
 
               {upcomingSips.length > 0 ? (
-              <Col lg="6" className="mb-2 d-flex flex-column ">
-                <p className="packageDetailText">Upcoming SIP's</p>
+                <Col lg="6" className="mb-2 d-flex flex-column ">
+                  <p className="packageDetailText">Upcoming SIP's</p>
 
-                <section className="orderHistorySection">
-                  {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
-                  <div className="orderHistoryTableContainer">
-                    {/* {upcomingSips.length > 0 ? ( */}
+                  <section className="orderHistorySection">
+                    {/* <h1 className="textHeadingWithMargin">Upcoming SIPs</h1> */}
+                    <div className="orderHistoryTableContainer">
+                      {/* {upcomingSips.length > 0 ? ( */}
                       <Table striped responsive className="orderTable">
                         <thead>
                           <tr>
@@ -479,13 +486,13 @@ const Dashboard = () => {
                           ))}
                         </tbody>
                       </Table>
-                    {/* ) : (
+                      {/* ) : (
                       <p>No upcoming SIPs found</p>
                     )} */}
-                  </div>
-                </section>
-              </Col>
-               ) : (
+                    </div>
+                  </section>
+                </Col>
+              ) : (
                 null
               )}
             </Row>

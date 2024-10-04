@@ -171,7 +171,7 @@ const Incomes = () => {
           <div className="historyContent">
             <h1 className="textHeading"></h1>
             <h4>
-              Total Income: <span> {currentIncome} {companyData?.currency}</span>
+              Total Income: <span> {parseFloat(currentIncome).toFixed(2)} {companyData?.currency}</span>
             </h4>
           </div>
           <div className="table">
