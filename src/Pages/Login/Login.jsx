@@ -41,8 +41,9 @@ const Login = () => {
             headers: { Authorization: token },
           });
           if (response) {
-            console.log(response);
+            BasicInfo.isDebug && console.log(response);
             localStorage.setItem("token", token);
+            localStorage.setItem("userId", response?.data?.uid);
             navigate("/dashboard");
           }
         }
@@ -55,6 +56,8 @@ const Login = () => {
 
     fetchData();
   }, [token]);
+
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter") {

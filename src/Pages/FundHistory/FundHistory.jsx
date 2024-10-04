@@ -471,7 +471,7 @@ const OverallFundHistory = () => {
         {selectedImage && (
           <div className="popup">
             <div className="popup-content">
-              <span className="close-icon" onClick={closeImagePopup}>
+              <span className="close-icon" style={{color:"var(--textColor"}} onClick={closeImagePopup}>
                 <AiOutlineClose />
               </span>
               <img src={selectedImage} alt="proof" className="popup-image" />
