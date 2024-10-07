@@ -32,6 +32,42 @@ const Login = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
   const basepath = process.env.REACT_APP_API_URL;
+  const [companyData, setCompanyData] = useState()
+  async function CompanyInfo() {
+    try {
+      let data = localStorage.getItem("companyData");
+     BasicInfo.isDebug && console.log("LocalStorage Data:", data);
+      
+      if (data) {
+        // If data exists in localStorage, parse and set it
+        setCompanyData(JSON.parse(data));
+      } else {
+        // If no data, make an API call to fetch the company info
+        const response = await AxiosGet(ApiPaths.getCompanyDetails);
+        
+        // Assuming response?.company_info holds the data you need
+        const companyData = response?.company_info;
+        
+        // Store the fetched data in localStorage
+        localStorage.setItem("companyData", JSON.stringify(companyData));
+        
+        // Set the fetched data in the state
+        setCompanyData(companyData);
+        BasicInfo.isDebug && console.log("Fetched and stored company data:", companyData);
+      }
+    } catch (error) {
+      BasicInfo.isDebug && console.log("Error fetching company data:", error);
+    }
+  }
+  
+
+  let x = 0
+  useEffect(() => {
+    if (x == 0) {
+      CompanyInfo();
+      x++
+    }
+  })
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,7 +156,7 @@ const Login = () => {
             <Col md="6">
               {" "}
               <div className="loginContent">
-                <a className="loginLogo" href={BasicInfo.websiteLink}>
+                <a className="loginLogo" href={companyData?.contactInfo?.website}>
                   <img src={Logo} alt="logo.png" width="50px" height="50px" />
                 </a>
                 <p>sign in into your account</p>

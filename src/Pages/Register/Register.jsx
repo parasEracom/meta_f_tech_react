@@ -79,6 +79,16 @@ const Register = () => {
   const [accNo, setAccNo] = useState("");
   const [ifscCode, setIfscCode] = useState("");
   const [bankName, setBankName] = useState("");
+  const [companyData, setCompanyData] = useState()
+  async function CompanyInfo() {
+    try {
+      const data = localStorage.getItem("companyData");
+      // console.log(JSON.parse(data));
+      setCompanyData(JSON.parse(data));
+    } catch (error) {
+      BasicInfo.isDebug && console.log(error);
+    }
+  }
 
   useEffect(() => {
     // Fetch country codes and names
@@ -158,6 +168,7 @@ const Register = () => {
   useEffect(() => {
     if (x == 0) {
       RegisterField();
+      CompanyInfo();
       x++;
     }
   }, []);
@@ -413,7 +424,7 @@ const Register = () => {
       <Container id="logincontainer">
         <div className="registerContainerContent">
           <div className="registerContent">
-            <a className="loginLogo" href={BasicInfo.websiteLink}>
+            <a className="loginLogo" href={companyData?.contactInfo?.website}>
               <img src={Logo} alt="logo.png" width="150px" height="100px" />
             </a>
             <p>sign Up your account</p>

@@ -7,6 +7,7 @@ import useAxiosHelper from "../../Common/AxiosHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { BasicInfo } from "../../Config/BasicInfo";
+import moment from "moment/moment";
 const ClaimedHistory = () => {
   const [selectIncome, setSelectIncome] = useState(1);
   const [tabsName, setTabsName] = useState("deposit");
@@ -25,7 +26,7 @@ const ClaimedHistory = () => {
   const incomeData = useSelector((state) => state.incomeData.incomeWallet);
   const [companyData, setCompanyData] = useState([])
 
- 
+
   async function CompanyInfo() {
     try {
 
@@ -53,7 +54,7 @@ const ClaimedHistory = () => {
     try {
       setLoading(true);
       const filters = {
-        tx_type: "withdraw",
+        tx_type: "withdrawal",
       };
       const queryParams = {
         page: page,
@@ -145,8 +146,7 @@ const ClaimedHistory = () => {
                   ? paymentTransaction?.map((x, i) => {
                     return (
                       <tr>
-                        <td>{parseInt(incomeData?.start_from) + 1 + i}</td>
-
+                        <td>{i + 1 + 20 * (currentPage - 1)}</td>
                         {/* <td>{i + 1}</td> */}
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
                         <td>{x?.tx_type}</td>
@@ -154,11 +154,11 @@ const ClaimedHistory = () => {
                         {x?.status == "0" ? (
                           <td>Pending</td>
                         ) : x?.status == "1" ? (
-                          <td style={{ color: "green" }}>Success</td>
+                          <td style={{ color: "var(--bs-success)" }}>Success</td>
                         ) : (
-                          <td style={{ color: "red" }}>Rejected</td>
+                          <td style={{ color: "var(--bs-danger)" }}>Rejected</td>
                         )}
-                        <td>{x?.added_on}</td>
+                        <td>{moment(x?.time).format("DD MMM YY (hh:mm:ss)")}</td>
                       </tr>
                     );
                   })

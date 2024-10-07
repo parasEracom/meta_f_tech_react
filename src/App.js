@@ -38,32 +38,7 @@ function App() {
     }
   }
 
-  // async function CompanyInfo() {
-  //   try {
-  //     // Check if company data exists in localStorage
-  //     const storedData = localStorage.getItem("companyData");
-  
-  //     if (storedData) {
-  //       // If data exists in localStorage, set it to state
-  //       setCompanyData(JSON.parse(storedData));
-  //     } else {
-  //       // If data doesn't exist, fetch from API
-  //       const response = await AxiosGet(ApiPaths.getCompanyDetails);
-  
-  //       // Store the fetched data in localStorage
-  //       localStorage.setItem(
-  //         "companyData",
-  //         JSON.stringify(response?.company_info)
-  //       );
-  
-  //       // Set the company data to state
-  //       setCompanyData(response?.company_info);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
+ 
 
 
 

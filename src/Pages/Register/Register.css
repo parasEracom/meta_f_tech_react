@@ -250,7 +250,7 @@
 }
 #myProfileInputFieldTitle {
   background: transparent !important;
-  color: black !important;
+  /* color: black !important; */
 }
 .css-13cymwt-control {
   padding: 2px 15px;
