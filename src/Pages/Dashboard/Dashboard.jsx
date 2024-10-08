@@ -441,9 +441,6 @@ const Dashboard = () => {
                   </section>
                 </Col>
               ) : null}
-
-
-
               {upcomingSips.length > 0 ? (
                 <Col lg="6" className="mb-2 d-flex flex-column ">
                   <p className="packageDetailText">Upcoming SIP's</p>

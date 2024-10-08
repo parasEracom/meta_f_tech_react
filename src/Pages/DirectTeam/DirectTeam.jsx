@@ -228,7 +228,7 @@ const DirectTeam = () => {
                 {directTeamData?.map((x, i) => {
                   return x.status == "1" ? (
                     <tr className="teamRow">
-                      <td>{i + 1}</td>
+                      <td>{i + 1 + 20 * (currentPage - 1)}</td>
                       <td
                         onClick={() => (
                           FetchTeam(x?.uid, "", "0"), setUid(x?.uid),
