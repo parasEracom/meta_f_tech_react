@@ -136,7 +136,8 @@ const ClaimedHistory = () => {
                 <tr>
                   <th>S.No</th>
                   <th>Amount ({companyData?.currency_sign})</th>
-                  <th>Type</th>
+                  {/* <th>Type</th> */}
+                  <th>Tx Charges ({companyData?.currency_sign})</th>
                   <th>Status</th>
                   <th>Date</th>
                 </tr>
@@ -149,7 +150,8 @@ const ClaimedHistory = () => {
                         <td>{i + 1 + 20 * (currentPage - 1)}</td>
                         {/* <td>{i + 1}</td> */}
                         <td>{parseFloat(x?.amount).toFixed(2)}</td>
-                        <td>{x?.tx_type}</td>
+                        {/* <td>{x?.tx_type}</td> */}
+                        <td>{parseFloat(x?.tx_charge).toFixed(2)}</td>
                         {/* <td>{x?.subcription}</td> */}
                         {x?.status == "0" ? (
                           <td>Pending</td>
