@@ -18,6 +18,9 @@ import PhoneInput, {
   isValidPhoneNumber,
 } from "react-phone-number-input";
 import moment from "moment";
+import { FaUpload } from "react-icons/fa"; // Upload icon
+
+
 const Profile = () => {
   const dispatch = useDispatch();
   const { AxiosGet, AxiosPost } = useAxiosHelper();
@@ -36,6 +39,10 @@ const Profile = () => {
   const profileData = useSelector(
     (state) => state.profileData.userPersonalInfo
   );
+  // console.log("Updated profile data: ", profileData); // Check if profileImageUrl is available
+
+  // const userProfile = useSelector((state) => state.user.userProfile); // Access the updated user profile
+
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [mobileError, setMobileError] = useState("");
@@ -48,11 +55,17 @@ const Profile = () => {
   const [ifscCode, setIfscCode] = useState("");
   const [bankName, setBankName] = useState("");
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null); // For uploading profile image
+  const [imagePreview, setImagePreview] = useState(null); // Image preview
+  const [profileImg, setProfileImg] = useState(); // New Profile Image 
+
 
   useEffect(() => {
     setProfileEmail(profileData?.email);
     setProfileName(profileData?.name);
     setProfileMobile(profileData?.mobile);
+    // setImagePreview(profileData.profileImageUrl || null);
+    setProfileImg(profileData.profileImg || User)
   }, [profileData]);
   const checkPasswordDataIsValid = () => {
     if (
@@ -192,19 +205,75 @@ const Profile = () => {
     }
   };
 
+  ////////////////////////////////////
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const validTypes = ['image/jpeg', 'image/png'];
+      // const maxSize = 2 * 1024 * 1024; // 2MB
+      if (!validTypes.includes(file.type)) {
+        toastFailed("Please upload a valid image (jpg, png, jpeg)");
+        return;
+      }
+      // if (file.size > maxSize) {
+      //   toastFailed("File size exceeds 2MB");
+      //   return;
+      // }
+      setSelectedFile(file);
+      setImagePreview(URL.createObjectURL(file)); // Create image preview
+    }
+  };
+
+  const uploadProfilePhoto = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("profileImg", selectedFile);
+      setLoading(true);
+
+      try {
+        const res = await AxiosPost(ApiPaths.uploadProfileImage, formData);
+        toastSuccess(res?.message);
+        BasicInfo.isDebug &&  console.log("Upload message:", res);
+        getProfile()
+        // setProfileImg(profileData.profileImg )
+      } catch (error) {
+        toastFailed(error?.message);
+      } finally {
+        setLoading(false); // Reset loading state
+      }
+    } else {
+      toastFailed("Please select a file to upload");
+    }
+  };
+
+  const getProfile = async () => {
+    try {
+      setLoading(true);
+      const response = await AxiosGet(ApiPaths.getProfile);
+      BasicInfo.isDebug && console.log("Profile Data:", response);
+      setProfileImg(response?.profileImg)
+    } catch (error) {
+      BasicInfo.isDebug && console.error("Error fetching Profile data:", error);
+      toastFailed(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <section className="dashboard" style={{ paddingTop: "10px" }}>
       {loading && <Loader />}
       <div className="topProfile">
-        <img src={User} alt="" />
+        <img src={profileImg || User} alt="PRofile" />
         <h5>{profileData?.username}</h5>
         <p>-{profileData?.name}</p>
       </div>
-
       <Row className="mt-4">
         <Col lg="6" className="mb-2">
           <div className="tabButtons">
-            {/* <button
+            <button
               className="btnPrimary"
               onClick={() => setActiveTab("password")}
             >
@@ -212,11 +281,17 @@ const Profile = () => {
             </button>
             <button
               className="btnPrimary"
+              onClick={() => setActiveTab("image")}
+            >
+              Change Profile Picture
+            </button>
+           <button
+              className="btnPrimary"
               onClick={() => setActiveTab("profile")}
             >
-              Edit Profile
-            </button> */}
-            {/* <button
+              Edit E-mail
+            </button>
+            {/*   <button
               className="btnPrimary"
               onClick={() => setActiveTab("bankDetails")}
             >
@@ -333,10 +408,43 @@ const Profile = () => {
               </button>
             </div>
           )}
+          {activeTab === "image" && (
+            <div className="passwordDiv">
+              <h3 className="mb-4">Upload Profile Image</h3>
+
+              <div className="form-group mb-3">
+                <label htmlFor="imageUpload" style={{ color: "var(--textColor)" }} className="form-label mb-2">Choose Image </label>
+                <input
+                  id="imageUpload"
+                  type="file"
+                  accept="image/*"
+                  aria-label="Profile Image Upload"
+                  className="form-control"
+                  onChange={handleFileChange}
+                />
+                <p style={{ color: "var(--textColor)", fontSize: "xx-small" }}>Accepted Types (jpg, png, jpeg)</p>
+              </div>
+
+              <button
+                className="btnPrimary btn-block mt-4"
+                onClick={uploadProfilePhoto}
+              >
+                Upload
+              </button>
+              {loading && <Loader />}
+              {imagePreview && (
+                <div className="d-flex justify-content-center mt-4">
+                  <img src={imagePreview} alt="Profile Preview" height="100px" className=" rounded" />
+                </div>
+              )}
+            </div>
+
+          )}
+
           {activeTab === "profile" && (
             <div className="editProfile inputPrimary">
               <h3>Edit Profile</h3>
-              <label htmlFor="">User Id</label>
+              {/* <label htmlFor="">User Id</label>
               <input
                 contentEditable={false}
                 type="text"
@@ -350,7 +458,7 @@ const Profile = () => {
                 value={profileName}
                 onChange={(e) => setProfileName(e.target.value)}
               />
-              <p className="registerInputError">{nameError}</p>
+              <p className="registerInputError">{nameError}</p> */}
 
               <label htmlFor="">Email</label>
               <input
@@ -361,7 +469,7 @@ const Profile = () => {
               />
               <p className="registerInputError">{emailError}</p>
 
-              <label htmlFor="">Contact Number</label>
+              {/* <label htmlFor="">Contact Number</label>
 
               <PhoneInput
                 id="phoneInput"
@@ -371,10 +479,10 @@ const Profile = () => {
                 value={profileMobile}
                 onChange={setProfileMobile}
               />
-              <p className="registerInputError">{mobileError}</p>
+              <p className="registerInputError">{mobileError}</p> */}
 
               <button onClick={EditProfile} className="btnPrimary">
-                Edit Profile
+                Update
               </button>
             </div>
           )}

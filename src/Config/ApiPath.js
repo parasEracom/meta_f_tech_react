@@ -7,6 +7,8 @@ export const ApiPaths = {
   getWallets: `/get_wallets`,
   changePassword: `/update-password`,
   updateProfile: `/update-profile`,
+  uploadProfileImage:"/upload-profile-image",
+  getProfileImage:"/get-profile-image",
   paymentRequest: "/payment-request",
   getPaymentMethod: "/get-payment-method",
   getPaymentTransaction: `/get-payment-transaction`,

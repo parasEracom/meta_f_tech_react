@@ -69,7 +69,7 @@ const MyChart = (props) => {
             <p> Total Income</p>
           </div>
           <div>
-            <span style={{ background: "#ef7f1b" }}></span>
+            <span style={{ background: "grey" }}></span>
             <p>Income</p>
           </div>
         </div>

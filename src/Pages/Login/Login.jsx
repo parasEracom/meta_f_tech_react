@@ -36,7 +36,7 @@ const Login = () => {
   async function CompanyInfo() {
     try {
       let data = localStorage.getItem("companyData");
-     BasicInfo.isDebug && console.log("LocalStorage Data:", data);
+     BasicInfo.isDebug && console.log("LocalStorage Data:", JSON.parse(data));
       
       if (data) {
         // If data exists in localStorage, parse and set it
@@ -67,7 +67,7 @@ const Login = () => {
       CompanyInfo();
       x++
     }
-  })
+  },[])
   useEffect(() => {
     const fetchData = async () => {
       try {

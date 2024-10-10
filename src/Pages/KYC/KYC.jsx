@@ -198,12 +198,12 @@ const KYC = () => {
   };
   const onDrop = async (acceptedFiles, type) => {
     const acceptedImageTypes = ['image/jpeg', 'image/png']; // JPEG and PNG MIME types
-    const imageFiles = acceptedFiles.filter(file => 
-      acceptedImageTypes.includes(file.type) || 
-      file.name.endsWith('.jpg') || 
+    const imageFiles = acceptedFiles.filter(file =>
+      acceptedImageTypes.includes(file.type) ||
+      file.name.endsWith('.jpg') ||
       file.name.endsWith('.jpeg')
     );
-  
+
     const compressedFiles = await Promise.all(
       imageFiles.map(async (file) => {
         const options = {
@@ -460,8 +460,8 @@ const KYC = () => {
                     alt="Bank Document"
                     style={{ width: 100, height: 100, margin: 10 }}
                   />
-                ) : 
-                null}
+                ) :
+                  null}
               </div>
 
               {bankStatus == 1 || bankStatus == 2 || isApproved?.bank == 1 || isApproved?.bank == 2 ? (
@@ -598,6 +598,7 @@ const KYC = () => {
                 <option value="Adhar Card">Aadhaar</option>
                 <option value="Passport">Passport</option>
                 <option value="Driving License">Driver License</option>
+                <option value="Voter ID">Voter ID</option>
               </select>
               {errors.selectedValue && <p className="error">{errors.selectedValue}</p>}
 
@@ -669,7 +670,7 @@ const KYC = () => {
                     <div {...getAddressBackRootProps({ className: "dropzone" })}>
                       <input {...getAddressBackInputProps()} />
                       <p>
-                      Upload Address back document here (.jpg, .jpeg, or .png)
+                        Upload Address back document here (.jpg, .jpeg, or .png)
                       </p>
                     </div>
                     {previews.addressBack.map((url, index) => (
@@ -755,6 +756,7 @@ const KYC = () => {
                 <option value="Adhar Card">Aadhaar</option>
                 <option value="Passport">Passport</option>
                 <option value="Driving License">Driver License</option>
+                <option value="Voter ID">Voter ID</option>
               </select>
               {errors.idDocumentType && <p className="error">{errors.idDocumentType}</p>}
 
@@ -776,7 +778,7 @@ const KYC = () => {
                     <div {...getNomineeFrontRootProps({ className: "dropzone" })}>
                       <input {...getNomineeFrontInputProps()} />
                       <p>
-                      Upload Nominee front document here (.jpg, .jpeg, or .png)
+                        Upload Nominee front document here (.jpg, .jpeg, or .png)
                       </p>
                     </div>
                     {previews.nomineeFront.map((url, index) => (

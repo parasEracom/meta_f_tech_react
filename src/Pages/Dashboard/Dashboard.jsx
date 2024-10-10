@@ -42,6 +42,7 @@ const Dashboard = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [upcomingSips, setUpcomingSips] = useState([]);
   const [unpaidInstallments, setUnpaidInstallments] = useState([]);
+  const [todayIncomeData, setTodayIncomeData] = useState([]);
   const [showPopUp, setShowPopUp] = useState({ visible: false, sipId: null, amount: null, maturityDate: null, installmentId: null });
 
   const profileData = useSelector(
@@ -190,6 +191,7 @@ const Dashboard = () => {
       ]);
       if (res1) dispatch(setUserPersonalInfo(res1));
       if (res2) {
+        setTodayIncomeData(res2?.todayincome)
         dispatch(setIncomeWallet(res2?.wallets));
         const objectToArray = ArrayToObject(res2?.wallets);
         setTotalIncome(objectToArray?.roi_level_income?.value);
@@ -671,7 +673,51 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Col>
-
+              <Col md="6" className="mb-2">
+                <div className="dashboardIncomeCard">
+                  <div className="dashboardData">
+                    <div>
+                      <h5
+                        className="dashboardCardHeading"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Total SIP
+                      </h5>
+                      <h1>{companyData?.currency} {teamData?.Sip_business}</h1>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md="6" className="mb-2">
+                <div className="dashboardIncomeCard">
+                  <div className="dashboardData">
+                    <div>
+                      <h5
+                        className="dashboardCardHeading"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Total Fixed Deposit
+                      </h5>
+                      <h1>{companyData?.currency} {teamData?.fd_deposite_business}</h1>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+              <Col md="6" className="mb-2">
+                <div className="dashboardIncomeCard">
+                  <div className="dashboardData">
+                    <div>
+                      <h5
+                        className="dashboardCardHeading"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        Total Time Deposit
+                      </h5>
+                      <h1>{companyData?.currency} {teamData?.time_deposite_business}</h1>
+                    </div>
+                  </div>
+                </div>
+              </Col>
             </Row>
           </Col>
           <Col lg="12" className="gap-2 d-flex flex-column justify-content-between" >
@@ -687,11 +733,27 @@ const Dashboard = () => {
                               className="dashboardCardHeading"
                               style={{ textTransform: "capitalize" }}
                             >
-                              {x?.name}
+                             Total {x?.name}
                             </h5>
                             <h1>
                               {companyData?.currency} {parseFloat(x?.value).toFixed(2) ?? "0"}
                             </h1>
+                            {Array.isArray(todayIncomeData) &&
+                              todayIncomeData?.map(
+                                (item, index) =>
+                                  item?.slug == x?.slug && (
+                                    <div className="d-flex gap-2 mt-2" key={index}>
+                                      <p style={{fontSize:"12px",color:"var(--textColor)"}}>
+                                        {/* {companyData} */}
+                                        {parseFloat(
+                                          todayIncomeData?.[index]?.Today
+                                        ).toFixed(2)}
+                                      </p>
+                                      <p style={{fontSize:"12px", color:"var(--textColor)"}}>Today's Income</p>
+                                    </div>
+                                  )
+                              )}
+                           
                           </div>
                         </div>
                       </div>
