@@ -43,6 +43,7 @@ const Dashboard = () => {
   const [upcomingSips, setUpcomingSips] = useState([]);
   const [unpaidInstallments, setUnpaidInstallments] = useState([]);
   const [todayIncomeData, setTodayIncomeData] = useState([]);
+  const [lastMonthlyIncomeData, setLastMonthlyIncomeData] = useState([]);
   const [showPopUp, setShowPopUp] = useState({ visible: false, sipId: null, amount: null, maturityDate: null, installmentId: null });
 
   const profileData = useSelector(
@@ -192,6 +193,7 @@ const Dashboard = () => {
       if (res1) dispatch(setUserPersonalInfo(res1));
       if (res2) {
         setTodayIncomeData(res2?.todayincome)
+        setLastMonthlyIncomeData(res2?.lastmonthincome)
         dispatch(setIncomeWallet(res2?.wallets));
         const objectToArray = ArrayToObject(res2?.wallets);
         setTotalIncome(objectToArray?.roi_level_income?.value);
@@ -431,7 +433,7 @@ const Dashboard = () => {
                             .map((order, index) => (
                               <tr key={index}>
                                 <td>{order.package_type}</td>
-                                <td>{order.amount}</td>
+                                <td>{parseFloat(order.amount).toFixed(2)}</td>
                                 <td>{order?.sip_Id ? order.sip_Id : "-"}</td>
                                 <td>{order?.installment_id ? order.installment_id : "-"}</td>
                                 <td>{order?.maturity_Date} Months</td>
@@ -464,7 +466,9 @@ const Dashboard = () => {
                           {upcomingSips.map((sip, index) => (
                             <tr key={index}>
                               <td>{sip.nextUpcomingInstallment.sip_Id}</td>
-                              <td>{sip.nextUpcomingInstallment.installment_amount}</td>
+                              {/* <td>{sip.nextUpcomingInstallment.installment_amount}</td> */}
+                              <td>{parseFloat(sip.nextUpcomingInstallment.installment_amount).toFixed(2)}</td>
+
                               <td>{moment(sip.nextUpcomingInstallment.installment_Date).format("DD MMM YY")}</td>
                               <td>
                                 {sip.nextUpcomingInstallment.paid_Date === null ? (
@@ -643,7 +647,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Col>
-              <Col md="6" className="mb-2">
+              <Col md="6"  className="mb-2">
                 <div className="dashboardIncomeCard">
                   <div className="dashboardData">
                     <div>
@@ -658,7 +662,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </Col>
-              <Col md="6" className="mb-2">
+              <Col md="6"  className="mb-2">
                 <div className="dashboardIncomeCard">
                   <div className="dashboardData">
                     <div>
@@ -668,12 +672,12 @@ const Dashboard = () => {
                       >
                         Total Business{" "}
                       </h5>
-                      <h1>{companyData?.currency} {teamData?.sum?.business}</h1>
+                      <h1>{companyData?.currency} {parseFloat(teamData?.sum?.business).toFixed(2)}</h1>
                     </div>
                   </div>
                 </div>
               </Col>
-              <Col md="6" className="mb-2">
+              <Col md="6"  className="mb-2">
                 <div className="dashboardIncomeCard">
                   <div className="dashboardData">
                     <div>
@@ -683,12 +687,12 @@ const Dashboard = () => {
                       >
                         Total SIP
                       </h5>
-                      <h1>{companyData?.currency} {teamData?.Sip_business}</h1>
+                      <h1>{companyData?.currency} {parseFloat(teamData?.Sip_business).toFixed(2)}</h1>
                     </div>
                   </div>
                 </div>
               </Col>
-              <Col md="6" className="mb-2">
+              <Col md="6"  className="mb-2">
                 <div className="dashboardIncomeCard">
                   <div className="dashboardData">
                     <div>
@@ -698,12 +702,12 @@ const Dashboard = () => {
                       >
                         Total Fixed Deposit
                       </h5>
-                      <h1>{companyData?.currency} {teamData?.fd_deposite_business}</h1>
+                      <h1>{companyData?.currency} {parseFloat(teamData?.fd_deposite_business).toFixed(2)}</h1>
                     </div>
                   </div>
                 </div>
               </Col>
-              <Col md="6" className="mb-2">
+              <Col md="6"  className="mb-2">
                 <div className="dashboardIncomeCard">
                   <div className="dashboardData">
                     <div>
@@ -713,7 +717,7 @@ const Dashboard = () => {
                       >
                         Total Time Deposit
                       </h5>
-                      <h1>{companyData?.currency} {teamData?.time_deposite_business}</h1>
+                      <h1>{companyData?.currency} {parseFloat(teamData?.time_deposite_business).toFixed(2)}</h1>
                     </div>
                   </div>
                 </div>
@@ -743,13 +747,28 @@ const Dashboard = () => {
                                 (item, index) =>
                                   item?.slug == x?.slug && (
                                     <div className="d-flex gap-2 mt-2" key={index}>
+                                      <span style={{fontSize:"12px",color:"var(--textColor)"}}>
+                                        {/* {companyData} */}
+                                        {parseFloat(
+                                          todayIncomeData?.[index]?.income
+                                        ).toFixed(2)}
+                                      </span>
+                                      <span style={{fontSize:"12px", color:"var(--textColor)"}}>Today's Income</span>
+                                    </div>
+                                  )
+                              )}
+                            {Array.isArray(lastMonthlyIncomeData) &&
+                              lastMonthlyIncomeData?.map(
+                                (item, index) =>
+                                  item?.slug == x?.slug && (
+                                    <div className="d-flex gap-2 " key={index}>
                                       <p style={{fontSize:"12px",color:"var(--textColor)"}}>
                                         {/* {companyData} */}
                                         {parseFloat(
-                                          todayIncomeData?.[index]?.Today
+                                          lastMonthlyIncomeData?.[index]?.income
                                         ).toFixed(2)}
                                       </p>
-                                      <p style={{fontSize:"12px", color:"var(--textColor)"}}>Today's Income</p>
+                                      <p style={{fontSize:"12px", color:"var(--textColor)"}}>Last Month Income</p>
                                     </div>
                                   )
                               )}

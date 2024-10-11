@@ -705,16 +705,53 @@ const FundHistory = ({ status }) => {
         </section>
 
         {/* Image Popup */}
-        {selectedImage && (
+        {/* {selectedImage && (
           <div className="popup">
-            <div className="popup-content">
-              <span className="close-icon" onClick={closeImagePopup}>
+            <div className="popup-content d-flex justify-content-center">
+              <span className="close-icon" style={{ color: "var(--textColor)", fontSize: "10px" }} onClick={closeImagePopup}>
                 <AiOutlineClose />
               </span>
-              <img src={selectedImage} alt="proof" className="popup-image" />
+              <img src={selectedImage} alt="proof" height="150px" className="popup-image" />
+            </div>
+          </div>
+        )} */}
+
+
+
+        {selectedImage && (
+          <div className="popup" style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.7)", // Translucent background
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000, // Ensure it stays on top
+            backdropFilter: "blur(8px)"
+          }}>
+            <div className="popup-content" style={{ position: "relative" }}>
+              <span className="close-icon"
+                style={{
+                  color: "var(--textColor)",
+                  fontSize: "20px",
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  cursor: "pointer"
+                }}
+                onClick={closeImagePopup}>
+                <AiOutlineClose />
+              </span>
+              <img src={selectedImage} alt="proof"
+                style={{ maxHeight: "80vh", maxWidth: "90vw" }}
+                className="popup-image" />
             </div>
           </div>
         )}
+
       </section>
     </>
   );

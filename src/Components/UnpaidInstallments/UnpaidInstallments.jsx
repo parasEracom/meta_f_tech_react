@@ -98,7 +98,7 @@ export default function UnpaidInstallments() {
                     </div>
                     <div className="d-flex justify-content-between">
                       <p className="card-text">Amount:</p>
-                      <p className="card-text">{installment.installment_amount}</p>
+                      <p className="card-text">{companyData?.currency_sign}{parseFloat(installment.installment_amount).toFixed(2)}</p>
                     </div>
                     <div className="d-flex justify-content-between">
                       <p className="card-text">Installment Date:</p>

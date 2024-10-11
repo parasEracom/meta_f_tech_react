@@ -525,7 +525,7 @@ const Register = () => {
                     <span id="myProfileInputFieldTitle">Email ID</span>
 
                     <input
-                      type="text"
+                      type="email"
                       placeholder="Email Id"
                       id="email"
                       name="email"
