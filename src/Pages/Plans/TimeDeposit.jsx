@@ -363,12 +363,6 @@ useEffect(() => {
                   ))}
                 </select>
               </div> */}
-
-
-
-
-
-
               <label htmlFor="Amount">Amount ({companyData?.currency} )</label>
               <input
                 type="number"
@@ -404,72 +398,6 @@ useEffect(() => {
 
 export default Plans;
 
-// function PopUp({
-//   username,
-//   planId,
-//   amount,
-//   fundBalance,
-//   selectIncome,
-//   onClose,
-//   onTopUpSuccess,
-// }) {
-//   const [loading, setLoading] = useState(false);
-//   const { AxiosPost } = useAxiosHelper();
-
-//   async function TopUp() {
-//     const valid = checkValidation();
-//     if (valid) {
-//       try {
-//         setLoading(true);
-//         const body = {
-//           username,
-//           planId,
-//           amount,
-//         };
-//         console.log(body);
-//         const res = await AxiosPost(ApiPaths.topUp, body);
-//         console.log(res, "..");
-//         onTopUpSuccess();
-//       } catch (e) {
-//         toastFailed(e?.response?.data?.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     }
-//   }
-
-//   function checkValidation() {
-//     if (amount > 0) {
-//       if (amount > fundBalance) {
-//         toastFailed("Insufficient Funds");
-//         return false;
-//       } else {
-//         return true;
-//       }
-//     } else {
-//       toastFailed("Please Enter Amount");
-//       return false;
-//     }
-//   }
-
-//   return (
-//     <>
-//       <div className="otpSection" style={{ zIndex: "999" }}>
-//         <div className="otpContainer">
-//           <p>Are you sure you want to proceed with the top-up?</p>
-//           <div>
-//             <button className="btnSecondary" onClick={onClose}>
-//               No
-//             </button>
-//             <button className="btnPrimary" onClick={TopUp} disabled={loading}>
-//               {loading ? "Processing..." : "Yes"}
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
 
 function PopUp({
   username,

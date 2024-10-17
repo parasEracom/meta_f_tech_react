@@ -577,8 +577,18 @@ const Plans = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <p className="successData">Package Time:</p>
+                  <p className="successData">Maturity Time:</p>
                   <p className="successData">{moment(packageTime).format("DD-MM-YYYY")}</p> {/* Updated */}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p className="successData">Purchase Time:</p>
+                  <p className="successData">{moment().format("DD-MM-YYYY")}</p> {/* Updated */}
                 </div>
               </div>
 
@@ -753,10 +763,8 @@ function PopUp({
               <p>{selectIncome}</p>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
-              <p><strong>Package Time:</strong></p>
+              <p><strong>Maturity Time:</strong></p>
               <p>{moment(packageTime).format("DD-MM-YYYY")}</p>
-                
-
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginTop:"0px", gap:"0" }}>
               <p><strong>Amount:</strong></p>
