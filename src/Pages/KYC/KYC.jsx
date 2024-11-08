@@ -16,6 +16,7 @@ const KYC = () => {
   const [bankName, setBankName] = useState("");
   const [errors, setErrors] = useState({});
   const [address, setAddress] = useState("");
+  const [isAbove18, SetIsAbove18] = useState("");
   const [idNo, setIdNo] = useState("");
   const [nomineeIdNo, setNomineeIdNo] = useState("");
   const [panNo, setPanNo] = useState("");
@@ -145,6 +146,7 @@ const KYC = () => {
       formData.append("idNumber", idNo);
       formData.append("name", name);
       formData.append("address", address);
+      formData.append("isAbove18", isAbove18 || "no");
       files.forEach((file) => {
         formData.append("documentFront", file);
       });
@@ -629,6 +631,21 @@ const KYC = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
               {errors.address && <p className="error">{errors.address}</p>}
+
+
+
+              <label htmlFor="ageCheck">If you are under 18 years old, select "YES".</label>
+              <select
+                id="ageCheck"
+                value={isAbove18 || (isApproved?.isAbove18 == 3 ? "" : addressDetails?.isAbove18)} // "NO" is set as the default selected option
+                onChange={(e) => SetIsAbove18(e.target.value)}
+                required
+              >
+                <option value="no">NO</option>
+                <option value="yes">YES</option>
+              </select>
+              {errors.isAbove18 && <p className="error">{errors.isAbove18}</p>}
+
 
               {/* Front Document Upload */}
               <label htmlFor="">Upload Document (Front)</label>

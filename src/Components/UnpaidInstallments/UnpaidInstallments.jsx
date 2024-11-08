@@ -6,6 +6,7 @@ import moment from 'moment';
 import { toastFailed, toastSuccess } from '../../Common/Data';
 import './UnpaidInstallments.css'
 import PopUp from '../PayNowPopUp/PopUp';
+import Loader from '../Loader/Loader';
 
 export default function UnpaidInstallments() {
   const [unpaidInstallments, setUnpaidInstallments] = useState([]);
@@ -79,7 +80,7 @@ export default function UnpaidInstallments() {
   }, []); // Empty dependency array ensures it runs once on mount
 
   if (loading) {
-    return <div>Loading...</div>; // Loading indicator
+    return <Loader/>; // Loading indicator
   }
 
   return (
